@@ -55,13 +55,13 @@
 
   A snapshot file is available here:
 
-  http://github.com/jafingerhut/cd-client/blob/develop/clojuredocs-snapshot-2011-12-03.txt?raw=true
+  https://raw.github.com/jafingerhut/cd-client/develop/snapshots/clojuredocs-snapshot-latest.txt
 
   Example:
 
-  user=> (set-local-mode! \"clojuredocs-snapshot-2011-12-03.txt\")
-  Read info on 3574 names from file: clojuredocs-snapshot-2011-12-03.txt
-  Snapshot time: Sat Dec 03 18:03:43 PST 2011
+  user=> (set-local-mode! \"snapshots/clojuredocs-snapshot-latest.txt\")
+  Read info on 3574 names from file: snapshots/clojuredocs-snapshot-latest.txt
+  Snapshot time: Sun Apr 01 17:20:17 PDT 2012
   nil"
   [fname]
   (let [x (with-open [s (java.io.PushbackReader. (io/reader fname))]
