@@ -625,35 +625,37 @@ in the local snapshot."
   [search-str fname & quiet]
   (let [verbose (not quiet)
         all-names-urls (search-core nil search-str)
+        n (count all-names-urls)
         _ (when verbose
-            (println "Retrieved basic information for" (count all-names-urls)
+            (println "Retrieved basic information for" n
                      "names. Getting full details..."))
         all-info (doall
-                  (map (fn [{ns :ns, name :name, :as m}]
-                         ;; Make each of ex, sa, and com always a
-                         ;; vector, never nil. If examples returns
-                         ;; non-nil, it includes both a vector of
-                         ;; examples and a URL. We discard the URL
-                         ;; here, since it is already available in
-                         ;; all-names-urls.
-                         (let [_ (when verbose
-                                   (print (str ns "/" name) " examples:")
-                                   (flush))
-                               ex (if-let [x (examples ns name)]
-                                    (:examples x)
-                                    [])
-                               _ (when verbose
-                                   (print (count ex) " see-alsos:")
-                                   (flush))
-                               sa (if-let [x (see-also ns name)] x [])
-                               _ (when verbose
-                                   (print (count sa) " comments:")
-                                   (flush))
-                               com (if-let [x (comments ns name)] x [])
-                               _ (when verbose
-                                   (println (count com)))]
-                           (assoc m :examples ex :see-alsos sa :comments com)))
-                       all-names-urls))
+                  (map-indexed
+                   (fn [idx {ns :ns, name :name, :as m}]
+                     ;; Make each of ex, sa, and com always a vector,
+                     ;; never nil. If examples returns non-nil, it
+                     ;; includes both a vector of examples and a
+                     ;; URL. We discard the URL here, since it is
+                     ;; already available in all-names-urls.
+                     (let [_ (when verbose
+                               (printf "%d/%d " (inc idx) n)
+                               (print (str ns "/" name) " examples:")
+                               (flush))
+                           ex (if-let [x (examples ns name)]
+                                (:examples x)
+                                [])
+                           _ (when verbose
+                               (print (count ex) " see-alsos:")
+                               (flush))
+                           sa (if-let [x (see-also ns name)] x [])
+                           _ (when verbose
+                               (print (count sa) " comments:")
+                               (flush))
+                           com (if-let [x (comments ns name)] x [])
+                           _ (when verbose
+                               (println (count com)))]
+                       (assoc m :examples ex :see-alsos sa :comments com)))
+                   all-names-urls))
         all-info-map (reduce (fn [big-map one-name-info]
                                (assoc big-map
                                  (str (:ns one-name-info) "/"
