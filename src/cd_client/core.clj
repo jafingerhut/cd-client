@@ -23,12 +23,24 @@
 
 (def ^:private ^:dynamic *debug-flags* (ref #{}))
 
-(defn enable-debug-flags [& keywords]
+(defn enable-debug-flags
+  "Takes any number of keyswords as arguments.  Enables the debug
+print messages corresponding to those keywords within the cd-client
+library.  Currently these keywords are supported:
+
+    :show-urls       Show URLs of HTTP requests sent.
+
+    :show-http-resp  Show HTTP responses received as a Clojure map, as
+                     returned by clj-http.client/get."
+  [& keywords]
   (dosync (alter *debug-flags*
                  (fn [cur-val]
                    (apply conj cur-val keywords)))))
 
-(defn disable-debug-flags [& keywords]
+(defn disable-debug-flags
+  "Disables debug print messages in cd-client library.  See
+enable-debug-flags for supported arguments."
+  [& keywords]
   (dosync (alter *debug-flags*
                  (fn [cur-val]
                    (apply disj cur-val keywords)))))
