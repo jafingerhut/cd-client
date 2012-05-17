@@ -1,4 +1,4 @@
-{:snapshot-time "Thu May 10 12:07:05 PDT 2012",
+{:snapshot-time "Thu May 17 14:48:07 PDT 2012",
  :snapshot-info
  {"clojure.zip/insert-right"
   {:comments [],
@@ -35,7 +35,18 @@
   "clojure.contrib.string/escape"
   {:comments [],
    :see-alsos [],
-   :examples [],
+   :examples
+   [{:namespace_id 88,
+     :ns "clojure.contrib.string",
+     :updated_at "2012-05-15 10:44:01.0",
+     :function "escape",
+     :version 1,
+     :created_at "2012-05-15 10:44:01.0",
+     :library "Clojure Contrib",
+     :lib_version "1.2.0",
+     :library_id 1,
+     :body
+     "(clojure.string/escape \"asdf\" {\\a \\b}) \n=> \"bsdf\"\n(clojure.string/escape \"asdf\" {\\a \"b\"}) \n=> \"bsdf\"\n(clojure.string/escape \"asdf\" {\\a \"bb\"}) \n=> \"bbsdf\""}],
    :id 1129,
    :name "escape",
    :ns "clojure.contrib.string",
@@ -9573,7 +9584,31 @@
    :url "http://clojuredocs.org/v/3846"},
   "clojure.walk/walk"
   {:comments [],
-   :see-alsos [],
+   :see-alsos
+   [{:namespace_id 118,
+     :weight 1,
+     :name "postwalk",
+     :updated_at "2010-10-20 04:42:20.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:28:54.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/2558",
+     :line "53",
+     :arglists_comp "[f form]",
+     :url_friendly_name "postwalk",
+     :file "clojure/walk.clj"}
+    {:namespace_id 118,
+     :weight 0,
+     :name "prewalk",
+     :updated_at "2010-10-20 04:42:20.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:28:53.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/2557",
+     :line "62",
+     :arglists_comp "[f form]",
+     :url_friendly_name "prewalk",
+     :file "clojure/walk.clj"}],
    :examples
    [{:namespace_id 350,
      :ns "clojure.walk",
@@ -11617,7 +11652,19 @@
    :url "http://clojuredocs.org/v/3681"},
   "clojure.core/extend-type"
   {:comments [],
-   :see-alsos [],
+   :see-alsos
+   [{:namespace_id 99,
+     :weight 1,
+     :name "extend",
+     :updated_at "2011-02-02 19:35:03.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:20:31.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/1597",
+     :line "630",
+     :arglists_comp "[atype & proto+mmaps]",
+     :url_friendly_name "extend",
+     :file "clojure/core_deftype.clj"}],
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
@@ -17708,7 +17755,19 @@
    :url "http://clojuredocs.org/v/5737"},
   "clojure.core/keep"
   {:comments [],
-   :see-alsos [],
+   :see-alsos
+   [{:namespace_id 99,
+     :weight 3,
+     :name "keep-indexed",
+     :updated_at "2011-05-25 03:31:08.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:21:31.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/1683",
+     :line "5660",
+     :arglists_comp "[f coll]",
+     :url_friendly_name "keep-indexed",
+     :file "clojure/core.clj"}],
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
@@ -19326,7 +19385,18 @@
      :arglists_comp "[name & opts+sigs]",
      :url_friendly_name "defprotocol",
      :file "clojure/core_deftype.clj"}],
-   :examples [],
+   :examples
+   [{:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2012-05-15 22:33:12.0",
+     :function "extends?",
+     :version 1,
+     :created_at "2012-05-15 22:33:12.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     "user=> (defprotocol Area (get-area [this]))\nArea\n\nuser=> (defrecord Rectangle [width height]\n                  Area\n                  (get-area [this]\n                    (* width height)))\nuser.Rectangle\n\n(extends? Area Rectangle)\ntrue\n"}],
    :id 5500,
    :name "extends?",
    :ns "clojure.core",
@@ -19977,7 +20047,18 @@
   "clojure.contrib.classpath/classpath"
   {:comments [],
    :see-alsos [],
-   :examples [],
+   :examples
+   [{:namespace_id 5,
+     :ns "clojure.contrib.classpath",
+     :updated_at "2012-05-14 23:52:05.0",
+     :function "classpath",
+     :version 1,
+     :created_at "2012-05-14 23:52:05.0",
+     :library "Clojure Contrib",
+     :lib_version "1.2.0",
+     :library_id 1,
+     :body
+     ";; assuming that the clojure.contrib/java.classpath .jar\n;; is in your classpath (https://github.com/clojure/java.classpath/)\n\nuser=> (require '[clojure.java.classpath :as cp])\nnil\nuser=> (cp/classpath)\n(#<File .> #<File /Users/klauer/.lein/self-installs/leiningen-2.0.0-preview3-standalone.jar>)\nuser=> "}],
    :id 42,
    :name "classpath",
    :ns "clojure.contrib.classpath",
@@ -24911,19 +24992,31 @@
      :line "5618",
      :arglists_comp "[f coll]",
      :url_friendly_name "map-indexed",
+     :file "clojure/core.clj"}
+    {:namespace_id 99,
+     :weight 3,
+     :name "keep",
+     :updated_at "2011-05-25 03:28:23.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:26:20.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/2108",
+     :line "5638",
+     :arglists_comp "[f coll]",
+     :url_friendly_name "keep",
      :file "clojure/core.clj"}],
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2012-03-28 09:22:19.0",
+     :updated_at "2012-05-16 10:29:13.0",
      :function "keep-indexed",
-     :version 3,
+     :version 4,
      :created_at "2010-08-20 08:41:05.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (keep-indexed #(if (odd? %1) %2) (range 0 10))\n(1 3 5 7 9)"}
+     "user=> (keep-indexed #(if (odd? %1) %2) [:a :b :c :d :e])\n(:b :d)"}
     {:namespace_id 99,
      :ns "clojure.core",
      :updated_at "2010-12-12 10:07:17.0",
@@ -32709,7 +32802,18 @@
   "clojure.core/io!"
   {:comments [],
    :see-alsos [],
-   :examples [],
+   :examples
+   [{:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2012-05-15 22:46:08.0",
+     :function "io!",
+     :version 1,
+     :created_at "2012-05-15 22:46:08.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     "user=> (def a (ref 0))\n#'user/a\n\nuser=> (dosync\n         (io! (println \"hello\"))\n         (alter a inc))\nIllegalStateException I/O in transaction\n\nuser=> (dosync\n         (println \"hello\")\n         (alter a inc))\n\"hello\"\n1\n\nuser=> (defn fn-with-io []\n         (io! (println \"hello\")))\n#'user/fn-with-io\n\nuser=> (dosync\n         (fn-with-io)\n         (alter a inc))\nIllegalStateException I/O in transaction"}],
    :id 5566,
    :name "io!",
    :ns "clojure.core",
@@ -47124,7 +47228,7 @@
      "(flatten nil) actually returns an empty sequence, not nil.  The doc string is fixed in 1.4."}
     {:namespace_id 330,
      :ns "clojure.core",
-     :updated_at "2012-04-22 17:47:57.0",
+     :updated_at "2012-05-13 14:55:14.0",
      :user_id 106,
      :function "flatten",
      :version "1.3.0",
@@ -47132,7 +47236,7 @@
      :library "Clojure Core",
      :library_id 15,
      :body
-     "As shown in the example, flatten will return an empty sequence when given any non-sequential thing.  That can sometimes hide a bug. \n\nHere's another version that doesn't have that problem, and is faster as well.\n\n\n    (defn flatten2\n      \"Like `clojure.core/flatten` but better, stronger, faster.\n      Takes any nested combination of sequential things (lists, vectors,\n      etc.) and returns their contents as a single, flat, lazy sequence.\n      If the argument is non-sequential (numbers, maps, strings, nil, \n      etc.), returns the original argument.\"\n      {:static true}\n      [x]\n      (letfn [(flat [coll] \n                      (lazy-seq \n                       (when-let [c (seq coll)] \n                         (let [x (first c) \n                               nxt (flat (rest c))] \n                           (if (sequential? x) \n                             (concat (flat x) nxt) \n                             (cons x nxt))))))]\n        (if (sequential? x) (flat x) x)))\n"}],
+     "As shown in the example, flatten will return an empty sequence when given any non-sequential thing.  That can sometimes hide a bug. \n\nHere's another version that doesn't have that problem, and is faster as well.\n\n\n    (defn flatten2\n      \"Like `clojure.core/flatten` but better, stronger, faster.\n      Takes any nested combination of sequential things (lists, vectors,\n      etc.) and returns their contents as a single, flat, lazy sequence.\n      If the argument is non-sequential (numbers, maps, strings, nil, \n      etc.), returns the original argument.\"\n      {:static true}\n      [x]\n      (letfn [(flat [coll] \n                      (lazy-seq \n                       (when-let [c (seq coll)] \n                         (let [x (first c)] \n                           (if (sequential? x) \n                             (concat (flat x) (flat (rest c))) \n                             (cons x (flat (rest c))))))))]\n        (if (sequential? x) (flat x) x)))\n"}],
    :see-alsos [],
    :examples
    [{:namespace_id 99,
