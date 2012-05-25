@@ -673,11 +673,16 @@ in the local snapshot."
                                  (str (:ns one-name-info) "/"
                                       (:name one-name-info))
                                  one-name-info))
-                             {} all-info)]
+                             {} all-info)
+        now (str (java.util.Date.))]
     (with-open [f (io/writer fname)]
       (binding [*out* f]
-        (pprint {:snapshot-time (str (java.util.Date.)),
-                 :snapshot-info all-info-map })))))
+        (pprint {:snapshot-time now,
+                 :snapshot-info all-info-map})))
+    (with-open [f (io/writer "debug-all-info-out.txt")]
+      (binding [*out* f]
+        (pprint {:snapshot-time now,
+                 :snapshot-info all-info})))))
 
 
 (defn ^String ns-name-of-full-sym-name
