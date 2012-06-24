@@ -1,4 +1,4 @@
-{:snapshot-time "Sat Jun 16 08:54:12 PDT 2012",
+{:snapshot-time "Sun Jun 24 11:11:30 PDT 2012",
  :snapshot-info
  {"clojure.zip/insert-right"
   {:comments [],
@@ -835,7 +835,18 @@
      :lib_version "1.3.0",
      :library_id 15,
      :body
-     "user=> (mapcat (fn [[k v]] \n                 (for [[k2 v2] v] \n                   (concat [k k2] v2)))\n         '{:a {:x (1 2) :y (3 4)}\n           :b {:x (1 2) :z (5 6)}})\n\n((:a :x 1 2) (:a :y 3 4) (:b :x 1 2) (:b :z 5 6))"}],
+     "user=> (mapcat (fn [[k v]] \n                 (for [[k2 v2] v] \n                   (concat [k k2] v2)))\n         '{:a {:x (1 2) :y (3 4)}\n           :b {:x (1 2) :z (5 6)}})\n\n((:a :x 1 2) (:a :y 3 4) (:b :x 1 2) (:b :z 5 6))"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2012-06-19 02:54:54.0",
+     :function "mapcat",
+     :version 2,
+     :created_at "2012-06-19 02:23:06.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     "user=> (require '[clojure.string :as cs])\nnil\n\n;; Suppose you have a fn in a `map` that itself returns\n;; multiple values.\nuser=> (map #(cs/split % #\"\\d\") [\"aa1bb\" \"cc2dd\" \"ee3ff\"])\n([\"aa\" \"bb\"] [\"cc\" \"dd\"] [\"ee\" \"ff\"])\n\n;; Now, if you want to concat them all together, you *could*\n;; do this:\nuser=> (apply concat (map #(cs/split % #\"\\d\") [\"aa1bb\" \"cc2dd\" \"ee3ff\"]))\n(\"aa\" \"bb\" \"cc\" \"dd\" \"ee\" \"ff\")\n\n;; But `mapcat` can save you a step:\nuser=> (mapcat #(cs/split % #\"\\d\") [\"aa1bb\" \"cc2dd\" \"ee3ff\"])\n(\"aa\" \"bb\" \"cc\" \"dd\" \"ee\" \"ff\")\n"}],
    :id 5603,
    :name "mapcat",
    :ns "clojure.core",
@@ -5402,6 +5413,18 @@
      :line "1403",
      :arglists_comp "[bindings then]|[bindings then else & oldform]",
      :url_friendly_name "if-let",
+     :file "clojure/core.clj"}
+    {:namespace_id 99,
+     :weight 2,
+     :name "if-not",
+     :updated_at "2010-10-20 04:42:03.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:19:44.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/1537",
+     :line "638",
+     :arglists_comp "[test then]|[test then else]",
+     :url_friendly_name "if-not",
      :file "clojure/core.clj"}],
    :examples
    [{:namespace_id 99,
@@ -6146,7 +6169,18 @@
      :lib_version "1.3.0",
      :library_id 15,
      :body
-     "; Demonstrating difference between :when and :while\n\nuser=> (time (dorun (for [x (range 1000) y (range 10000) :when (> x y)] [x y])))\n\"Elapsed time: 2898.908 msecs\"\nnil\n\nuser=> (time (dorun (for [x (range 1000) y (range 10000) :while (> x y)] [x y])))\n\"Elapsed time: 293.677 msecs\"\nnil"}],
+     "; Demonstrating difference between :when and :while\n\nuser=> (time (dorun (for [x (range 1000) y (range 10000) :when (> x y)] [x y])))\n\"Elapsed time: 2898.908 msecs\"\nnil\n\nuser=> (time (dorun (for [x (range 1000) y (range 10000) :while (> x y)] [x y])))\n\"Elapsed time: 293.677 msecs\"\nnil"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2012-06-20 23:41:52.0",
+     :function "for",
+     :version 1,
+     :created_at "2012-06-20 23:41:52.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     "; Demonstrating difference between :when and :while\nuser=> (for [x (range 3) y (range 3) :when (not= x y)] [x y])\n([0 1] [0 2] [1 0] [1 2] [2 0] [2 1])\nuser=> (for [x (range 3) y (range 3) :while (not= x y)] [x y])\n([1 0] [2 0] [2 1])"}],
    :id 5522,
    :name "for",
    :ns "clojure.core",
@@ -6641,15 +6675,15 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2010-09-28 07:19:34.0",
+     :updated_at "2012-06-21 06:59:39.0",
      :function "hash-map",
-     :version 3,
+     :version 4,
      :created_at "2010-07-28 14:41:12.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (hash-map)\n{} \n\n;; sending a key more times, will remap it to the last value\nuser=> (hash-map :key1 1, :key1 2) \n{:key1 2} \n\nuser=> (hash-map :key1 'val1, 'key2 :val2, [:compound :key] nil)\n{[:compound :key] nil, :key1 val1, key2 :val2} \n\n"}
+     ";; create hash map the long way\nuser=> (hash-map)\n{}\n\n;; create hash map the short way\nuser=> {}\n{}\n\n;; sending a key more times, will remap it to the last value\nuser=> (hash-map :key1 1, :key1 2) \n{:key1 2} \n\nuser=> (hash-map :key1 'val1, 'key2 :val2, [:compound :key] nil)\n{[:compound :key] nil, :key1 val1, key2 :val2} \n\n"}
     {:namespace_id 99,
      :ns "clojure.core",
      :updated_at "2012-03-28 08:56:08.0",
@@ -7513,7 +7547,18 @@
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (partition 4 (range 20))\n((0 1 2 3) (4 5 6 7) (8 9 10 11) (12 13 14 15) (16 17 18 19))\n\nuser=> (partition 4 (range 22))\n((0 1 2 3) (4 5 6 7) (8 9 10 11) (12 13 14 15) (16 17 18 19))\n\nuser=> (partition 4 6 (range 20))\n((0 1 2 3) (6 7 8 9) (12 13 14 15))\n\nuser=> (partition 4 6 [\"a\"] (range 20))\n((0 1 2 3) (6 7 8 9) (12 13 14 15) (18 19 \"a\"))\n\nuser=> (partition 4 6 [\"a\" \"b\" \"c\" \"d\"] (range 20))\n((0 1 2 3) (6 7 8 9) (12 13 14 15) (18 19 \"a\" \"b\"))\n"}],
+     "user=> (partition 4 (range 20))\n((0 1 2 3) (4 5 6 7) (8 9 10 11) (12 13 14 15) (16 17 18 19))\n\nuser=> (partition 4 (range 22))\n((0 1 2 3) (4 5 6 7) (8 9 10 11) (12 13 14 15) (16 17 18 19))\n\nuser=> (partition 4 6 (range 20))\n((0 1 2 3) (6 7 8 9) (12 13 14 15))\n\nuser=> (partition 4 6 [\"a\"] (range 20))\n((0 1 2 3) (6 7 8 9) (12 13 14 15) (18 19 \"a\"))\n\nuser=> (partition 4 6 [\"a\" \"b\" \"c\" \"d\"] (range 20))\n((0 1 2 3) (6 7 8 9) (12 13 14 15) (18 19 \"a\" \"b\"))\n"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2012-06-18 21:04:57.0",
+     :function "partition",
+     :version 1,
+     :created_at "2012-06-18 21:04:57.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     "user=> (partition 3 1 [:a :b :c :d :e :f])\n((:a :b :c) (:b :c :d) (:c :d :e) (:d :e :f))\n"}],
    :id 5653,
    :name "partition",
    :ns "clojure.core",
@@ -15050,15 +15095,15 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2010-09-26 12:13:51.0",
+     :updated_at "2012-06-21 06:31:17.0",
      :function "vector",
-     :version 4,
+     :version 5,
      :created_at "2010-08-16 01:51:00.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     ";; create a vector the long way\nuser=> (vector 1 2 3)\n[1 2 3]\n\n;; create a vector the short way\nuser=> [1 2 3]\n[1 2 3]\n\n;; checking for the 2 results above\nuser=> (class (vector 1 2 3))\nclojure.lang.PersistentVector\n\nuser=> (class [1 2 3])\nclojure.lang.PersistentVector\n\nuser=> (= (vector 1 2 3) [1 2 3])\ntrue\n\n"}
+     ";; create an empty vector the long way\nuser=> (vector)\n[]\n\n;; create an empty vector the short way\nuser=> []\n[]\n\n;; you can even create vectors with nil values\nuser=> (vector nil)\n[nil]\n\n;; create a vector the long way\nuser=> (vector 1 2 3)\n[1 2 3]\n\n;; create a vector the short way\nuser=> [1 2 3]\n[1 2 3]\n\n;; checking for the 2 results above\nuser=> (class (vector 1 2 3))\nclojure.lang.PersistentVector\n\nuser=> (class [1 2 3])\nclojure.lang.PersistentVector\n\nuser=> (= (vector 1 2 3) [1 2 3])\ntrue\n\n"}
     {:namespace_id 99,
      :ns "clojure.core",
      :updated_at "2010-09-28 18:56:28.0",
@@ -23864,6 +23909,18 @@
      :line "3582",
      :arglists_comp "[seq-exprs body-expr]",
      :url_friendly_name "for",
+     :file "clojure/core.clj"}
+    {:namespace_id 99,
+     :weight 1,
+     :name "dotimes",
+     :updated_at "2010-10-20 04:42:04.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:20:24.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/1587",
+     :line "2508",
+     :arglists_comp "[bindings & body]",
+     :url_friendly_name "dotimes",
      :file "clojure/core.clj"}],
    :examples
    [{:namespace_id 99,
@@ -23901,15 +23958,15 @@
      "user=> (doseq [[[a b] [c d]] (map list {:1 1 :2 2} {:3 3 :4 4})] \n         (prn (* b d)))\n3\n8\nnil\n\n;; where\nuser=> (map list {:1 1 :2 2} {:3 3 :4 4})\n(([:1 1] [:3 3]) ([:2 2] [:4 4]))"}
     {:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2010-09-27 22:29:58.0",
+     :updated_at "2012-06-18 09:39:14.0",
      :function "doseq",
-     :version 4,
+     :version 5,
      :created_at "2010-07-22 09:58:32.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (doseq [[k v] (map identity {:1 1 :2 2 :3 3})] \n         (prn k v))\n:1 1\n:2 2\n:3 3\nnil\n\n;; where\nuser=> (map identity {:1 1 :2 2 :3 3})\n([:1 1] [:2 2] [:3 3])"}
+     "user=> (doseq [[k v] (map identity {:1 1 :2 2 :3 3})] \n         (prn k v))\n:1 1\n:2 2\n:3 3\nnil\n\n;; where\nuser=> (map identity {:1 1 :2 2 :3 3})\n([:1 1] [:2 2] [:3 3])\n\n;; or simply\nuser=> (doseq [[k v] {:1 1 :2 2 :3 3}]\n         (prn k v))\n:1 1\n:3 3\n:2 2\nnil"}
     {:namespace_id 99,
      :ns "clojure.core",
      :updated_at "2011-02-15 19:43:42.0",
@@ -26141,7 +26198,18 @@
      :lib_version "1.3.0",
      :library_id 15,
      :body
-     "user=> (get (System/getenv) \"SHELL\")\n\"/bin/bash\"\n\nuser=> (get (System/getenv) \"PATH\")\n\"/usr/local/bin:/sbin:/usr/sbin:/usr/bin:/bin\""}],
+     "user=> (get (System/getenv) \"SHELL\")\n\"/bin/bash\"\n\nuser=> (get (System/getenv) \"PATH\")\n\"/usr/local/bin:/sbin:/usr/sbin:/usr/bin:/bin\""}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2012-06-23 01:45:56.0",
+     :function "get",
+     :version 1,
+     :created_at "2012-06-23 01:45:56.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     ";; 'get' is not the only option\nuser=> (def my-map {:a 1 :b 2 :c 3})\n\n;; maps act like functions\nuser=> (my-map :a)\n1\n\n;; even keys act like functions\nuser=> (:b my-map)\n2"}],
    :id 5535,
    :name "get",
    :ns "clojure.core",
@@ -31626,15 +31694,15 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2010-09-26 03:14:10.0",
+     :updated_at "2012-06-23 02:40:30.0",
      :function "iterate",
-     :version 4,
+     :version 8,
      :created_at "2010-07-13 12:19:45.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (take 10 (iterate (partial + 2) 0))\n(0 2 4 6 8 10 12 14 16 18)\n\nuser=> (take 20 (iterate (partial + 2) 0))\n(0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38)\n\n"}
+     ";; iterate Ad Infinitum starting at 5 using the inc (increment) function\nuser=> (iterate inc 5)\n(5 6 7 8 9 10 11 12 13 14 15 ... n\n\n;; limit results\nuser=> (take 5 (iterate inc 5))\n(5 6 7 8 9)\n\nuser=> (take 10 (iterate (partial + 2) 0))\n(0 2 4 6 8 10 12 14 16 18)\n\nuser=> (take 20 (iterate (partial + 2) 0))\n(0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38)\n\n"}
     {:namespace_id 99,
      :ns "clojure.core",
      :updated_at "2010-09-26 03:14:20.0",
@@ -33590,6 +33658,18 @@
      :line "3582",
      :arglists_comp "[seq-exprs body-expr]",
      :url_friendly_name "for",
+     :file "clojure/core.clj"}
+    {:namespace_id 99,
+     :weight 5,
+     :name "doseq",
+     :updated_at "2011-02-15 19:43:42.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:19:42.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/1534",
+     :line "2384",
+     :arglists_comp "[seq-exprs & body]",
+     :url_friendly_name "doseq",
      :file "clojure/core.clj"}],
    :examples
    [{:namespace_id 99,
@@ -36067,15 +36147,15 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2011-01-05 01:29:04.0",
+     :updated_at "2012-06-23 02:16:21.0",
      :function "range",
-     :version 8,
+     :version 10,
      :created_at "2010-07-14 19:22:43.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (take 10 (range))\n(0 1 2 3 4 5 6 7 8 9)\nuser=> (range 5)\n(0 1 2 3 4)\nuser=> (range -5 5)\n(-5 -4 -3 -2 -1 0 1 2 3 4)\nuser=> (range -100 100 10)\n(-100 -90 -80 -70 -60 -50 -40 -30 -20 -10 0 10 20 30 40 50 60 70 80 90)\n\nuser=> (range 0 4 2)\n(0 2)\nuser=> (range 0 5 2)\n(0 2 4)\nuser=> (range 0 6 2)\n(0 2 4)\nuser=> (range 0 7 2)\n(0 2 4 6)\n\nuser=> (range 100 0 -10)\n(100 90 80 70 60 50 40 30 20 10)\n\nuser=> (range 10 -10 -1)\n(10 9 8 7 6 5 4 3 2 1 0 -1 -2 -3 -4 -5 -6 -7 -8 -9)\n \n\n"}
+     ";; default value of 'end' is infinity\nuser=> (range)\n(0 1 2 3 4 5 6 7 8 9 10 ... 12770 12771 12772 12773 ... n\n\n;; Since clojure 1.2:\nuser=> (take 10 (range))\n(0 1 2 3 4 5 6 7 8 9)\n\nuser=> (range 10)\n(0 1 2 3 4 5 6 7 8 9)\n\nuser=> (range -5 5)\n(-5 -4 -3 -2 -1 0 1 2 3 4)\n\nuser=> (range -100 100 10)\n(-100 -90 -80 -70 -60 -50 -40 -30 -20 -10 0 10 20 30 40 50 60 70 80 90)\n\nuser=> (range 0 4 2)\n(0 2)\n\nuser=> (range 0 5 2)\n(0 2 4)\n\nuser=> (range 0 6 2)\n(0 2 4)\n\nuser=> (range 0 7 2)\n(0 2 4 6)\n\nuser=> (range 100 0 -10)\n(100 90 80 70 60 50 40 30 20 10)\n\nuser=> (range 10 -10 -1)\n(10 9 8 7 6 5 4 3 2 1 0 -1 -2 -3 -4 -5 -6 -7 -8 -9)\n \n\n"}
     {:namespace_id 99,
      :ns "clojure.core",
      :updated_at "2010-09-26 02:48:22.0",
@@ -41064,15 +41144,15 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2010-09-26 02:52:22.0",
+     :updated_at "2012-06-21 06:43:51.0",
      :function "subvec",
-     :version 3,
+     :version 6,
      :created_at "2010-08-11 13:35:54.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (subvec [12 3 4 5 6 7] 2)\n[4 5 6 7]\n\nuser=> (subvec [12 3 4 5 6 7] 2 4)\n[4 5]\n\n\n\n\n"}],
+     ";; not supplying 'end' returns vector from 'start' to (count vector)\nuser=> (subvec [12 3 4 5 6 7] 2)\n[4 5 6 7]\n\n;; supplying 'end' returns vector from 'start' to element (- end 1)\nuser=> (subvec [12 3 4 5 6 7] 2 4)\n[4 5]\n\n\n\n\n"}],
    :id 5778,
    :name "subvec",
    :ns "clojure.core",
@@ -44720,15 +44800,15 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2010-09-26 00:39:13.0",
+     :updated_at "2012-06-21 06:52:29.0",
      :function "set",
-     :version 4,
+     :version 5,
      :created_at "2010-07-17 18:51:37.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (set [1 2 3 4 5])  \n#{1 2 3 4 5}\n\nuser=> (set \"abcd\")\n#{\\a \\b \\c \\d}\n\nuser=> (set '(\"a\" \"b\" \"c\" \"d\"))\n#{\"a\" \"b\" \"c\" \"d\"}\n\nuser=> (set {:one 1 :two 2 :three 3})\n#{[:two 2] [:three 3] [:one 1]}\n"}
+     ";; returns distinct elements\nuser=> (set '(1 1 2 3 2 4 5 5))\n#{1 2 3 4 5}\n\n;; returns distinct elements (different nomenclature)\nuser=> (set [1 1 2 3 2 4 5 5])\n#{1 2 3 4 5}\n\nuser=> (set [1 2 3 4 5])  \n#{1 2 3 4 5}\n\nuser=> (set \"abcd\")\n#{\\a \\b \\c \\d}\n\nuser=> (set '(\"a\" \"b\" \"c\" \"d\"))\n#{\"a\" \"b\" \"c\" \"d\"}\n\nuser=> (set {:one 1 :two 2 :three 3})\n#{[:two 2] [:three 3] [:one 1]}\n"}
     {:namespace_id 99,
      :ns "clojure.core",
      :updated_at "2010-11-15 00:54:59.0",
