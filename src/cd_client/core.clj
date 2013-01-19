@@ -4,6 +4,7 @@
   (:require [cheshire.core :as json]
             [clj-http.client :as http]
             [clj-http.util :as util]
+            [clojure.set :as set]
             [clojure.string :as string]
             [clojure.java.io :as io]
             [clojure.repl :as repl]))
@@ -725,13 +726,16 @@ in the local snapshot."
       (let [{:keys [data filename snapshot-time]} mode
             total-num-syms (count data)
             data-by-ns (group-by #(ns-name-of-full-sym-name (key %)) data)
+            all-ns (set (keys data-by-ns))
             nss-with-at-least-1-example
             (->> (keys data-by-ns)
                  (map (fn [ns]
                         [ns (example-counts (get data-by-ns ns))]))
                  (filter (fn [[ns ex-counts]]
                            (pos? (count (remove zero? ex-counts)))))
-                 (map first))]
+                 (map first))
+            nss-with-no-examples (set/difference
+                                  all-ns (set nss-with-at-least-1-example))]
         (printf " #   # syms  %% syms  avg / max\n")
         (printf " of   with    with   examples\n")
         (printf "syms examps examples per sym   Namespace\n")
@@ -776,5 +780,8 @@ in the local snapshot."
           (printf (str "Printed stats for %d namespaces (%d others with a "
                        "total of %d symbols have no examples)\n")
                   (count nss-with-at-least-1-example)
-                  (- (count data-by-ns) (count nss-with-at-least-1-example))
-                  (- total-num-syms num-syms-shown)))))))
+                  (count nss-with-no-examples)
+                  (- total-num-syms num-syms-shown))
+          (printf "\nList of namespaces that have no examples:\n")
+          (doseq [ns-name (sort nss-with-no-examples)]
+            (printf "%4d %s\n" (count (get data-by-ns ns-name)) ns-name)))))))
