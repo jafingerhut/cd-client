@@ -6,6 +6,7 @@
             [clj-http.util :as util]
             [clojure.set :as set]
             [clojure.string :as string]
+            [clojure.tools.reader.edn :as edn]
             [clojure.java.io :as io]
             [clojure.repl :as repl]))
 
@@ -52,6 +53,11 @@ enable-debug-flags for supported arguments."
 (def ^:private ^:dynamic *cd-client-mode* (ref {:source :web}))
 
 
+(defn- read-safely [x & opts]
+  (with-open [r (java.io.PushbackReader. (apply io/reader x opts))]
+    (edn/read r)))
+
+
 ;; Handle errors in attempting to open the file, or as returned from
 ;; read?
 (defn set-local-mode!
@@ -77,8 +83,7 @@ enable-debug-flags for supported arguments."
   Snapshot time: Sun Apr 01 17:20:17 PDT 2012
   nil"
   [fname]
-  (let [x (with-open [s (java.io.PushbackReader. (io/reader fname))]
-            (read s))
+  (let [x (read-safely fname)
         data (:snapshot-info x)
         snapshot-time (:snapshot-time x)]
     (dosync (alter *cd-client-mode*
