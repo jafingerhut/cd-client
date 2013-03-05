@@ -685,10 +685,11 @@ in the local snapshot."
       (binding [*out* f]
         (pprint {:snapshot-time now,
                  :snapshot-info all-info-map})))
-    (with-open [f (io/writer "debug-all-info-out.txt")]
-      (binding [*out* f]
-        (pprint {:snapshot-time now,
-                 :snapshot-info all-info})))))
+;;    (with-open [f (io/writer "debug-all-info-out.txt")]
+;;      (binding [*out* f]
+;;        (pprint {:snapshot-time now,
+;;                 :snapshot-info all-info})))
+    ))
 
 
 (defn ^String ns-name-of-full-sym-name
