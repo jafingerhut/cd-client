@@ -1,4 +1,4 @@
-{:snapshot-time "Fri Mar 15 05:27:02 PDT 2013",
+{:snapshot-time "Fri Mar 29 15:46:24 PDT 2013",
  :snapshot-info
  {"clojure.zip/insert-right"
   {:comments [],
@@ -12712,7 +12712,18 @@
      :created_at "2013-03-12 23:31:11.0",
      :library "Clojure Core",
      :library_id 15,
-     :body "So what is difference with =? "}],
+     :body "So what is difference with =? "}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-03-17 02:26:27.0",
+     :user_id 864,
+     :function "==",
+     :version "1.3.0",
+     :created_at "2013-03-17 02:26:27.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "'== is defined only for numbers, where '= is general equality. The example showing (== :foo) as true is a bit misleading because (== :foo :foo) produces an exception. Unary == always returns true as an optimization."}],
    :see-alsos
    [{:namespace_id 99,
      :weight 1,
@@ -17832,7 +17843,18 @@
      :lib_version "1.3.0",
      :library_id 15,
      :body
-     "(defn find-needle [needle haystack]\n  ;loop binds initial values once,\n  ;then binds values from each recursion call\n  (loop [needle needle\n         maybe-here haystack\n         not-here '()]\n\n    (let [needle? (first maybe-here)]\n\n      ;test for return or recur\n      (if (or (= (str needle?) (str needle))\n              (empty? maybe-here))\n\n        ;return results\n        [needle? maybe-here not-here]\n\n        ;recur calls loop with new values\n        (recur needle\n               (rest maybe-here)\n               (concat not-here (list (first maybe-here))))))))\n\nuser=>(find-needle \"|\" \"hay|stack\")\n[\\| (\\| \\s \\t \\a \\c \\k) (\\h \\a \\y)]"}],
+     "(defn find-needle [needle haystack]\n  ;loop binds initial values once,\n  ;then binds values from each recursion call\n  (loop [needle needle\n         maybe-here haystack\n         not-here '()]\n\n    (let [needle? (first maybe-here)]\n\n      ;test for return or recur\n      (if (or (= (str needle?) (str needle))\n              (empty? maybe-here))\n\n        ;return results\n        [needle? maybe-here not-here]\n\n        ;recur calls loop with new values\n        (recur needle\n               (rest maybe-here)\n               (concat not-here (list (first maybe-here))))))))\n\nuser=>(find-needle \"|\" \"hay|stack\")\n[\\| (\\| \\s \\t \\a \\c \\k) (\\h \\a \\y)]"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-03-15 13:15:23.0",
+     :function "loop",
+     :version 1,
+     :created_at "2013-03-15 13:15:23.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     "; makes a simple template function that can be used in mustache way: http://mustache.github.com/\n(defn template [tpl env]\n  (loop [tpl tpl\n         env env]\n    (cond (empty? env)\n          tpl\n          :else\n          (let [[key value] (first env)]\n            (recur (try (clojure.string/replace tpl \n                                                (re-pattern (str \"\\\\{\\\\{\" (name key) \"\\\\}\\\\}\")) \n                                                value)\n                        (catch Exception e tpl)) \n                   (rest env))))))"}],
    :id 5595,
    :name "loop",
    :ns "clojure.core",
@@ -34558,7 +34580,19 @@
    :url "http://clojuredocs.org/v/3703"},
   "clojure.contrib.monads/with-monad"
   {:comments [],
-   :see-alsos [],
+   :see-alsos
+   [{:namespace_id 52,
+     :weight 0,
+     :name "with-symbol-macros",
+     :updated_at "2010-10-20 04:41:50.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:53:45.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/673",
+     :line "231",
+     :arglists_comp "[& exprs]",
+     :url_friendly_name "with-symbol-macros",
+     :file "clojure/contrib/macro_utils.clj"}],
    :examples [],
    :id 765,
    :name "with-monad",
@@ -37175,15 +37209,15 @@
    :examples
    [{:namespace_id 113,
      :ns "clojure.string",
-     :updated_at "2011-02-24 06:50:35.0",
+     :updated_at "2013-03-24 00:09:37.0",
      :function "escape",
-     :version 1,
+     :version 2,
      :created_at "2011-02-24 06:50:35.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     ";; There should be no space between the \\ and the &amp;, but I don't know how\n;; to create that in an example yet.\nuser=> (escape \"I want 1 < 2 as HTML, & other good things.\"\n               {\\< \"&amp;lt;\", \\> \"&amp;gt;\", \\ &amp; \"&amp;amp;\"})\n\"I want 1 &amp;lt; 2 as HTML, &amp;amp; other good things.\""}],
+     ";; There should be no space between the \\ and the &, but I don't know how\n;; to create that in an example yet.\nuser=> (clojure.string/escape \"I want 1 < 2 as HTML, & other good things.\"\n               {\\< \"&lt;\", \\> \"&gt;\", \\ & \"&amp;\"})\n\"I want 1 &lt; 2 as HTML, &amp; other good things.\""}],
    :id 5999,
    :name "escape",
    :ns "clojure.string",
@@ -45265,7 +45299,18 @@
   "clojure.contrib.str-utils2/take"
   {:comments [],
    :see-alsos [],
-   :examples [],
+   :examples
+   [{:namespace_id 86,
+     :ns "clojure.contrib.str-utils2",
+     :updated_at "2013-03-23 20:20:20.0",
+     :function "take",
+     :version 1,
+     :created_at "2013-03-23 20:20:20.0",
+     :library "Clojure Contrib",
+     :lib_version "1.2.0",
+     :library_id 1,
+     :body
+     "(take 23 [1 2 4 5 6])\n(1 2 4 5 6)\n\n(take 3 [1 2 4 5 6])\n(1 2 4)\n\n(take -1 [1 2 4 5 6])\n()\n"}],
    :id 1292,
    :name "take",
    :ns "clojure.contrib.str-utils2",
