@@ -1,4 +1,4 @@
-{:snapshot-time "Mon Apr 08 14:32:22 PDT 2013",
+{:snapshot-time "Sun Apr 21 17:01:11 PDT 2013",
  :snapshot-info
  {"clojure.zip/insert-right"
   {:comments [],
@@ -472,6 +472,18 @@
      :line "150",
      :arglists_comp "[set1 set2]",
      :url_friendly_name "superset_q",
+     :file "clojure/set.clj"}
+    {:namespace_id 111,
+     :weight 1,
+     :name "project",
+     :updated_at "2010-10-20 04:42:18.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:27:37.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/2453",
+     :line "71",
+     :arglists_comp "[xrel ks]",
+     :url_friendly_name "project",
      :file "clojure/set.clj"}],
    :examples
    [{:namespace_id 111,
@@ -2959,9 +2971,9 @@
   {:comments [],
    :see-alsos
    [{:namespace_id 342,
-     :weight 0,
+     :weight 1,
      :name "pst",
-     :updated_at "2011-09-26 06:37:43.0",
+     :updated_at "2013-04-14 12:44:32.0",
      :version "1.3.0",
      :created_at "2011-09-26 06:15:16.0",
      :added "1.3",
@@ -4240,6 +4252,18 @@
      :line "4347",
      :arglists_comp "[v f & args]",
      :url_friendly_name "alter-var-root",
+     :file "clojure/core.clj"}
+    {:namespace_id 99,
+     :weight 0,
+     :name "with-bindings",
+     :updated_at "2010-10-20 04:42:09.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:23:21.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/1845",
+     :line "1506",
+     :arglists_comp "[binding-map & body]",
+     :url_friendly_name "with-bindings",
      :file "clojure/core.clj"}],
    :examples
    [{:namespace_id 330,
@@ -4255,15 +4279,15 @@
      "user=> [(type []) (class [])]\n[clojure.lang.PersistentVector clojure.lang.PersistentVector]\n\nuser=> (with-redefs [type (constantly java.lang.String)\n                     class (constantly 10)]\n         [(type [])\n          (class [])])\n[java.lang.String 10]"}
     {:namespace_id 330,
      :ns "clojure.core",
-     :updated_at "2012-10-11 23:43:25.0",
+     :updated_at "2013-04-21 15:21:32.0",
      :function "with-redefs",
-     :version 2,
+     :version 3,
      :created_at "2012-10-11 23:42:34.0",
      :library "Clojure Core",
      :lib_version "1.3.0",
      :library_id 15,
      :body
-     "(ns http)\n\n(defn post [url]\n  {:body \"Hello world\"})\n\n(ns app\n  (:require [clojure.test :refer [run-tests]]))\n\n(deftest is-a-macro\n  (with-redefs [http/post (fn [url] {:body \"Goodbye world\"})]\n    (is (= {:body \"Goodbye world\"} (http/post \"http://service.com/greet\")))))\n\n(run-tests) ;; test is passing"}
+     "(ns http)\n\n(defn post [url]\n  {:body \"Hello world\"})\n\n(ns app\n  (:require [clojure.test :refer [deftest is run-tests]]))\n\n(deftest is-a-macro\n  (with-redefs [http/post (fn [url] {:body \"Goodbye world\"})]\n    (is (= {:body \"Goodbye world\"} (http/post \"http://service.com/greet\")))))\n\n(run-tests) ;; test is passing"}
     {:namespace_id 330,
      :ns "clojure.core",
      :updated_at "2012-11-09 06:25:12.0",
@@ -8387,6 +8411,18 @@
      :line "568",
      :arglists_comp "[string & body]",
      :url_friendly_name "testing",
+     :file "clojure/test.clj"}
+    {:namespace_id 115,
+     :weight 0,
+     :name "test-var",
+     :updated_at "2010-10-20 04:42:19.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:28:23.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/2517",
+     :line "679",
+     :arglists_comp "[v]",
+     :url_friendly_name "test-var",
      :file "clojure/test.clj"}],
    :examples
    [{:namespace_id 115,
@@ -9680,7 +9716,19 @@
      :library_id 3,
      :body
      "Here is another good example:\n<pre>(some identity ((juxt :foo :bar) {:bar :b}))</pre>\nequivalent to \n<pre> (let [map {:bar b}] (or (:foo map) (:bar map)))"}],
-   :see-alsos [],
+   :see-alsos
+   [{:namespace_id 99,
+     :weight 1,
+     :name "nil?",
+     :updated_at "2010-10-20 04:42:03.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:19:48.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/1542",
+     :line "364",
+     :arglists_comp "[x]",
+     :url_friendly_name "nil_q",
+     :file "clojure/core.clj"}],
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
@@ -12548,7 +12596,18 @@
      :library "Clojure Core",
      :library_id 3,
      :body
-     "<pre>\nuser=> (seq \"2938434\")\n(\\2 \\9 \\3 \\8 \\4 \\3 \\4)\n</pre>\n\nmight also be what you want."}],
+     "<pre>\nuser=> (seq \"2938434\")\n(\\2 \\9 \\3 \\8 \\4 \\3 \\4)\n</pre>\n\nmight also be what you want."}
+    {:namespace_id 113,
+     :ns "clojure.string",
+     :updated_at "2013-04-09 02:45:09.0",
+     :user_id 892,
+     :function "split",
+     :version "1.2.0",
+     :created_at "2013-04-09 02:42:43.0",
+     :library "Clojure Core",
+     :library_id 3,
+     :body
+     "Thanks for the help Domon and Iceland_jack, one more question:\n\nSay I have used sequence in the way:\n\nuser=&gt; (seq \"2938434\")\n(\\2 \\9 \\3 \\8 \\4 \\3 \\4)\n\nIf I only wanted to access the 4th item in the sequence (which is 8), how would I do so? Aside from using (next (next (next ...))) ? Just trying to index it giving that I want position 4"}],
    :see-alsos
    [{:namespace_id 99,
      :weight 1,
@@ -14846,15 +14905,15 @@
      "(defn pos-neg-or-zero\n  \"Determines whether or not n is positive, negative, or zero\"\n  [n]\n  (cond\n    (< n 0) \"negative\"\n    (> n 0) \"positive\"\n    :else \"zero\"))\n\nuser=> (pos-neg-or-zero 5)\n\"positive\"\nuser=> (pos-neg-or-zero -1)\n\"negative\"\nuser=> (pos-neg-or-zero 0)\n\"zero\"\n"}
     {:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2010-09-26 04:42:36.0",
+     :updated_at "2013-04-09 09:38:34.0",
      :function "cond",
-     :version 3,
+     :version 4,
      :created_at "2010-07-13 18:44:30.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (let [grade 85]\n         (cond\n           (> grade 90) \"A\"\n           (> grade 80) \"B\"\n           (> grade 70) \"C\"\n           (> grade 60) \"D\"\n           :else \"F\"))\n\"B\""}
+     "user=> (let [grade 85]\n         (cond\n           (>= grade 90) \"A\"\n           (>= grade 80) \"B\"\n           (>= grade 70) \"C\"\n           (>= grade 60) \"D\"\n           :else \"F\"))\n\"B\""}
     {:namespace_id 330,
      :ns "clojure.core",
      :updated_at "2012-04-12 22:01:55.0",
@@ -26259,15 +26318,15 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2012-03-28 09:21:26.0",
+     :updated_at "2013-04-18 15:59:43.0",
      :function "spit",
-     :version 3,
+     :version 4,
      :created_at "2010-07-29 19:59:52.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (spit \"blubber.txt\" \"test\")\nnil\nuser=> (slurp \"blubber.txt\")\n\"test\""}
+     "user=> (spit \"flubber.txt\" \"test\")\nnil\nuser=> (slurp \"flubber.txt\")\n\"test\""}
     {:namespace_id 99,
      :ns "clojure.core",
      :updated_at "2010-09-26 00:49:36.0",
@@ -27294,7 +27353,19 @@
    :url "http://clojuredocs.org/v/3328"},
   "clojure.core/with-bindings"
   {:comments [],
-   :see-alsos [],
+   :see-alsos
+   [{:namespace_id 99,
+     :weight 0,
+     :name "with-bindings*",
+     :updated_at "2010-10-20 04:42:06.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:21:39.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/1695",
+     :line "1494",
+     :arglists_comp "[binding-map f & args]",
+     :url_friendly_name "with-bindings*",
+     :file "clojure/core.clj"}],
    :examples [],
    :id 5841,
    :name "with-bindings",
@@ -35038,6 +35109,18 @@
      :line "150",
      :arglists_comp "[set1 set2]",
      :url_friendly_name "superset_q",
+     :file "clojure/set.clj"}
+    {:namespace_id 111,
+     :weight 1,
+     :name "project",
+     :updated_at "2010-10-20 04:42:18.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:27:37.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/2453",
+     :line "71",
+     :arglists_comp "[xrel ks]",
+     :url_friendly_name "project",
      :file "clojure/set.clj"}],
    :examples
    [{:namespace_id 111,
@@ -35416,7 +35499,19 @@
    :url "http://clojuredocs.org/v/501"},
   "clojure.core/nil?"
   {:comments [],
-   :see-alsos [],
+   :see-alsos
+   [{:namespace_id 99,
+     :weight 6,
+     :name "identity",
+     :updated_at "2011-08-01 09:30:09.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:24:04.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/1905",
+     :line "1117",
+     :arglists_comp "[x]",
+     :url_friendly_name "identity",
+     :file "clojure/core.clj"}],
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
@@ -44433,7 +44528,18 @@
   "clojure.repl/find-doc"
   {:comments [],
    :see-alsos [],
-   :examples [],
+   :examples
+   [{:namespace_id 342,
+     :ns "clojure.repl",
+     :updated_at "2013-04-14 12:32:13.0",
+     :function "find-doc",
+     :version 2,
+     :created_at "2013-04-14 12:19:35.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     "user=> (find-doc \"data structure\")\n\n-------------------------\nclojure.core/eval\n([form])\n  Evaluates the form data structure (not text!) and returns the result.\n-------------------------\nclojure.core/ifn?\n([x])\n  Returns true if x implements IFn. Note that many data structures\n  (e.g. sets and maps) implement IFn\n"}],
    :id 5971,
    :name "find-doc",
    :ns "clojure.repl",
@@ -48371,7 +48477,18 @@
      :arglists_comp "",
      :url_friendly_name "*e",
      :file "clojure/core.clj"}],
-   :examples [],
+   :examples
+   [{:namespace_id 342,
+     :ns "clojure.repl",
+     :updated_at "2013-04-14 12:44:32.0",
+     :function "pst",
+     :version 1,
+     :created_at "2013-04-14 12:44:32.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     "user=> (pst)\nnil\n\nuser=> (/ 1 0)\nArithmeticException Divide by zero  clojure.lang.Numbers.divide (Numbers.java:156)\n\nuser=> (pst)\nArithmeticException Divide by zero\n\tclojure.lang.Numbers.divide (Numbers.java:156)\n\tclojure.lang.Numbers.divide (Numbers.java:3691)\n\tuser/eval13 (NO_SOURCE_FILE:7)\n\tclojure.lang.Compiler.eval (Compiler.java:6619)\n\tclojure.lang.Compiler.eval (Compiler.java:6582)\n\tclojure.core/eval (core.clj:2852)\n\tclojure.main/repl/read-eval-print--6588/fn--6591 (main.clj:259)\n\tclojure.main/repl/read-eval-print--6588 (main.clj:259)\n\tclojure.main/repl/fn--6597 (main.clj:277)\n\tclojure.main/repl (main.clj:277)\n\tclojure.main/repl-opt (main.clj:343)\n\tclojure.main/main (main.clj:441)\nnil\n"}],
    :id 5972,
    :name "pst",
    :ns "clojure.repl",
