@@ -1,4 +1,4 @@
-{:snapshot-time "Tue May 07 11:37:33 PDT 2013",
+{:snapshot-time "Wed May 22 15:42:29 PDT 2013",
  :snapshot-info
  {"clojure.zip/insert-right"
   {:comments [],
@@ -32681,15 +32681,15 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2012-08-23 15:38:29.0",
+     :updated_at "2013-05-17 10:14:47.0",
      :function "into-array",
-     :version 3,
+     :version 7,
      :created_at "2011-01-07 02:15:23.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     ";; Array's component type is set to (class 2), cannot add Strings.\n;; This will result in an IllegalArgumentException\nuser=> (into-array [2 \"4\" \"8\" 5])\n;; Evaluation aborted.\n\nuser=> (into-array (range 4))\n#<Integer[] [Ljava.lang.Integer;@63d6dc46>\n\n;; if you assign a type, you still have to coerce values\nuser=> (into-array Byte/TYPE (range 4))\n;; Evaluation aborted.\n\nuser=> (into-array Byte/TYPE (map byte (range 4)))\n#<byte[] [B@68ffefc9>"}
+     ";; Array's component type is set to (class 2), cannot add Strings.\n;; This will result in an IllegalArgumentException\nuser=> (into-array [2 \"4\" \"8\" 5])\n;; Evaluation aborted.\n\n;; However, if the common type is specified, aforementioned values can be put into an array\nuser=> (into-array Object [2 \"4\" \"8\" 5])\n#<Object[] [Ljava.lang.Object;@3aa6d0a4>\n\nuser=> (into-array (range 4))\n#<Integer[] [Ljava.lang.Integer;@63d6dc46>\n\n;; if you assign a type, you still have to coerce values\nuser=> (into-array Byte/TYPE (range 4))\n;; Evaluation aborted.\n\nuser=> (into-array Byte/TYPE (map byte (range 4)))\n#<byte[] [B@68ffefc9>"}
     {:namespace_id 330,
      :ns "clojure.core",
      :updated_at "2012-05-25 02:08:35.0",
@@ -32700,7 +32700,18 @@
      :lib_version "1.3.0",
      :library_id 15,
      :body
-     ";; java.nio.file.Paths#get takes (String, String...)\nuser=> (java.nio.file.Paths/get \"/Users\" (into-array [\"username\" \"dev\" \"clojure\"]))\n#<UnixPath /Users/username/dev/clojure>"}],
+     ";; java.nio.file.Paths#get takes (String, String...)\nuser=> (java.nio.file.Paths/get \"/Users\" (into-array [\"username\" \"dev\" \"clojure\"]))\n#<UnixPath /Users/username/dev/clojure>"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-05-17 10:12:30.0",
+     :function "into-array",
+     :version 1,
+     :created_at "2013-05-17 10:12:30.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     ";; Creating an empty array defaults to Object[]\nuser=> (into-array [])\n#<Object[] [Ljava.lang.Object;@21f1151f>\n\n;; However, the type of an empty array can be coerced\nuser=> (into-array String [])\n#<String[] [Ljava.lang.String;@578baf24>\n"}],
    :id 5564,
    :name "into-array",
    :ns "clojure.core",
