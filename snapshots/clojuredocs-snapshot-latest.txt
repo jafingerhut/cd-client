@@ -1,4 +1,4 @@
-{:snapshot-time "Wed May 22 15:42:29 PDT 2013",
+{:snapshot-time "Mon Jun 17 11:49:57 PDT 2013",
  :snapshot-info
  {"clojure.zip/insert-right"
   {:comments [],
@@ -8935,7 +8935,18 @@
   "clojure.core/biginteger"
   {:comments [],
    :see-alsos [],
-   :examples [],
+   :examples
+   [{:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-06-06 15:37:05.0",
+     :function "biginteger",
+     :version 1,
+     :created_at "2013-06-06 15:37:05.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     "user=> (def x (biginteger 19931029))\n#'user/x\nuser=> (class x)\njava.math.BigInteger\n\n\n\n"}],
    :id 5378,
    :name "biginteger",
    :ns "clojure.core",
@@ -11038,7 +11049,29 @@
    :ns "incanter.processing",
    :url "http://clojuredocs.org/v/3198"},
   "clojure.core/bytes"
-  {:comments [],
+  {:comments
+   [{:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-05-25 22:34:35.0",
+     :user_id 51,
+     :function "bytes",
+     :version "1.3.0",
+     :created_at "2013-05-25 22:34:35.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "Why is the `(comp byte int)` required in the example? This seems to work just as well:\n\n<pre>\nuser=> (def b (bytes (byte-array (map byte \"ascii\"))))\nuser=> (String. b)\n\"ascii\"\n</pre>"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-05-25 22:37:00.0",
+     :user_id 51,
+     :function "bytes",
+     :version "1.3.0",
+     :created_at "2013-05-25 22:37:00.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "For that matter, why is the `bytes` needed? Consider:\n\n<pre>\nuser=> (String. (byte-array (map byte \"ascii\")))\n\"ascii\"\n</pre>\n"}],
    :see-alsos
    [{:namespace_id 99,
      :weight 1,
@@ -14510,7 +14543,18 @@
      :arglists_comp "",
      :url_friendly_name "print-dup",
      :file "clojure/core.clj"}],
-   :examples [],
+   :examples
+   [{:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-05-31 02:27:03.0",
+     :function "print-method",
+     :version 1,
+     :created_at "2013-05-31 02:27:03.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     "(deftype XYZ [])\n\n; without custom print-method defined:\nuser=> (prn (XYZ.))\n#<XYZ user.XYZ@2670d85b> \n\n(defmethod print-method XYZ [v ^java.io.Writer w]\n  (.write w \"<<-XYZ->>\"))\n\n; with print-method\nuser=> (prn (XYZ.))\n<<-XYZ->>\n"}],
    :id 5672,
    :name "print-method",
    :ns "clojure.core",
@@ -21800,6 +21844,18 @@
      :line "2456",
      :arglists_comp "[coll]|[n coll]",
      :url_friendly_name "doall",
+     :file "clojure/core.clj"}
+    {:namespace_id 99,
+     :weight 3,
+     :name "iterate",
+     :updated_at "2011-07-16 14:14:30.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:22:16.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/1749",
+     :line "2241",
+     :arglists_comp "[f x]",
+     :url_friendly_name "iterate",
      :file "clojure/core.clj"}],
    :examples
    [{:namespace_id 99,
@@ -23863,7 +23919,18 @@
      :lib_version "1.3.0",
      :library_id 15,
      :body
-     ";;It's possible to get variables out of your string with regexp\n\nuser=> (re-find #\"(\\d\\d\\d) (USD)\" \"450 USD\")\n[\"450 USD\" \"450\" \"USD\"]\nuser=> (nth *1 1)\n\"450\"\n\n;;thanks kotarak @ stackoverflow.com for this one"}],
+     ";;It's possible to get variables out of your string with regexp\n\nuser=> (re-find #\"(\\d\\d\\d) (USD)\" \"450 USD\")\n[\"450 USD\" \"450\" \"USD\"]\nuser=> (nth *1 1)\n\"450\"\n\n;;thanks kotarak @ stackoverflow.com for this one"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-05-29 17:01:04.0",
+     :function "re-find",
+     :version 2,
+     :created_at "2013-05-29 17:00:25.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     ";; If your input has line delimiters you can switch on multiline with (?m)\n\nuser=> (def testcase \"Line 1\\nLine 2\\nTarget Line\\nLine 4\\nNot a target line\")\nuser=>(re-find #\"(?im)^target.*$\" testcase)\n\"Target Line\""}],
    :id 5696,
    :name "re-find",
    :ns "clojure.core",
@@ -33946,6 +34013,18 @@
      :line "2045",
      :arglists_comp "[pred coll]",
      :url_friendly_name "some",
+     :file "clojure/core.clj"}
+    {:namespace_id 99,
+     :weight 2,
+     :name "every?",
+     :updated_at "2011-07-16 14:22:36.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:26:05.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/2085",
+     :line "2026",
+     :arglists_comp "[pred coll]",
+     :url_friendly_name "every_q",
      :file "clojure/core.clj"}],
    :examples
    [{:namespace_id 99,
@@ -35761,7 +35840,18 @@
      :library "Clojure Core",
      :library_id 15,
      :body
-     "<pre>(fn [coll]\n   (let [gp (group-by identity coll)] \n      (zipmap (keys gp) (map #(count (second %)) gp))))</pre>"}],
+     "<pre>(fn [coll]\n   (let [gp (group-by identity coll)] \n      (zipmap (keys gp) (map #(count (second %)) gp))))</pre>"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-05-31 21:53:26.0",
+     :user_id 876,
+     :function "frequencies",
+     :version "1.3.0",
+     :created_at "2013-05-31 21:53:26.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "    (into {} (for [[k v] (group-by identity \"abbbc\")] [k (count v)]))\n"}],
    :see-alsos
    [{:namespace_id 99,
      :weight 2,
@@ -36031,7 +36121,19 @@
    :url "http://clojuredocs.org/v/6067"},
   "clojure.core/hash"
   {:comments [],
-   :see-alsos [],
+   :see-alsos
+   [{:namespace_id 99,
+     :weight 1,
+     :name "get",
+     :updated_at "2010-10-20 04:42:12.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:24:28.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/1941",
+     :line "1154",
+     :arglists_comp "[map key]|[map key not-found]",
+     :url_friendly_name "get",
+     :file "clojure/core.clj"}],
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
@@ -39153,7 +39255,18 @@
      :lib_version "1.3.0",
      :library_id 15,
      :body
-     "(map fn [a 4 x]\n        [b 5 y]\n        [c 6])    \n;        ^ ^\n; applies fn to a b c as (fn a b c)\n; applies fn to 4 5 6 as (fn 4 5 6)\n; ignores (x y)\n; returns a list of results\n; equivalent to (list (fn a b c) (fn 4 5 6))\n\n;example\n(map list [1 2 3]\n         '(a b c)\n         '(4 5))\n\nuser=> (map list  [1 2 3] '(a b c) '(4 5))\n((1 a 4) (2 b 5))\n;same as\nuser=> (list (list 1 'a 4) (list 2 'b 5))\n((1 a 4) (2 b 5))"}],
+     "(map fn [a 4 x]\n        [b 5 y]\n        [c 6])    \n;        ^ ^\n; applies fn to a b c as (fn a b c)\n; applies fn to 4 5 6 as (fn 4 5 6)\n; ignores (x y)\n; returns a list of results\n; equivalent to (list (fn a b c) (fn 4 5 6))\n\n;example\n(map list [1 2 3]\n         '(a b c)\n         '(4 5))\n\nuser=> (map list  [1 2 3] '(a b c) '(4 5))\n((1 a 4) (2 b 5))\n;same as\nuser=> (list (list 1 'a 4) (list 2 'b 5))\n((1 a 4) (2 b 5))"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-06-13 17:09:12.0",
+     :function "map",
+     :version 1,
+     :created_at "2013-06-13 17:09:12.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     "; map passed two collection arguments. From 4Clojure Problem #157\n\n(def d1 [:a :b :c])\n(#(map list % (range)) d1)\n((:a 0) (:b 1) (:c 2))"}],
    :id 5600,
    :name "map",
    :ns "clojure.core",
@@ -39343,7 +39456,18 @@
   "clojure.java.javadoc/add-remote-javadoc"
   {:comments [],
    :see-alsos [],
-   :examples [],
+   :examples
+   [{:namespace_id 337,
+     :ns "clojure.java.javadoc",
+     :updated_at "2013-05-29 00:36:21.0",
+     :function "add-remote-javadoc",
+     :version 1,
+     :created_at "2013-05-29 00:36:21.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     "user=> (use 'clojure.java.javadoc)\n\tnil\n\nuser=> (add-remote-javadoc \"org.apache.commons.csv.\" \"http://commons.apache.org/proper/commons-csv/apidocs/index.html\")\n\t{\"java.\" \"http://java.sun.com/javase/6/docs/api/\", \"javax.\" \"http://java.sun.com/javase/6/docs/api/\", \"org.apache.commons.codec.\" \"http://commons.apache.org/codec/api-release/\", \"org.apache.commons.csv.\" \"http://commons.apache.org/proper/commons-csv/apidocs/index.html\", \"org.apache.commons.io.\" \"http://commons.apache.org/io/api-release/\", \"org.apache.commons.lang.\" \"http://commons.apache.org/lang/api-release/\", \"org.ietf.jgss.\" \"http://java.sun.com/javase/6/docs/api/\", \"org.omg.\" \"http://java.sun.com/javase/6/docs/api/\", \"org.w3c.dom.\" \"http://java.sun.com/javase/6/docs/api/\", \"org.xml.sax.\" \"http://java.sun.com/javase/6/docs/api/\"}"}],
    :id 5903,
    :name "add-remote-javadoc",
    :ns "clojure.java.javadoc",
@@ -51942,7 +52066,18 @@
      :library "Clojure Core",
      :library_id 15,
      :body
-     "<p>Be aware that this function is intended to load code only. If your data structures or a string in them grow bigger than around 65,535 it crashes.</p>\n\n<p>Exception similar to:</p>\n<pre>java.lang.ClassFormatError: Unknown constant tag 49 in class file parse$eval13</pre>\n\n<p>Please use <a href=\"/clojure_core/clojure.core/read-string\">read-string</a> instead.</p>\n\nExample: <pre>(read-string (slurp \"data.clj\"))</pre>\n\nSource: <a href=\"http://groups.google.com/group/clojure/browse_thread/thread/e556434a382de814/f8183c88db8fa257?lnk=gst&q=string+size#f8183c88db8fa257\">Google Groups</a>"}],
+     "<p>Be aware that this function is intended to load code only. If your data structures or a string in them grow bigger than around 65,535 it crashes.</p>\n\n<p>Exception similar to:</p>\n<pre>java.lang.ClassFormatError: Unknown constant tag 49 in class file parse$eval13</pre>\n\n<p>Please use <a href=\"/clojure_core/clojure.core/read-string\">read-string</a> instead.</p>\n\nExample: <pre>(read-string (slurp \"data.clj\"))</pre>\n\nSource: <a href=\"http://groups.google.com/group/clojure/browse_thread/thread/e556434a382de814/f8183c88db8fa257?lnk=gst&q=string+size#f8183c88db8fa257\">Google Groups</a>"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-06-16 22:34:37.0",
+     :user_id 405,
+     :function "load-file",
+     :version "1.3.0",
+     :created_at "2013-06-16 22:34:37.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "<p>The following unhelpful error will be thrown if you have a typo in your namespace declaration:</p>\n\n<pre>CompilerException java.lang.RuntimeException: Unable to resolve symbol: load-file in this context, compiling:(NO_SOURCE_PATH:1:1)</pre>\n\n<p>Fix the error in (ns ...) and you'll be able to use (load-file ...) again.</p>\n\n\n"}],
    :see-alsos
    [{:namespace_id 99,
      :weight 1,
