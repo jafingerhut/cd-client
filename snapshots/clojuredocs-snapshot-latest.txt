@@ -1,4 +1,4 @@
-{:snapshot-time "Thu Aug 15 15:58:43 PDT 2013",
+{:snapshot-time "Tue Sep 03 23:44:39 PDT 2013",
  :snapshot-info
  {"clojure.zip/insert-right"
   {:comments [],
@@ -5485,7 +5485,18 @@
      :lib_version "1.3.0",
      :library_id 15,
      :body
-     "(def s1 [[:000-00-0000 \"TYPE 1\" \"JACKSON\" \"FRED\"]\n         [:000-00-0001 \"TYPE 2\" \"SIMPSON\" \"HOMER\"]\n         [:000-00-0002 \"TYPE 4\" \"SMITH\" \"SUSAN\"]])\n\n(def cols [0 2 3])\n\n(defn f1 \n  [s1 col] \n  (map #(get-in s1 [% col] nil) (range (count s1))))\n\n(apply interleave (map (partial f1 s1) cols))\n\n(:000-00-0000 \"JACKSON\" \"FRED\" :000-00-0001 \"SIMPSON\" \"HOMER\" :000-00-0002 \"SMITH\" \"SUSAN\")"}],
+     "(def s1 [[:000-00-0000 \"TYPE 1\" \"JACKSON\" \"FRED\"]\n         [:000-00-0001 \"TYPE 2\" \"SIMPSON\" \"HOMER\"]\n         [:000-00-0002 \"TYPE 4\" \"SMITH\" \"SUSAN\"]])\n\n(def cols [0 2 3])\n\n(defn f1 \n  [s1 col] \n  (map #(get-in s1 [% col] nil) (range (count s1))))\n\n(apply interleave (map (partial f1 s1) cols))\n\n(:000-00-0000 \"JACKSON\" \"FRED\" :000-00-0001 \"SIMPSON\" \"HOMER\" :000-00-0002 \"SMITH\" \"SUSAN\")"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-08-26 11:10:28.0",
+     :function "get-in",
+     :version 1,
+     :created_at "2013-08-26 11:10:28.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     "https://secure.fling.com/main.php?a=billing.join&sduid=57980576&billing_header=im"}],
    :id 5536,
    :name "get-in",
    :ns "clojure.core",
@@ -22742,15 +22753,15 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2010-12-29 17:37:14.0",
+     :updated_at "2013-08-29 23:27:01.0",
      :function "doto",
-     :version 1,
+     :version 2,
      :created_at "2010-12-29 17:37:14.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     ";; Note that even though println returns nil, doto still returns the date object\nuser> (doto (java.util.HashMap.)\n            (.put \"a\" 1)\n            (.put \"b\" 2)\n            (println :printed))\n#<HashMap {b=2, a=1}> :printed\n#<HashMap {b=2, a=1}>"}
+     ";; Note that even though println returns nil, doto still returns the HashMap object\nuser> (doto (java.util.HashMap.)\n            (.put \"a\" 1)\n            (.put \"b\" 2)\n            (println))\n#<HashMap {b=2, a=1}>\n{\"b\" 2, \"a\" 1}\n"}
     {:namespace_id 99,
      :ns "clojure.core",
      :updated_at "2011-08-21 15:26:59.0",
@@ -55633,15 +55644,15 @@
      :body "(require '(clojure.contrib [sql :as sql]))"}
     {:namespace_id 330,
      :ns "clojure.core",
-     :updated_at "2013-01-19 20:26:08.0",
+     :updated_at "2013-08-19 19:07:46.0",
      :function "require",
-     :version 1,
+     :version 2,
      :created_at "2013-01-19 20:26:08.0",
      :library "Clojure Core",
      :lib_version "1.3.0",
      :library_id 15,
      :body
-     "(ns myproject.core\n  (:use [clojure.core] :reload)\n  (:require [clojure.string :as str :only [replace]] :reload-all))\n\n(str/replace \"foo\" #\"o\" \"e\")\n\"fee\""}],
+     "(ns myproject.core\n  (:use [clojure.core] :reload)\n  (:require [clojure.string :as str :refer [replace]] :reload-all))\n\n(str/replace \"foo\" #\"o\" \"e\")\n\"fee\""}],
    :id 5727,
    :name "require",
    :ns "clojure.core",
