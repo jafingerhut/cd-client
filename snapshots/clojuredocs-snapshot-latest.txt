@@ -1,4 +1,4 @@
-{:snapshot-time "Thu Sep 12 15:12:35 PDT 2013",
+{:snapshot-time "Wed Oct 02 00:11:57 PDT 2013",
  :snapshot-info
  {"clojure.zip/insert-right"
   {:comments [],
@@ -5499,15 +5499,14 @@
      "(def s1 [[:000-00-0000 \"TYPE 1\" \"JACKSON\" \"FRED\"]\n         [:000-00-0001 \"TYPE 2\" \"SIMPSON\" \"HOMER\"]\n         [:000-00-0002 \"TYPE 4\" \"SMITH\" \"SUSAN\"]])\n\n(def cols [0 2 3])\n\n(defn f1 \n  [s1 col] \n  (map #(get-in s1 [% col] nil) (range (count s1))))\n\n(apply interleave (map (partial f1 s1) cols))\n\n(:000-00-0000 \"JACKSON\" \"FRED\" :000-00-0001 \"SIMPSON\" \"HOMER\" :000-00-0002 \"SMITH\" \"SUSAN\")"}
     {:namespace_id 330,
      :ns "clojure.core",
-     :updated_at "2013-08-26 11:10:28.0",
+     :updated_at "2013-09-15 17:39:38.0",
      :function "get-in",
-     :version 1,
+     :version 2,
      :created_at "2013-08-26 11:10:28.0",
      :library "Clojure Core",
      :lib_version "1.3.0",
      :library_id 15,
-     :body
-     "https://secure.fling.com/main.php?a=billing.join&sduid=57980576&billing_header=im"}],
+     :body ";; spam link removed"}],
    :id 5536,
    :name "get-in",
    :ns "clojure.core",
@@ -41229,7 +41228,18 @@
      :lib_version "1.3.0",
      :library_id 15,
      :body
-     ";; defprotocol does NOT support interfaces with variable argument lists, \n;; like [this & args]\n;; (this is not documented anywhere... )\n\n;; The workaround is to define the interface with the variable arg list in a fn\n;; separately outside of the protocol, which then calls the protocol interface\n;; with a slightly different name and an array in place of the variable list,\n;; like:\n\n(defprotocol MyProtocol\n  (-my-fn [this args]))\n\n(defn my-fn [this & args] (-my-fn this args))"}],
+     ";; defprotocol does NOT support interfaces with variable argument lists, \n;; like [this & args]\n;; (this is not documented anywhere... )\n\n;; The workaround is to define the interface with the variable arg list in a fn\n;; separately outside of the protocol, which then calls the protocol interface\n;; with a slightly different name and an array in place of the variable list,\n;; like:\n\n(defprotocol MyProtocol\n  (-my-fn [this args]))\n\n(defn my-fn [this & args] (-my-fn this args))"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-09-24 19:26:19.0",
+     :function "defprotocol",
+     :version 1,
+     :created_at "2013-09-24 19:26:19.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     ";; Protocols allow you to add new abstractions to existing types in a clean way.\n;; Polymorphic functions are created in namespaces as opposed to\n;; having the polymorphism live on Classes as typically done in OO.\n\n;; example from: \n;; https://speakerdeck.com/bmabey/clojure-plain-and-simple?slide=230\n(ns abstraction-a)\n\n(defprotocol AbstractionA\n  (foo [obj]))\n\n(extend-protocol AbstractionA\n  nil\n  (foo [s] (str \"foo-A!\"))\n  String\n  (foo [s] (str \"foo-A-\" (.toUpperCase s))))\n\n(ns abstraction-b)\n\n(defprotocol AbstractionB\n  (foo [obj]))\n\n(extend-protocol AbstractionB\n  nil\n  (foo [s] (str \"foo-B!\"))\n  String\n  (foo [s] (str \"foo-B-\" (.toLowerCase s))))\n\n\nuser=> (require '[abstraction-a :as a])\n\nuser=> (require '[abstraction-b :as b])\n\nuser=> (a/foo \"Bar\")\n\"foo-A-BAR\"\n\nuser=> (b/foo \"Bar\")\n\"foo-B-bar\"\n\nuser=> (a/foo nil)\n\"foo-A!\"\n\nuser=> (b/foo nil)\n\"foo-B!\"\n"}],
    :id 5456,
    :name "defprotocol",
    :ns "clojure.core",
@@ -44642,7 +44652,18 @@
      :lib_version "1.3.0",
      :library_id 15,
      :body
-     ";(seq x) is the recommended idiom for testing if a collection is not empty\nuser=> (every? seq [\"1\" [1] '(1) {:1 1} #{1}])\ntrue"}],
+     ";(seq x) is the recommended idiom for testing if a collection is not empty\nuser=> (every? seq [\"1\" [1] '(1) {:1 1} #{1}])\ntrue"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-09-30 21:22:48.0",
+     :function "seq",
+     :version 1,
+     :created_at "2013-09-30 21:22:48.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     "; seq can be used to turn a map into a list of vectors\n; notice how the list is built adding elements to the start of the list\n; not to the end, like in vectors\nuser=> (seq {:key1 \"value1\" :key2 \"value2\"})\n([:key2 \"value 2\"] [:key1 \"value 1\"])"}],
    :id 5743,
    :name "seq",
    :ns "clojure.core",
