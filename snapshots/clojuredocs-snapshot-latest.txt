@@ -1,4 +1,4 @@
-{:snapshot-time "Fri Nov 08 14:22:14 PST 2013",
+{:snapshot-time "Thu Nov 28 11:33:08 PST 2013",
  :snapshot-info
  {"clojure.zip/insert-right"
   {:comments [],
@@ -128,7 +128,18 @@
    :ns "clojure.contrib.combinatorics",
    :url "http://clojuredocs.org/v/5258"},
   "clojure.core/defonce"
-  {:comments [],
+  {:comments
+   ({:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-11-20 22:18:51.0",
+     :user_id 1031,
+     :function "defonce",
+     :version "1.3.0",
+     :created_at "2013-11-20 22:18:51.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "Note that this isn't thread safe. I.e. EXPR for the same NAME can be evaluated more than once."}),
    :see-alsos [],
    :examples
    [{:namespace_id 99,
@@ -4120,7 +4131,17 @@
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (def large-vec (vec (range 0 10000)))\n#'user/large-vec\n\nuser=> (time (last large-vec))\n\"Elapsed time: 1.279841 msecs\"\n9999\n\nuser=> (time (peek large-vec))\n\"Elapsed time: 0.049238 msecs\"\n9999\n"}],
+     "user=> (def large-vec (vec (range 0 10000)))\n#'user/large-vec\n\nuser=> (time (last large-vec))\n\"Elapsed time: 1.279841 msecs\"\n9999\n\nuser=> (time (peek large-vec))\n\"Elapsed time: 0.049238 msecs\"\n9999\n"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-11-22 19:13:20.0",
+     :function "peek",
+     :version 1,
+     :created_at "2013-11-22 19:13:20.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body "user=> (peek '(:a :b :c))\n:a"}],
    :id 5657,
    :name "peek",
    :ns "clojure.core",
@@ -7777,15 +7798,15 @@
      ";;another way of creating hash map is by using def\nuser=> (def user {:name \"Steve\" :age 24 :salary 7886 :company \"Acme\"})\n{:age 24, :name \"Steve\", :salary 7756, :company \"Acme\"}\n\n\n"}
     {:namespace_id 330,
      :ns "clojure.core",
-     :updated_at "2012-07-20 21:57:01.0",
+     :updated_at "2013-11-19 02:02:23.0",
      :function "hash-map",
-     :version 1,
+     :version 3,
      :created_at "2012-07-20 21:57:01.0",
      :library "Clojure Core",
      :lib_version "1.3.0",
      :library_id 15,
      :body
-     "; Take a sequence of sequences (vector of vectors, and create a map\n; using date as the map key.\n(def csv1 [[\"01/01/2012\" 1 2 3 4][\"06/15/2012\" 38 24 101]])\n\n(map #(hash-map (keyword (first %1)) (vec (rest %1))) csv1)\n({:01/01/2012 [1 2 3 4]} {:06/15/2012 [38 24 101]})\n"}],
+     "; Take a sequence of sequences (vector of vectors, and create a map\n; using date as the map key.\nuser=> (def csv1 [[\"01/01/2012\" 1 2 3 4][\"06/15/2012\" 38 24 101]])\n\nuser=> (map #(hash-map (keyword (first %1)) (vec (rest %1))) csv1)\n{:01/01/2012 [1 2 3 4]} {:06/15/2012 [38 24 101]}\n\n; merge the list of maps into a single map\nuser=> (apply merge '({\"01/01/2012\" [1 2 3 4]} {\"06/15/2012\" [38 24 101]}))\n{\"06/15/2012\" [38 24 101], \"01/01/2012\" [1 2 3 4]}\n\n"}],
    :id 5544,
    :name "hash-map",
    :ns "clojure.core",
@@ -13416,15 +13437,15 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2012-09-12 12:11:43.0",
+     :updated_at "2013-11-19 21:40:46.0",
      :function "empty",
-     :version 5,
+     :version 6,
      :created_at "2010-07-28 05:20:00.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (empty [1 2 3])\r\n[]\r\nuser=> (empty (list 1 2 3))\r\n()\r\nuser=> (map empty [[\\a \\b] {1 2} (range 4)])\r\n([] {} ())\r\n"}
+     "user=> (empty [1 2 3])\n[]\nuser=> (empty (list 1 2 3))\n()\nuser=> (map empty [[\\a \\b] {1 2} (range 4)])\n([] {} ())\nuser=> (swap! (atom (range 10)) empty)      \n()"}
     {:namespace_id 330,
      :ns "clojure.core",
      :updated_at "2012-10-08 21:02:41.0",
@@ -31246,7 +31267,19 @@
    :url "http://clojuredocs.org/v/976"},
   "clojure.core/name"
   {:comments [],
-   :see-alsos [],
+   :see-alsos
+   ({:namespace_id 99,
+     :weight 1,
+     :name "namespace",
+     :updated_at "2010-10-20 04:42:09.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:23:32.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/1858",
+     :line "1247",
+     :arglists_comp "[x]",
+     :url_friendly_name "namespace",
+     :file "clojure/core.clj"}),
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
@@ -32559,15 +32592,15 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2010-11-04 08:06:05.0",
+     :updated_at "2013-11-23 22:49:28.0",
      :function "take-while",
-     :version 5,
+     :version 6,
      :created_at "2010-07-19 19:08:13.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     ";; Calculate the sum of all numbers under 1000:\nuser=> (reduce + (take-while (partial > 1000 ) (iterate inc 0)))\n499500"}
+     ";; Calculate the sum of all numbers under 1000:\nuser=> (reduce + (take-while (partial > 1000) (iterate inc 0)))\n499500"}
     {:namespace_id 330,
      :ns "clojure.core",
      :updated_at "2012-06-03 22:01:04.0",
@@ -38537,6 +38570,18 @@
      :line "4594",
      :arglists_comp "[name docstring? attr-map? references*]",
      :url_friendly_name "ns",
+     :file "clojure/core.clj"}
+    {:namespace_id 99,
+     :weight 1,
+     :name "name",
+     :updated_at "2010-10-20 04:42:08.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:22:51.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/1800",
+     :line "1240",
+     :arglists_comp "[x]",
+     :url_friendly_name "name",
      :file "clojure/core.clj"}),
    :examples
    [{:namespace_id 99,
@@ -43559,7 +43604,18 @@
    :ns "incanter.core",
    :url "http://clojuredocs.org/v/2724"},
   "clojure.core/vals"
-  {:comments [],
+  {:comments
+   ({:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-11-26 01:11:21.0",
+     :user_id 740,
+     :function "vals",
+     :version "1.3.0",
+     :created_at "2013-11-26 01:11:21.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "Functions keys and vals return sequences such that\n<pre>\n(= (zipmap (keys m) (vals m)) m)\n</pre>"}),
    :see-alsos
    ({:namespace_id 99,
      :weight 3,
@@ -46484,7 +46540,17 @@
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     ";; A simple implementation using rest for recursing over a collection.  Note that (seq coll) is used as the test.\n(defn my-map [func coll]\n     (when-let [s (seq coll)]\n        (cons (func (first s))\n\t      (my-map func (rest s)))))"}],
+     ";; A simple implementation using rest for recursing over a collection.  Note that (seq coll) is used as the test.\n(defn my-map [func coll]\n     (when-let [s (seq coll)]\n        (cons (func (first s))\n\t      (my-map func (rest s)))))"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-11-22 19:03:27.0",
+     :function "rest",
+     :version 1,
+     :created_at "2013-11-22 19:03:27.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body "user=>(rest '(1 2 3 4 5))\n'(2 3 4 5)"}],
    :id 5731,
    :name "rest",
    :ns "clojure.core",
@@ -47698,7 +47764,18 @@
      :library "Clojure Core",
      :library_id 15,
      :body
-     "As Rich points out on the ML: \n\n`contains?` tells you whether or not `get` will succeed. It is not a \"rummager\".\n\n`contains?` and `get` abstract over fast lookup.\n"}),
+     "As Rich points out on the ML: \n\n`contains?` tells you whether or not `get` will succeed. It is not a \"rummager\".\n\n`contains?` and `get` abstract over fast lookup.\n"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-11-24 12:30:44.0",
+     :user_id 1041,
+     :function "contains?",
+     :version "1.3.0",
+     :created_at "2013-11-24 12:03:18.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "If you have a vector or list and want to check whether a *value* is contained in it, you will find that `contains?` does not work.\n\n<pre>; does not work as you might expect\n(contains? [:a :b :c] :b) ; = false</pre>\n\nThere are four things you can try in this case:\n\n1. Consider whether you really need a vector or list. If you use a set instead, `contains?` will work.\n   <pre>(contains? #{:a :b :c} :b) ; = true</pre>\n2. Use [`some`](http://clojuredocs.org/clojure_core/clojure.core/some) instead, wrapping the target in a set, as follows:\n   <pre>(some #{:b} [:a :b :c]) ; = :b, which is truthy</pre>\n3. The set-as-function shortcut will not work if you might be searching for a falsy value (`false` or `nil`).\n   <pre>; will not work\n(some #{false} [true false true]) ; = nil</pre>\n   In that case, you will have to write the predicate function the long way:\n   <pre>(some #(= false %) [true false true]) ; = true</pre>\n4. If you will need to do this kind of search a lot, write a function for it:\n   <pre>(defn seq-contains? [coll target] (some #(= target %) coll))\n(contains-val? [true false true] false) ; = true</pre>"}),
    :see-alsos
    ({:namespace_id 99,
      :weight 7,
@@ -47727,15 +47804,15 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2013-01-18 13:32:18.0",
+     :updated_at "2013-11-12 08:21:31.0",
      :function "contains?",
-     :version 5,
+     :version 6,
      :created_at "2010-07-10 21:16:46.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     ";; `contains?` is straightforward for maps:\nuser=> (contains? {:a 1} :a)\ntrue\nuser=> (contains? {:a nil} :a)\ntrue\nuser=> (contains? {:a 1} :b)\nfalse\n\n\n;; It's likely to surprise you for other sequences because it's \n;; about *indices*, not *contents*:\n\nuser=> (contains? [:a :b :c] :b)\nfalse\n\nuser=> (contains? [:a :b :c] 2)\ntrue\n\nuser=> (contains? \"f\" 0)\ntrue\n\nuser=> (contains? \"f\" 1)\nfalse\n\n\n;; It can be applied to non-sequences:\n\nuser=> (contains? 5 3)\nfalse\n\n\n;; Although lists are sequences, `contains?` seems to always return\n;; `false` for them. (Clojure 1.1)\n\nuser=> (contains? '(1 2 3) 1) => false\n\n"}
+     ";; `contains?` is straightforward for maps:\nuser=> (contains? {:a 1} :a)\ntrue\nuser=> (contains? {:a nil} :a)\ntrue\nuser=> (contains? {:a 1} :b)\nfalse\n\n\n;; It's likely to surprise you for other sequences because it's \n;; about *indices*, not *contents*:\n\nuser=> (contains? [:a :b :c] :b)\nfalse\n\nuser=> (contains? [:a :b :c] 2)\ntrue\n\nuser=> (contains? \"f\" 0)\ntrue\n\nuser=> (contains? \"f\" 1)\nfalse\n\n\n;; It can be applied to non-sequences:\n\nuser=> (contains? 5 3)\nfalse\n\n\n;; Although lists are sequences, `contains?` seems to always return\n;; `false` for them. (Clojure 1.1)\n;;\n;; Note, this no longer works in Clojure 1.5, throwing an \n;; IllegalArgumentException.\n\nuser=> (contains? '(1 2 3) 1) => false\n\n"}
     {:namespace_id 99,
      :ns "clojure.core",
      :updated_at "2011-06-03 03:39:09.0",
@@ -47760,7 +47837,18 @@
    :ns "circumspec.for-all",
    :url "http://clojuredocs.org/v/3676"},
   "clojure.core/keys"
-  {:comments [],
+  {:comments
+   ({:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-11-26 01:10:55.0",
+     :user_id 740,
+     :function "keys",
+     :version "1.3.0",
+     :created_at "2013-11-26 01:10:55.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "Functions keys and vals return sequences such that\n<pre>\n(= (zipmap (keys m) (vals m)) m)\n</pre>"}),
    :see-alsos
    ({:namespace_id 99,
      :weight 1,
@@ -48651,7 +48739,18 @@
    :ns "incanter.processing",
    :url "http://clojuredocs.org/v/3253"},
   "clojure.core/partial"
-  {:comments [],
+  {:comments
+   ({:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-11-24 00:54:07.0",
+     :user_id 1041,
+     :function "partial",
+     :version "1.3.0",
+     :created_at "2013-11-24 00:54:07.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "This function implements the concept of â€œ[currying](http://en.wikipedia.org/wiki/Currying)â€�."}),
    :see-alsos
    ({:namespace_id 86,
      :weight 1,
@@ -55650,7 +55749,18 @@
    :ns "clojure.core",
    :url "http://clojuredocs.org/v/6134"},
   "clojure.core/deliver"
-  {:comments [],
+  {:comments
+   ({:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-11-26 16:16:46.0",
+     :user_id 1043,
+     :function "deliver",
+     :version "1.3.0",
+     :created_at "2013-11-26 16:16:46.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "As of Clojure 1.3 `deliver` does not throw an exception when it is called multiple times on the same promise. See [CLJ-1038](http://dev.clojure.org/jira/browse/CLJ-1038)."}),
    :see-alsos
    ({:namespace_id 99,
      :weight 1,
