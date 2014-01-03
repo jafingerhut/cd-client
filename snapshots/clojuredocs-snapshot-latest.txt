@@ -1,4 +1,4 @@
-{:snapshot-time "Thu Nov 28 11:33:08 PST 2013",
+{:snapshot-time "Fri Jan 03 13:43:16 PST 2014",
  :snapshot-info
  {"clojure.zip/insert-right"
   {:comments [],
@@ -354,7 +354,18 @@
    :ns "clojure.data",
    :url "http://clojuredocs.org/v/5859"},
   "clojure.core/rationalize"
-  {:comments [],
+  {:comments
+   ({:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-12-26 10:45:23.0",
+     :user_id 722,
+     :function "rationalize",
+     :version "1.3.0",
+     :created_at "2013-12-26 10:45:23.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "Remember that for irrational numbers, like sqrt 2, this is only an estimate (pretty good one). "}),
    :see-alsos [],
    :examples
    [{:namespace_id 99,
@@ -7787,15 +7798,15 @@
      "user=> (map #(hash-map % 0) (seq \"abcdefgh\"))\n({\\a 0} {\\b 0} {\\c 0} {\\d 0} {\\e 0} {\\f 0} {\\g 0} {\\h 0}) \n\nuser=> (apply hash-map (.split \"a 1 b 2 c 3\" \" \"))\n{\"a\" \"1\", \"b\" \"2\", \"c\" \"3\"}"}
     {:namespace_id 330,
      :ns "clojure.core",
-     :updated_at "2012-07-05 02:00:49.0",
+     :updated_at "2014-01-01 02:33:20.0",
      :function "hash-map",
-     :version 2,
+     :version 3,
      :created_at "2012-07-05 01:58:30.0",
      :library "Clojure Core",
      :lib_version "1.3.0",
      :library_id 15,
      :body
-     ";;another way of creating hash map is by using def\nuser=> (def user {:name \"Steve\" :age 24 :salary 7886 :company \"Acme\"})\n{:age 24, :name \"Steve\", :salary 7756, :company \"Acme\"}\n\n\n"}
+     "; a hash map can be stored in a var by using `def`\nuser=> (def person {:name \"Steve\" :age 24 :salary 7886 :company \"Acme\"})\n#'user/person\nuser=> person\n{:age 24, :name \"Steve\", :salary 7886, :company \"Acme\"}"}
     {:namespace_id 330,
      :ns "clojure.core",
      :updated_at "2013-11-19 02:02:23.0",
@@ -7824,7 +7835,19 @@
      :library_id 3,
      :body
      "Note that `replicate` is obsolete. It's functionality is now available via the two-arg arity form of [`repeat`](http://clojuredocs.org/v/1578)."}),
-   :see-alsos [],
+   :see-alsos
+   ({:namespace_id 99,
+     :weight 1,
+     :name "repeat",
+     :updated_at "2010-10-20 04:42:04.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:20:16.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/1578",
+     :line "2230",
+     :arglists_comp "[x]|[n x]",
+     :url_friendly_name "repeat",
+     :file "clojure/core.clj"}),
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
@@ -9189,7 +9212,18 @@
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (defn foo []\n         (undefined-func))\n; Evaluation aborted. Unable to resolve symbol: undefined-func in this context\nnil\n\nuser=> (declare undefined-func)\n#'user/undefined-func\n\nuser=> (defn foo []\n         (undefined-func))\n#'user/foo\n"}],
+     "user=> (defn foo []\n         (undefined-func))\n; Evaluation aborted. Unable to resolve symbol: undefined-func in this context\nnil\n\nuser=> (declare undefined-func)\n#'user/undefined-func\n\nuser=> (defn foo []\n         (undefined-func))\n#'user/foo\n"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-12-02 05:56:46.0",
+     :function "declare",
+     :version 2,
+     :created_at "2013-12-02 05:55:46.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     "user=> (declare show)\n#'user/show\nuser=> (defn welcome [user-name] (prn (show) user-name))\n#'user/welcome\nuser=> (defn show [] (prn \"welcome \"))\n#'user/show\nuser=> (welcome \"lu4nx\")\n\"welcome \"\nnil \"lu4nx\"\nnil\nuser=> "}],
    :id 5447,
    :name "declare",
    :ns "clojure.core",
@@ -18792,7 +18826,18 @@
    :ns "clojure.contrib.io",
    :url "http://clojuredocs.org/v/508"},
   "clojure.java.io/reader"
-  {:comments [],
+  {:comments
+   ({:namespace_id 336,
+     :ns "clojure.java.io",
+     :updated_at "2013-12-16 01:12:51.0",
+     :user_id 1041,
+     :function "reader",
+     :version "1.3.0",
+     :created_at "2013-12-16 01:12:51.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "Java documentation links for the listed argument types that have â€œdefault implementationsâ€�:\n\n* [`Reader`](http://docs.oracle.com/javase/7/docs/api/java/io/Reader.html)\n* [`BufferedReader`](http://docs.oracle.com/javase/7/docs/api/java/io/BufferedReader.html)\n* [`InputStream`](http://docs.oracle.com/javase/7/docs/api/java/io/InputStream.html)\n* [`File`](http://docs.oracle.com/javase/7/docs/api/java/io/File.html)\n* [`URI`](http://docs.oracle.com/javase/7/docs/api/java/net/URI.html)\n* [`URL`](http://docs.oracle.com/javase/7/docs/api/java/net/URL.html)\n* [`Socket`](http://docs.oracle.com/javase/7/docs/api/java/net/Socket.html)\n* byte arrays (`byte[]`)\n* character arrays (`char[]`)\n* [`String`](http://docs.oracle.com/javase/7/docs/api/java/lang/String.html) (resolved as a URI or a local file name)"}),
    :see-alsos
    ({:namespace_id 104,
      :weight 0,
@@ -27033,7 +27078,18 @@
   "clojure.contrib.string/drop"
   {:comments [],
    :see-alsos [],
-   :examples [],
+   :examples
+   [{:namespace_id 88,
+     :ns "clojure.contrib.string",
+     :updated_at "2013-12-01 09:48:59.0",
+     :function "drop",
+     :version 1,
+     :created_at "2013-12-01 09:48:59.0",
+     :library "Clojure Contrib",
+     :lib_version "1.2.0",
+     :library_id 1,
+     :body
+     "user=> (drop 1 [1 2 3 4])\n(2 3 4)\nuser=> (drop 2 [1 2 3 4])\n(3 4)\n"}],
    :id 1340,
    :name "drop",
    :ns "clojure.contrib.string",
@@ -27479,7 +27535,20 @@
      :line "119",
      :arglists_comp "[smap form]",
      :url_friendly_name "postwalk-replace",
-     :file "clojure/walk.clj"}),
+     :file "clojure/walk.clj"}
+    {:namespace_id 99,
+     :weight 3,
+     :name "map",
+     :updated_at "2010-10-20 05:22:45.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:22:06.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/1734",
+     :line "2079",
+     :arglists_comp
+     "[f coll]|[f c1 c2]|[f c1 c2 c3]|[f c1 c2 c3 & colls]",
+     :url_friendly_name "map",
+     :file "clojure/core.clj"}),
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
@@ -27502,7 +27571,18 @@
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (replace '{0 ZERO, 1 ONE, 2 TWO} '(This is the code â€” 0 1 2 0))\n(This is the code â€” ZERO ONE TWO ZERO)\n\nuser=> (replace {2 :two, 4 :four} [4 2 3 4 5 6 2])\n[:four :two 3 :four 5 6 :two]\n"}],
+     "user=> (replace '{0 ZERO, 1 ONE, 2 TWO} '(This is the code â€” 0 1 2 0))\n(This is the code â€” ZERO ONE TWO ZERO)\n\nuser=> (replace {2 :two, 4 :four} [4 2 3 4 5 6 2])\n[:four :two 3 :four 5 6 :two]\n"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-11-30 14:11:28.0",
+     :function "replace",
+     :version 1,
+     :created_at "2013-11-30 14:11:28.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     "; Behaves somewhat similar to map, but notice the differences\nuser=> (map [:zeroth :first :second :third :fourth] [0 2 4 0])\n(:zeroth :second :fourth :zeroth)\n\n; 1. replace returns a vector, while map returns a seq\n; 2. replace keeps unmatched values, while map replace with nil\nuser=> (map {} [0])\n(nil)\nuser=> (map [] [0])\nIndexOutOfBoundsException   clojure.lang.PersistentVector.arrayFor (PersistentVector.java:107)\n"}],
    :id 5725,
    :name "replace",
    :ns "clojure.core",
@@ -28583,7 +28663,18 @@
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (clojure.string/upper-case \"MiXeD cAsE\")\n\"MIXED CASE\""}],
+     "user=> (clojure.string/upper-case \"MiXeD cAsE\")\n\"MIXED CASE\""}
+    {:namespace_id 345,
+     :ns "clojure.string",
+     :updated_at "2013-12-12 12:58:30.0",
+     :function "upper-case",
+     :version 1,
+     :created_at "2013-12-12 12:58:30.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     ";; Non-character symbols will be returned back\nuser=> (clojure.string/upper-case \",.!@#$%^&*()\")\n\",.!@#$%^&*()\""}],
    :id 6011,
    :name "upper-case",
    :ns "clojure.string",
@@ -31216,15 +31307,15 @@
    :examples
    [{:namespace_id 351,
      :ns "clojure.xml",
-     :updated_at "2012-03-18 16:42:19.0",
+     :updated_at "2013-12-02 18:35:57.0",
      :function "parse",
-     :version 2,
+     :version 3,
      :created_at "2011-12-22 14:46:02.0",
      :library "Clojure Core",
      :lib_version "1.3.0",
      :library_id 15,
      :body
-     "(require '[clojure.xml :as xml]\n         '[clojure.zip :as zip])\n\n;;convenience function, first sawn at nakkaya.com later in clj.zip src\n(defn zip-str [s]\n  (zip/xml-zip (xml/parse (java.io.ByteArrayInputStream. (.getBytes s)))))\n\n;;parse from xml-strings to internal xml representation\n(zip-str \"<a href='nakkaya.com'/>\")\n=>\n[{:tag :a, :attrs {:href \"nakkaya.com\"}, :content nil} nil]\n\n;;root can be rendered with xml/emit-element\n(xml/emit-element (zip/root [{:tag :a, :attrs {:href \"nakkaya.com\"}, :content nil} nil]))\n=>\n<a href='nakkaya.com'/>\n;;printed (to assure it's not lazy and performance), can be catched to string variable with with-out-str\n\n\n\n\n\n"}],
+     "(require '[clojure.xml :as xml]\n         '[clojure.zip :as zip])\n\n;;convenience function, first seen at nakkaya.com later in clj.zip src\n(defn zip-str [s]\n  (zip/xml-zip (xml/parse (java.io.ByteArrayInputStream. (.getBytes s)))))\n\n;;parse from xml-strings to internal xml representation\n(zip-str \"<a href='nakkaya.com'/>\")\n=>\n[{:tag :a, :attrs {:href \"nakkaya.com\"}, :content nil} nil]\n\n;;root can be rendered with xml/emit-element\n(xml/emit-element (zip/root [{:tag :a, :attrs {:href \"nakkaya.com\"}, :content nil} nil]))\n=>\n<a href='nakkaya.com'/>\n;;printed (to assure it's not lazy and for performance), can be caught to string variable with with-out-str\n\n\n\n\n\n"}],
    :id 6094,
    :name "parse",
    :ns "clojure.xml",
@@ -35783,15 +35874,15 @@
      "user=> (def powers-of-two (iterate (partial * 2) 1))\n#'user/powers-of-two\n\nuser=> (nth powers-of-two 10)\n1024\nuser=> (take 10 powers-of-two)\n(1 2 4 8 16 32 64 128 256 512)\n"}
     {:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2012-10-11 16:48:26.0",
+     :updated_at "2014-01-02 11:14:19.0",
      :function "iterate",
-     :version 4,
+     :version 5,
      :created_at "2011-07-16 14:14:30.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     ";; demonstrating the power of iterate\n;; to generate the Fibonacci sequence\nuser=> (def fib (map first (iterate (fn [[a b]] [b (+ a b)]) [0 1])))\n#'user/fib\n\nuser=> (take 10 fib)\n(0 1 1 2 3 5 8 13 21 34)"}],
+     ";; demonstrating the power of iterate\n;; to generate the Fibonacci sequence\n;; uses +' to promote to BigInt\nuser=> (def fib (map first (iterate (fn [[a b]] [b (+' a b)]) [0 1])))\n#'user/fib\n\nuser=> (take 10 fib)\n(0 1 1 2 3 5 8 13 21 34)"}],
    :id 5568,
    :name "iterate",
    :ns "clojure.core",
@@ -36875,7 +36966,18 @@
      :created_at "2011-07-01 14:32:51.0",
      :library "Clojure Core",
      :library_id 3,
-     :body "Use slurp also to read an input stream into a string."}),
+     :body "Use slurp also to read an input stream into a string."}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-12-16 01:09:54.0",
+     :user_id 1041,
+     :function "slurp",
+     :version "1.3.0",
+     :created_at "2013-12-16 00:53:13.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "With link: â€œSee [`clojure.java.io/reader`](http://clojuredocs.org/clojure_core/clojure.java.io/reader) for a complete list of supported arguments.â€�\n\nAccording to those docs, here are the supported types for `f`, the object to read:\n\n* [`Reader`](http://docs.oracle.com/javase/7/docs/api/java/io/Reader.html)\n* [`BufferedReader`](http://docs.oracle.com/javase/7/docs/api/java/io/BufferedReader.html)\n* [`InputStream`](http://docs.oracle.com/javase/7/docs/api/java/io/InputStream.html)\n* [`File`](http://docs.oracle.com/javase/7/docs/api/java/io/File.html)\n* [`URI`](http://docs.oracle.com/javase/7/docs/api/java/net/URI.html)\n* [`URL`](http://docs.oracle.com/javase/7/docs/api/java/net/URL.html)\n* [`Socket`](http://docs.oracle.com/javase/7/docs/api/java/net/Socket.html)\n* byte arrays (`byte[]`)\n* character arrays (`char[]`)\n* [`String`](http://docs.oracle.com/javase/7/docs/api/java/lang/String.html)\n\n`slurp` can read objects of any of these types into a string."}),
    :see-alsos
    ({:namespace_id 99,
      :weight 2,
@@ -38021,7 +38123,18 @@
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (dotimes [n 5] (println \"n is\" n))\nn is 0\nn is 1\nn is 2\nn is 3\nn is 4\nnil"}],
+     "user=> (dotimes [n 5] (println \"n is\" n))\nn is 0\nn is 1\nn is 2\nn is 3\nn is 4\nnil"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-12-30 17:54:26.0",
+     :function "dotimes",
+     :version 3,
+     :created_at "2013-12-30 17:46:01.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     "user=> (dotimes [n 10] (println (map #(* % (inc n)) [1 2 3 4 5 6 7 8 9 10])))\n(1 2 3 4 5 6 7 8 9 10)\n(2 4 6 8 10 12 14 16 18 20)\n(3 6 9 12 15 18 21 24 27 30)\n(4 8 12 16 20 24 28 32 36 40)\n(5 10 15 20 25 30 35 40 45 50)\n(6 12 18 24 30 36 42 48 54 60)\n(7 14 21 28 35 42 49 56 63 70)\n(8 16 24 32 40 48 56 64 72 80)\n(9 18 27 36 45 54 63 72 81 90)\n(10 20 30 40 50 60 70 80 90 100)\nnil"}],
    :id 5478,
    :name "dotimes",
    :ns "clojure.core",
@@ -42748,7 +42861,18 @@
      :library "Clojure Core",
      :library_id 15,
      :body
-     "Note that, as for macros, the arguments to definline are potentially subject to double evaluation if they are used more than once in the body. For example:\n\n<pre>\nuser=> (definline bad-sqr [x] `(* ~x ~x))\n#'user/bad-sqr\nuser=> (bad-sqr (do (println \"x\") 5))\nx\nx\n25\n</pre>\n\n"}),
+     "Note that, as for macros, the arguments to definline are potentially subject to double evaluation if they are used more than once in the body. For example:\n\n<pre>\nuser=> (definline bad-sqr [x] `(* ~x ~x))\n#'user/bad-sqr\nuser=> (bad-sqr (do (println \"x\") 5))\nx\nx\n25\n</pre>\n\n"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-11-30 13:26:28.0",
+     :user_id 1046,
+     :function "definline",
+     :version "1.3.0",
+     :created_at "2013-11-30 13:26:28.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "Any non-like-a-function behaviour should be avoided, because otherwise function will behave differently depending on whether it's inlined or not:\n\n    user=> (definline bad-if [cond then] `(if ~cond ~then))\n    #'user/bad-if\n    user=> (bad-if nil (do (prn :side-effect) :not-returned))\n    nil\n    user=> (let [bad-if bad-if] (bad-if nil (do (prn :side-effect)     :not-returned)))\n    :side-effect\n    nil\n"}),
    :see-alsos [],
    :examples [],
    :id 5448,
@@ -47767,7 +47891,7 @@
      "As Rich points out on the ML: \n\n`contains?` tells you whether or not `get` will succeed. It is not a \"rummager\".\n\n`contains?` and `get` abstract over fast lookup.\n"}
     {:namespace_id 330,
      :ns "clojure.core",
-     :updated_at "2013-11-24 12:30:44.0",
+     :updated_at "2014-01-01 14:58:15.0",
      :user_id 1041,
      :function "contains?",
      :version "1.3.0",
@@ -47775,7 +47899,7 @@
      :library "Clojure Core",
      :library_id 15,
      :body
-     "If you have a vector or list and want to check whether a *value* is contained in it, you will find that `contains?` does not work.\n\n<pre>; does not work as you might expect\n(contains? [:a :b :c] :b) ; = false</pre>\n\nThere are four things you can try in this case:\n\n1. Consider whether you really need a vector or list. If you use a set instead, `contains?` will work.\n   <pre>(contains? #{:a :b :c} :b) ; = true</pre>\n2. Use [`some`](http://clojuredocs.org/clojure_core/clojure.core/some) instead, wrapping the target in a set, as follows:\n   <pre>(some #{:b} [:a :b :c]) ; = :b, which is truthy</pre>\n3. The set-as-function shortcut will not work if you might be searching for a falsy value (`false` or `nil`).\n   <pre>; will not work\n(some #{false} [true false true]) ; = nil</pre>\n   In that case, you will have to write the predicate function the long way:\n   <pre>(some #(= false %) [true false true]) ; = true</pre>\n4. If you will need to do this kind of search a lot, write a function for it:\n   <pre>(defn seq-contains? [coll target] (some #(= target %) coll))\n(contains-val? [true false true] false) ; = true</pre>"}),
+     "If you have a vector or list and want to check whether a *value* is contained in it, you will find that `contains?` does not work.\n\n<pre>; does not work as you might expect\n(contains? [:a :b :c] :b) ; = false</pre>\n\nThere are four things you can try in this case:\n\n1. Consider whether you really need a vector or list. If you use a set instead, `contains?` will work.\n   <pre>(contains? #{:a :b :c} :b) ; = true</pre>\n2. Use [`some`](http://clojuredocs.org/clojure_core/clojure.core/some) instead, wrapping the target in a set, as follows:\n   <pre>(some #{:b} [:a :b :c]) ; = :b, which is truthy</pre>\n3. The set-as-function shortcut will not work if you might be searching for a falsy value (`false` or `nil`).\n   <pre>; will not work\n(some #{false} [true false true]) ; = nil</pre>\n   In that case, you will have to write the predicate function the long way:\n   <pre>(some #(= false %) [true false true]) ; = true</pre>\n4. If you will need to do this kind of search a lot, write a function for it:\n   <pre>(defn seq-contains? [coll target] (some #(= target %) coll))\n(seq-contains? [true false true] false) ; = true</pre>"}),
    :see-alsos
    ({:namespace_id 99,
      :weight 7,
@@ -49796,7 +49920,17 @@
    :ns "clojure.contrib.trace",
    :url "http://clojuredocs.org/v/1409"},
   "clojure.core.protocols/InternalReduce"
-  {:comments [],
+  {:comments
+   ({:namespace_id 331,
+     :ns "clojure.core.protocols",
+     :updated_at "2013-12-07 17:17:57.0",
+     :user_id 1054,
+     :function "InternalReduce",
+     :version "1.3.0",
+     :created_at "2013-12-07 17:17:57.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body "http://muhammadkhojaye.blogspot.com"}),
    :see-alsos [],
    :examples [],
    :id 5855,
@@ -50445,7 +50579,17 @@
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (sorted? (sorted-set 5 3 1 2 4))\ntrue\nuser=> (sorted? (sorted-map :a 1 :c 3 :b 2))\ntrue\n\n;; Note you can't just pass in a collection that happens to be sorted.\nuser=> (sorted? [1 2 3 4 5])\nfalse\n"}],
+     "user=> (sorted? (sorted-set 5 3 1 2 4))\ntrue\nuser=> (sorted? (sorted-map :a 1 :c 3 :b 2))\ntrue\n\n;; Note you can't just pass in a collection that happens to be sorted.\nuser=> (sorted? [1 2 3 4 5])\nfalse\n"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2013-11-30 13:41:06.0",
+     :function "sorted?",
+     :version 2,
+     :created_at "2013-11-30 13:40:25.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body "=> (sorted? (sort [1 2]))\nfalse"}],
    :id 5767,
    :name "sorted?",
    :ns "clojure.core",
