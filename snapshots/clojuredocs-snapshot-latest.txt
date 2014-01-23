@@ -1,4 +1,4 @@
-{:snapshot-time "Fri Jan 03 13:43:16 PST 2014",
+{:snapshot-time "Thu Jan 23 12:14:37 PST 2014",
  :snapshot-info
  {"clojure.zip/insert-right"
   {:comments [],
@@ -4965,7 +4965,18 @@
      :library "Clojure Core",
      :library_id 3,
      :body
-     "If you do not need the lazyness of distinct, set can be faster. Like: (count (set some-coll))."}),
+     "If you do not need the lazyness of distinct, set can be faster. Like: (count (set some-coll))."}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2014-01-07 13:28:21.0",
+     :user_id 1077,
+     :function "distinct",
+     :version "1.3.0",
+     :created_at "2014-01-07 13:28:21.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "Use this function if you want to remove only consequtive duplicates\n\n    (defn distinct-consequtive [sequence] (map first (partition-by identity sequence)))\n\n    (distinct-consequtive [1 1 2 3 3 2 2 3])\n    ;=> (1 2 3 2 3)"}),
    :see-alsos [],
    :examples
    [{:namespace_id 99,
@@ -18138,7 +18149,17 @@
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (count nil)\n0\n\nuser=> (count [])\n0\n\nuser=> (count [1 2 3])\n3\n\nuser=> (count {:one 1 :two 2})\n2\n\nuser=> (count [1 \\a \"string\" [1 2] {:foo :bar}])\n5\n\nuser=> (count \"string\")\n6"}],
+     "user=> (count nil)\n0\n\nuser=> (count [])\n0\n\nuser=> (count [1 2 3])\n3\n\nuser=> (count {:one 1 :two 2})\n2\n\nuser=> (count [1 \\a \"string\" [1 2] {:foo :bar}])\n5\n\nuser=> (count \"string\")\n6"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2014-01-23 10:36:41.0",
+     :function "count",
+     :version 2,
+     :created_at "2014-01-11 02:54:33.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body "user=> (= (count '(1 2 3 3 1)) 5)\ntrue"}],
    :id 5439,
    :name "count",
    :ns "clojure.core",
@@ -27293,9 +27314,9 @@
      "user=> (doseq [[x y] (map list [1 2 3] [1 2 3])] \n         (prn (* x y)))\n1\n4\n9\nnil\n\n;; where\nuser=> (map list [1 2 3] [1 2 3])\n((1 1) (2 2) (3 3))"}
     {:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2010-09-27 22:27:20.0",
+     :updated_at "2014-01-20 13:32:47.0",
      :function "doseq",
-     :version 5,
+     :version 7,
      :created_at "2010-07-22 07:22:41.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
@@ -29479,7 +29500,18 @@
      :library "Clojure Core",
      :library_id 15,
      :body
-     "Shouldn't we use seq instead of coll in the function signature since we should really pass a sequence?"}),
+     "Shouldn't we use seq instead of coll in the function signature since we should really pass a sequence?"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2014-01-19 00:35:27.0",
+     :user_id 1091,
+     :function "doall",
+     :version "1.3.0",
+     :created_at "2014-01-19 00:35:27.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "'seq' is a function; using it in the function args as a value would shadow the function (and thereby making the function seq unusable in that scope)"}),
    :see-alsos
    ({:namespace_id 99,
      :weight 1,
@@ -45247,7 +45279,18 @@
    :ns "swank.core",
    :url "http://clojuredocs.org/v/4067"},
   "clojure.core/comment"
-  {:comments [],
+  {:comments
+   ({:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2014-01-15 17:26:20.0",
+     :user_id 1086,
+     :function "comment",
+     :version "1.3.0",
+     :created_at "2014-01-15 17:26:20.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "it doesn't 100% ignore the body. If your comment has a map in it, for example, and that map isn't 100% correct it will fail to compile in some environments. I found that using Light Table. I am certain it would fail on other platforms that won't know to exclude it before parsing.\n\nExample:\n(comment\n here is some TeX: \\frac{\\sum_{m=1}^{m}x_{m}}{x_{s}}\n)\n\nThat will produce an error."}),
    :see-alsos [],
    :examples
    [{:namespace_id 99,
@@ -46897,7 +46940,31 @@
    :url "http://clojuredocs.org/v/6046"},
   "clojure.contrib.str-utils2/take"
   {:comments [],
-   :see-alsos [],
+   :see-alsos
+   ({:namespace_id 99,
+     :weight 1,
+     :name "take-nth",
+     :updated_at "2010-10-20 04:42:14.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:25:35.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/2040",
+     :line "3320",
+     :arglists_comp "[n coll]",
+     :url_friendly_name "take-nth",
+     :file "clojure/core.clj"}
+    {:namespace_id 99,
+     :weight 1,
+     :name "take-last",
+     :updated_at "2010-10-20 04:42:14.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:25:39.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/2047",
+     :line "2189",
+     :arglists_comp "[n coll]",
+     :url_friendly_name "take-last",
+     :file "clojure/core.clj"}),
    :examples
    [{:namespace_id 86,
      :ns "clojure.contrib.str-utils2",
@@ -48564,6 +48631,30 @@
      :line "2980",
      :arglists_comp "[array]",
      :url_friendly_name "aclone",
+     :file "clojure/core.clj"}
+    {:namespace_id 99,
+     :weight 1,
+     :name "get",
+     :updated_at "2010-10-20 04:42:12.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:24:28.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/1941",
+     :line "1154",
+     :arglists_comp "[map key]|[map key not-found]",
+     :url_friendly_name "get",
+     :file "clojure/core.clj"}
+    {:namespace_id 99,
+     :weight 1,
+     :name "nth",
+     :updated_at "2010-10-20 04:42:09.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:23:26.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/1851",
+     :line "740",
+     :arglists_comp "[coll index]|[coll index not-found]",
+     :url_friendly_name "nth",
      :file "clojure/core.clj"}),
    :examples
    [{:namespace_id 99,
@@ -50282,6 +50373,18 @@
      :line "3393",
      :arglists_comp "[coll n]",
      :url_friendly_name "nthnext",
+     :file "clojure/core.clj"}
+    {:namespace_id 99,
+     :weight 1,
+     :name "get",
+     :updated_at "2010-10-20 04:42:12.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:24:28.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/1941",
+     :line "1154",
+     :arglists_comp "[map key]|[map key not-found]",
+     :url_friendly_name "get",
      :file "clojure/core.clj"}),
    :examples
    [{:namespace_id 99,
@@ -51940,15 +52043,15 @@
      ";; See http://download.oracle.com/javase/1.5.0/docs/api/java/util/Formatter.html\n;; for formatting options.\nuser=> (format \"Hello there, %s\" \"bob\")\n\"Hello there, bob\"\n"}
     {:namespace_id 330,
      :ns "clojure.core",
-     :updated_at "2012-03-22 21:54:22.0",
+     :updated_at "2014-01-12 15:14:18.0",
      :function "format",
-     :version 4,
+     :version 5,
      :created_at "2012-03-10 20:30:28.0",
      :library "Clojure Core",
      :lib_version "1.3.0",
      :library_id 15,
      :body
-     "user=> (format \"%5d\" 3)\n\"    3\"\n\nuser=> (format \"Pad with leading zeros %07d\" 5432)\n\"Pad with leading zeros 0005432\"\n\nuser=> (format \"Left justified :%-7d:\" 5432)\n\"Left justified :5432   :\"\n\nuser=> (format \"Locale-specific group separators %,12d\" 1234567)\n\"Locale-specific group separators    1,234,567\"\n\nuser=> (format \"decimal %d  octal %o  hex %x  upper-case hex %X\" 63 63 63 63)\n\"decimal 63  octal 77  hex 3f  upper-case hex 3F\"\n\n;;    ====== Clojure format/printf and large integers =====\n\n;; This big number doesn't fit in a Long.  It is a\n;; clojure.lang.BigInt, which format cannot handle directly.\nuser=> (format \"%5d\" 12345678901234567890)\nIllegalFormatConversionException d != clojure.lang.BigInt  java.util.Formatter$FormatSpecifier.failConversion (Formatter.java:3999)\n\n;; You can convert it to a java.math.BigInteger, which format does handle.\nuser=> (format \"%5d\" (biginteger 12345678901234567890))\n\"12345678901234567890\"\n\n;; If you do this very often, you might want to use something like\n;; format-plus to avoid sprinkling your code with calls to biginteger.\n(defn coerce-unformattable-types [args]\n  (map (fn [x]\n         (cond (instance? clojure.lang.BigInt x) (biginteger x)\n               (instance? clojure.lang.Ratio x) (double x)\n               :else x))\n       args))\n\n(defn format-plus [fmt & args]\n  (apply format fmt (coerce-unformattable-types args)))\n\n;; Now this works:\nuser=> (format-plus \"%5d\" 12345678901234567890)\n\"12345678901234567890\""}
+     "user=> (format \"%5d\" 3)\n\"    3\"\n\nuser=> (format \"Pad with leading zeros %07d\" 5432)\n\"Pad with leading zeros 0005432\"\n\nuser=> (format \"Left justified :%-7d:\" 5432)\n\"Left justified :5432   :\"\n\nuser=> (format \"Locale-specific group separators %,12d\" 1234567)\n\"Locale-specific group separators    1,234,567\"\n\nuser=> (format \"decimal %d  octal %o  hex %x  upper-case hex %X\" 63 63 63 63)\n\"decimal 63  octal 77  hex 3f  upper-case hex 3F\"\n\nuser=> (format \"%2$d %1$s\" \"Positional arguments\" 23)\n\"23 Positional arguments\"\n\n;;    ====== Clojure format/printf and large integers =====\n\n;; This big number doesn't fit in a Long.  It is a\n;; clojure.lang.BigInt, which format cannot handle directly.\nuser=> (format \"%5d\" 12345678901234567890)\nIllegalFormatConversionException d != clojure.lang.BigInt  java.util.Formatter$FormatSpecifier.failConversion (Formatter.java:3999)\n\n;; You can convert it to a java.math.BigInteger, which format does handle.\nuser=> (format \"%5d\" (biginteger 12345678901234567890))\n\"12345678901234567890\"\n\n;; If you do this very often, you might want to use something like\n;; format-plus to avoid sprinkling your code with calls to biginteger.\n(defn coerce-unformattable-types [args]\n  (map (fn [x]\n         (cond (instance? clojure.lang.BigInt x) (biginteger x)\n               (instance? clojure.lang.Ratio x) (double x)\n               :else x))\n       args))\n\n(defn format-plus [fmt & args]\n  (apply format fmt (coerce-unformattable-types args)))\n\n;; Now this works:\nuser=> (format-plus \"%5d\" 12345678901234567890)\n\"12345678901234567890\""}
     {:namespace_id 330,
      :ns "clojure.core",
      :updated_at "2012-03-22 21:38:56.0",
