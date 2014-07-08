@@ -1,4 +1,4 @@
-{:snapshot-time "Sun Jun 01 12:20:13 PDT 2014",
+{:snapshot-time "Tue Jul 08 05:15:32 PDT 2014",
  :snapshot-info
  {"clojure.zip/insert-right"
   {:comments [],
@@ -11562,7 +11562,18 @@
      :library "Clojure Core",
      :library_id 15,
      :body
-     "For that matter, why is the `bytes` needed? Consider:\n\n<pre>\nuser=> (String. (byte-array (map byte \"ascii\")))\n\"ascii\"\n</pre>\n"}),
+     "For that matter, why is the `bytes` needed? Consider:\n\n<pre>\nuser=> (String. (byte-array (map byte \"ascii\")))\n\"ascii\"\n</pre>\n"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2014-06-10 01:13:23.0",
+     :user_id 1197,
+     :function "bytes",
+     :version "1.3.0",
+     :created_at "2014-06-10 01:13:23.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "AFAIK, `bytes` is used for referring to `bytes[].class` from JAVA\n\nExample (midje):\n\n     (fact (class (.getBytes \"test\")) => bytes) ; true\n"}),
    :see-alsos
    ({:namespace_id 99,
      :weight 1,
@@ -11910,14 +11921,15 @@
    :examples
    [{:namespace_id 330,
      :ns "clojure.core",
-     :updated_at "2012-04-27 22:55:32.0",
+     :updated_at "2014-06-10 04:35:03.0",
      :function "prn",
-     :version 1,
+     :version 4,
      :created_at "2012-04-27 22:55:32.0",
      :library "Clojure Core",
      :lib_version "1.3.0",
      :library_id 15,
-     :body "user=> (prn \"fred\" 1)\n\"fred\" 1\nnil"}],
+     :body
+     "user=> (prn \"fred\" 1)\n\"fred\" 1\nnil\n\nuser=> (def items [ \"hello\" :a 1 (list :b 2) \\c {:d 4} #{5 6 7} ])\n#'user/items\n\n; prn outputs items in a machine-readable format, such as in a source\n; file. Note the double-quotes around the string \"hello\" and the escaped letter \"c\".\nuser=> (prn items)\n[\"hello\" :a 1 (:b 2) \\c {:d 4} #{5 6 7}]\nnil\n\n; println is for human-readable output, like a report. Note the lack of quotes around the string \"hello\", and the unescaped letter \"c\". \nuser=> (println items)\n[hello :a 1 (:b 2) c {:d 4} #{5 6 7}]\nnil\n\n; pr-str produces a string with escaped punctuation, so that println yields the same result as the original prn call.\nuser=> (println (pr-str items))\n[\"hello\" :a 1 (:b 2) \\c {:d 4} #{5 6 7}]\nnil\n\n"}],
    :id 5678,
    :name "prn",
    :ns "clojure.core",
@@ -12078,25 +12090,26 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2012-03-28 09:03:16.0",
+     :updated_at "2014-07-08 05:24:24.0",
      :function "into",
-     :version 3,
+     :version 4,
      :created_at "2010-07-11 04:04:33.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (into {} [[1 2] [3 4]])\n{1 2, 3 4}\nuser=> (into [] {1 2, 3 4})\n[[1 2] [3 4]]"}
+     "; Maps can be constructed from a sequence of 2-vectors or a sequence \n; of maps\nuser=> (into (sorted-map) [ [:a 1] [:c 3] [:b 2] ] )\n{:a 1, :b 2, :c 3}\nuser=> (into (sorted-map) [ {:a 1} {:c 3} {:b 2} ] )\n{:a 1, :b 2, :c 3}\n\n; When maps are the input source, they convert into an unordered sequence \n; of key-value pairs, encoded as 2-vectors\nuser=> (into [] {1 2, 3 4})\n[[1 2] [3 4]]\n"}
     {:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2011-07-09 22:43:34.0",
+     :updated_at "2014-07-08 05:27:05.0",
      :function "into",
-     :version 1,
+     :version 2,
      :created_at "2011-07-09 22:43:34.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
-     :body "user=> (into () '(1 2 3))\n(3 2 1)\n"}
+     :body
+     "; Items are conj'ed one at a time, which puts them at the head of \n; the destination list\nuser=> (into () '(1 2 3))\n(3 2 1)\n"}
     {:namespace_id 330,
      :ns "clojure.core",
      :updated_at "2012-04-16 20:07:03.0",
@@ -13576,7 +13589,29 @@
    :ns "circumspec.watch",
    :url "http://clojuredocs.org/v/3783"},
   "clojure.contrib.sql/update-values"
-  {:comments [],
+  {:comments
+   ({:namespace_id 83,
+     :ns "clojure.contrib.sql",
+     :updated_at "2014-06-25 14:46:01.0",
+     :user_id 1208,
+     :function "update-values",
+     :version "1.2.0",
+     :created_at "2014-06-25 14:46:01.0",
+     :library "Clojure Contrib",
+     :library_id 1,
+     :body
+     "How do I set the where clause to 1=1? In other words, if I wanted to update all rows. You can't exactly put \"1=1\" as a string, right?"}
+    {:namespace_id 83,
+     :ns "clojure.contrib.sql",
+     :updated_at "2014-06-25 14:52:19.0",
+     :user_id 1208,
+     :function "update-values",
+     :version "1.2.0",
+     :created_at "2014-06-25 14:52:19.0",
+     :library "Clojure Contrib",
+     :library_id 1,
+     :body
+     "Also, what if I wanted to update where a column is null. \nSimply saying [\"columnName=?\" nil] doesn't suffice because the where statement columnName = NULL doesn't work. How do I translate \"where columnName is NULL\" to clojure code?"}),
    :see-alsos [],
    :examples
    [{:namespace_id 83,
@@ -15331,7 +15366,18 @@
      :lib_version "1.3.0",
      :library_id 15,
      :body
-     ";; a recursive function to calculate length\n;; same as 'count'\n(defn length [lst]\n    (condp = lst\n        (list) 0 ; if empty list result 0\n        (+ 1 (length (rest lst))))) ; default expression\n\nuser=> (length '(1 2 3))\n\nuser=> 3"}],
+     ";; a recursive function to calculate length\n;; same as 'count'\n(defn length [lst]\n    (condp = lst\n        (list) 0 ; if empty list result 0\n        (+ 1 (length (rest lst))))) ; default expression\n\nuser=> (length '(1 2 3))\n\nuser=> 3"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2014-06-14 17:49:21.0",
+     :function "condp",
+     :version 1,
+     :created_at "2014-06-14 17:49:21.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     "(condp #(%1 2 %2) 3\n  = \"eq\"\n  < \"lt\"\n  > \"gt\")\n\"lt\""}],
    :id 5432,
    :name "condp",
    :ns "clojure.core",
@@ -17329,14 +17375,15 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2010-09-26 03:07:10.0",
+     :updated_at "2014-06-10 04:35:41.0",
      :function "println",
-     :version 4,
+     :version 7,
      :created_at "2010-08-02 12:23:01.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
-     :body "user=> (println \"Hello world.\")\nHello world.\nnil"}],
+     :body
+     "user=> (println \"Hello world.\")\nHello world.\nnil\n\nuser=> (def items [ \"hello\" :a 1 (list :b 2) \\c {:d 4} #{5 6 7} ])\n#'user/items\n\n; println is for human-readable output, like a report. Note the lack of quotes around the string \"hello\" and the unescaped letter \"c\". \nuser=> (println items)\n[hello :a 1 (:b 2) c {:d 4} #{5 6 7}]\nnil\n\n; prn outputs items in a machine-readable format, such as in a source\n; file. Note the double-quotes around the string \"hello\" and the escaped letter \"c\".\nuser=> (prn items)\n[\"hello\" :a 1 (:b 2) \\c {:d 4} #{5 6 7}]\nnil\n\n; pr-str produces a string with escaped punctuation, so that println yields the same result as the original prn call.\nuser=> (println (pr-str items))\n[\"hello\" :a 1 (:b 2) \\c {:d 4} #{5 6 7}]\nnil\n\n; Calling println w/o args outputs a newline and nothing else.\nuser=> (println)\n\nnil\n; The newline function does the same.\nuser=> (newline)\n\nnil\nuser=>"}],
    :id 5676,
    :name "println",
    :ns "clojure.core",
@@ -20243,7 +20290,18 @@
      :library "Clojure Core",
      :library_id 3,
      :body
-     "Good description of use/require/import here:\n\nhttp://blog.8thlight.com/articles/2010/12/6/clojure-libs-and-namespaces-require-use-import-and-ns"}),
+     "Good description of use/require/import here:\n\nhttp://blog.8thlight.com/articles/2010/12/6/clojure-libs-and-namespaces-require-use-import-and-ns"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2014-06-17 13:01:26.0",
+     :user_id 61,
+     :function "import",
+     :version "1.3.0",
+     :created_at "2014-06-17 13:01:26.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "`import` will also accept vectors instead of lists, but I would discourage folks from doing so:\n\n* It's undocumented.\n* Lists and vectors have different meanings for `require`, so there's precedent for making a distinction.\n* Lists have a distinguished first element, and so they indent more meaningfully here. :-P"}),
    :see-alsos
    ({:namespace_id 99,
      :weight 4,
@@ -26572,15 +26630,15 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2012-07-24 10:33:19.0",
+     :updated_at "2014-06-19 17:13:07.0",
      :function "repeatedly",
-     :version 9,
+     :version 10,
      :created_at "2010-07-14 00:41:27.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     ";these two functions are equivalent \n\nuser=> (take 5 (repeatedly #(rand-int 11)))\n(6 6 3 9 8)\n\nuser=> (repeatedly 5 #(rand-int 11))\n(1 8 6 9 6)\n\n;compare with repeat\nuser=> (repeat 5 (int (rand 100)))\n(94 94 94 94 94)"}
+     ";these two functions are equivalent \n\nuser=> (take 5 (repeatedly #(rand-int 11)))\n(6 6 3 9 8)\n\nuser=> (repeatedly 5 #(rand-int 11))\n(1 8 6 9 6)\n\n;compare with repeat\nuser=> (repeat 5 (rand-int 100))\n(94 94 94 94 94)"}
     {:namespace_id 99,
      :ns "clojure.core",
      :updated_at "2011-10-04 08:16:47.0",
@@ -27509,15 +27567,15 @@
    :examples
    [{:namespace_id 330,
      :ns "clojure.core",
-     :updated_at "2012-03-01 18:23:36.0",
+     :updated_at "2014-06-10 00:13:48.0",
      :function "newline",
-     :version 1,
+     :version 2,
      :created_at "2012-03-01 18:23:36.0",
      :library "Clojure Core",
      :lib_version "1.3.0",
      :library_id 15,
      :body
-     ";; This is equivalent to System.out.println() in Java\nuser> (newline)\n\nnil"}],
+     ";; This is equivalent to System.out.println() in Java\nuser=> (newline)\n\nnil\n; Calling println w/o args is equivalent.\nuser=> (println)\n\nnil\nuser=>"}],
    :id 5621,
    :name "newline",
    :ns "clojure.core",
@@ -27887,7 +27945,18 @@
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "; Multiple sequences results in a Cartesian cross of their values.\nuser=> (doseq [a [1 2]\n               b [3 4]]\n         (println a b))\n1 3\n1 4\n2 3\n2 4\nnil"}],
+     "; Multiple sequences results in a Cartesian cross of their values.\nuser=> (doseq [a [1 2]\n               b [3 4]]\n         (println a b))\n1 3\n1 4\n2 3\n2 4\nnil"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2014-06-17 23:35:33.0",
+     :function "doseq",
+     :version 1,
+     :created_at "2014-06-17 23:35:33.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     "; Keywords :let, :when, and :while are supported, the same as \"for\"\nuser=> (doseq [x (range 6)\n               :when (odd? x)\n               :let [y (* x x)] ]\n         (println [x y]) )\n[1 1]\n[3 9]\n[5 25]\nnil\nuser=> (doseq [x (range 99)\n               :let [y (* x x)] \n               :while (< y 30)\n              ]\n         (println [x y]) )\n[0 0]\n[1 1]\n[2 4]\n[3 9]\n[4 16]\n[5 25]\nnil\nuser=> \n"}],
    :id 5476,
    :name "doseq",
    :ns "clojure.core",
@@ -34446,7 +34515,18 @@
      :arglists_comp "[pred coll]",
      :url_friendly_name "filter",
      :file "clojure/core.clj"}),
-   :examples [],
+   :examples
+   [{:namespace_id 76,
+     :ns "clojure.contrib.seq",
+     :updated_at "2014-06-28 01:19:47.0",
+     :function "separate",
+     :version 1,
+     :created_at "2014-06-28 01:19:47.0",
+     :library "Clojure Contrib",
+     :lib_version "1.2.0",
+     :library_id 1,
+     :body
+     "; In your project.clj, you need to declare dependencies like so:\n:dependencies [   [org.clojure/clojure            \"1.6.0\"]\n                  [org.clojure/clojure-contrib    \"1.2.0\"] ]\n\n; Then, require the library as normal in your source code:\n(ns demo.core\n  (:require [clojure.contrib.seq :as seq] ))\n\n; Then, use the function in your code:\n(prn (seq/separate odd? (range 5)))\n;=>> [(1 3) (0 2 4)]\n"}],
    :id 57,
    :name "separate",
    :ns "clojure.contrib.seq",
@@ -40960,15 +41040,15 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2010-09-27 02:46:03.0",
+     :updated_at "2014-06-20 11:53:48.0",
      :function "map",
-     :version 6,
+     :version 9,
      :created_at "2010-07-09 17:16:17.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (map inc [1 2 3 4 5])\n(2 3 4 5 6)\n\n\n;; map can be used with multiple collections. Collections will be consumed\n;; and passed to the mapping function in parallel:\nuser=> (map + [1 2 3] [4 5 6])\n(5 7 9)\n\n\n;; When map is passed more than one collection, the mapping function will\n;; be applied until one of the collections runs out:\nuser=> (map + [1 2 3] (iterate inc 1))\n(2 4 6)\n\n\n\n;; map is often used in conjunction with the # reader macro:\nuser=> (map #(str \"\" % \"\") [\"the\" \"quick\" \"brown\" \"fox\"])\n(\"the\" \"quick\" \"brown\" \"fox\")\n\n;; A useful idiom to pull \"columns\" out of a collection of collections:\nuser=> (apply map vector [[:a :b :c]\n                          [:d :e :f]\n                          [:g :h :i]])\n\n([:a :d :g] [:b :e :h] [:c :f :i])\n\n\n\n;; From http://clojure-examples.appspot.com/clojure.core/map"}
+     "user=> (map inc [1 2 3 4 5])\n(2 3 4 5 6)\n\n\n;; map can be used with multiple collections. Collections will be consumed\n;; and passed to the mapping function in parallel:\nuser=> (map + [1 2 3] [4 5 6])\n(5 7 9)\n\n\n;; When map is passed more than one collection, the mapping function will\n;; be applied until one of the collections runs out:\nuser=> (map + [1 2 3] (iterate inc 1))\n(2 4 6)\n\n\n\n;; map is often used in conjunction with the # reader macro:\nuser=> (map #(str \"Hello \" % \"!\" ) [\"Ford\" \"Arthur\" \"Tricia\"])\n(\"Hello Ford!\" \"Hello Arthur!\" \"Hello Tricia!\")\n\n;; A useful idiom to pull \"columns\" out of a collection of collections. \n;; Note, it is equivalent to:\n;; user=> (map vector [:a :b :c] [:d :e :f] [:g :h :i])\n\nuser=> (apply map vector [[:a :b :c]\n                          [:d :e :f]\n                          [:g :h :i]])\n\n([:a :d :g] [:b :e :h] [:c :f :i])\n\n;; From http://clojure-examples.appspot.com/clojure.core/map"}
     {:namespace_id 99,
      :ns "clojure.core",
      :updated_at "2010-09-26 04:50:56.0",
@@ -42687,7 +42767,18 @@
      :library "Clojure Core",
      :library_id 3,
      :body
-     "(constantly 1) is often useful when it comes to testing. You can think of it like you would a \"stub\"."}),
+     "(constantly 1) is often useful when it comes to testing. You can think of it like you would a \"stub\"."}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2014-06-26 16:51:01.0",
+     :user_id 1209,
+     :function "constantly",
+     :version "1.3.0",
+     :created_at "2014-06-26 16:51:01.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "constantly is typically used as an argument to a higher order function when a constant value is needed. "}),
    :see-alsos
    ({:namespace_id 99,
      :weight 2,
@@ -43953,7 +44044,18 @@
    :ns "clojure.contrib.str-utils2",
    :url "http://clojuredocs.org/v/1294"},
   "clojure.core/empty?"
-  {:comments [],
+  {:comments
+   ({:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2014-06-11 14:50:11.0",
+     :user_id 1202,
+     :function "empty?",
+     :version "1.3.0",
+     :created_at "2014-06-11 14:50:11.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "Some explanation of why (seq x) is preferable over (not (empty? x)) would be good. Because it's far less readable. When I come across (not (empty? x)) in some code, I immediately understand the author's intention. Not so much with (seq x)."}),
    :see-alsos
    ({:namespace_id 99,
      :weight 1,
@@ -46598,7 +46700,18 @@
   "net.cgrand.enlive-html/clone-for"
   {:comments [],
    :see-alsos [],
-   :examples [],
+   :examples
+   [{:namespace_id 198,
+     :ns "net.cgrand.enlive-html",
+     :updated_at "2014-06-03 12:44:09.0",
+     :function "clone-for",
+     :version 1,
+     :created_at "2014-06-03 12:44:09.0",
+     :library "enlive",
+     :lib_version "1.0.0-SNAPSHOT",
+     :library_id 8,
+     :body
+     ";clones the element for each item in a given collection\n\n;<ul>\n; <li> list item </li>\n;</ul>\n\n[:ul :li](clone-for [item [\"item 1\" \"item 2\"]]\n             [:li] (content item)\n\n;<ul>\n; <li> item 1 </li>\n; <li> item 2 </li>\n;</ul>\n\n\n\n"}],
    :id 3898,
    :name "clone-for",
    :ns "net.cgrand.enlive-html",
@@ -56260,9 +56373,9 @@
      :url_friendly_name "remove",
      :file "clojure/core.clj"}
     {:namespace_id 76,
-     :weight 0,
+     :weight 1,
      :name "separate",
-     :updated_at "2010-10-20 04:41:41.0",
+     :updated_at "2014-06-28 01:19:47.0",
      :version "1.2.0",
      :created_at "2010-07-14 20:46:28.0",
      :added nil,
