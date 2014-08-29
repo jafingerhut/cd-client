@@ -1,4 +1,4 @@
-{:snapshot-time "Fri Aug 01 11:41:22 PDT 2014",
+{:snapshot-time "Fri Aug 29 06:53:55 PDT 2014",
  :snapshot-info
  {"clojure.zip/insert-right"
   {:comments [],
@@ -16854,7 +16854,18 @@
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user> (def counter (atom 0))\n#'user/counter\n\nuser> (swap! counter inc)\n1\n\nuser> (swap! counter inc)\n2"}],
+     "user> (def counter (atom 0))\n#'user/counter\n\nuser> (swap! counter inc)\n1\n\nuser> (swap! counter inc)\n2"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2014-08-19 23:03:06.0",
+     :function "swap!",
+     :version 1,
+     :created_at "2014-08-19 23:03:06.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     ";; swap map values\nuser> (def m1 (atom {:a \"A\" :b \"B\"}))\natom\n\nuser> @m1\n{:a \"A\", :b \"B\"}\n\nuser> (swap! m1 assoc :a \"Aaay\")\n{:a \"Aaay\", :b \"B\"}"}],
    :id 5780,
    :name "swap!",
    :ns "clojure.core",
@@ -17721,15 +17732,15 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2011-08-21 00:16:32.0",
+     :updated_at "2014-08-06 03:32:30.0",
      :function "unchecked-multiply",
-     :version 1,
+     :version 2,
      :created_at "2011-08-21 00:16:32.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     ";; demonstrate the the unchecked-multiply function cannot calculate\n;; 1 trillion * 10 without throwing an exception\n\nuser=> (def thous 1000)\n#'user/thous\nuser=> (def trill (* thous thous thous thous))\n#'user/trill\nuser=> (unchecked-multiply trill 10)\njava.lang.IllegalArgumentException: No matching method found: unchecked_multiply\n (NO_SOURCE_FILE:0)\nuser=> (* trill 10)\n10000000000000\nuser=>"}],
+     ";; the unchecked-multiply function silently overflows\n\nuser=> (* 1000000000000 10)\n10000000000000\nuser=> (unchecked-multiply 1000000000000 10)\n10000000000000\n\nuser=> (* 3037000500 3037000500)\nArithmeticException integer overflow  clojure.lang.Numbers.throwIntOverflow (Numbers.java:1424)\nuser=> (unchecked-multiply 3037000500 3037000500)\n-9223372036709301616\n\n"}],
    :id 5812,
    :name "unchecked-multiply",
    :ns "clojure.core",
@@ -18099,15 +18110,15 @@
      ";; A future's calculation is started here and it runs in another thread\nuser=> (def f (future (Thread/sleep 10000) (println \"done\") 100))\n#'user/f\n;;if you wait 10 seconds before dereferencing it you'll see \"done\"\n\n;; When you dereference it you will block until the result is available.\nuser=> @f\ndone\n100\n\n;; Dereferencing again will return the already calculated value.\n=> @f\n100\n"}
     {:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2012-09-05 21:12:48.0",
+     :updated_at "2014-08-23 16:37:38.0",
      :function "future",
-     :version 3,
+     :version 4,
      :created_at "2011-08-03 05:43:23.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     ";; save the example in a script (e.g. test-future.clj) then run it in the console\n;;\n;; > clojure test-future.clj\n\n(println \"[Main] calculate the answer to life the universe and everything\")\n\n;; Used Thread/sleep to simulate long running process\n(def what-is-the-answer-to-life (future \n        (println \"[Future] started computation\")\n        (Thread/sleep 3000) ;; running for 3 seconds\n        (println \"[Future] completed computation\")\n        42))\n        \n(println \"[Main] created future\")\n\n(Thread/sleep 1000)\n(println \"[Main] do other things while waiting for the answer\")\n(println \"[Main] get the answer\")\n(println \"[Main] the result\" @what-is-the-answer-to-life)\n(shutdown-agents)\n\n\n;; You may get something like this\n;;\n;; [Main] calculate the answer to life the universe and everything\n;; [Future] started computation\n;; [Main] created future\n;; [Main] do other things while waiting for the answer\n;; [Main] get the answer\n;; [Future] completed computation\n;; [Main] the result 42\n\n\n;; Note: If you leave out the call to (shutdown-agents), the program will on\n;; most (all?) OS/JVM combinations \"hang\" for 1 minute before the process exits.\n;; It is simply waiting for background threads, created by the future call, to\n;; be shut down.  shutdown-agents will shut them down immediately, or\n;; (System/exit <exit-status>) will exit immediately without waiting for them\n;; to shut down.\n\n;; This wait occurs even if you use futures indirectly through some other Clojure\n;; functions that use them internally, such as pmap or clojure.java.shell/sh\n\n;; http://dev.clojure.org/jira/browse/CLJ-124 is a ticket opened against Clojure,\n;; as this 1-minute wait is not considered desirable behavior."}],
+     ";; save the example in a script (e.g. test-future.clj) then run it in the console\n;;\n;; > clojure test-future.clj\n\n(println \"[Main] calculate the answer to life the universe and everything\")\n\n;; Used Thread/sleep to simulate long running process\n(def what-is-the-answer-to-life (future \n        (println \"[Future] started computation\")\n        (Thread/sleep 3000) ;; running for 3 seconds\n        (println \"[Future] completed computation\")\n        42))\n        \n(println \"[Main] created future\")\n\n(Thread/sleep 1000)\n(println \"[Main] do other things while waiting for the answer\")\n(println \"[Main] get the answer\")\n(println \"[Main] the result\" @what-is-the-answer-to-life)\n(shutdown-agents)\n\n\n;; You may get something like this\n;;\n;; [Main] calculate the answer to life the universe and everything\n;; [Future] started computation\n;; [Main] created future\n;; [Main] do other things while waiting for the answer\n;; [Main] get the answer\n;; [Future] completed computation\n;; [Main] the result 42\n\n\n;; Note: If you leave out the call to (shutdown-agents), the program\n;; will on most (all?) OS/JVM combinations \"hang\" for 1 minute before\n;; the process exits.  It is waiting for a thread created by the\n;; future call to be shut down.  shutdown-agents will shut them down\n;; immediately, or (System/exit <exit-status>) will exit immediately\n;; without waiting for them to shut down.\n\n;; This wait occurs even if you use futures indirectly through some other Clojure\n;; functions that use them internally, such as pmap or clojure.java.shell/sh\n\n;; http://dev.clojure.org/jira/browse/CLJ-124 is a ticket opened against Clojure,\n;; as this 1-minute wait is not considered desirable behavior."}],
    :id 5526,
    :name "future",
    :ns "clojure.core",
@@ -41245,6 +41256,18 @@
      :line "5638",
      :arglists_comp "[f coll]",
      :url_friendly_name "keep",
+     :file "clojure/core.clj"}
+    {:namespace_id 99,
+     :weight 4,
+     :name "juxt",
+     :updated_at "2011-02-12 17:43:16.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:25:47.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/2058",
+     :line "1965",
+     :arglists_comp "[f]|[f g]|[f g h]|[f g h & fs]",
+     :url_friendly_name "juxt",
      :file "clojure/core.clj"}),
    :examples
    [{:namespace_id 99,
@@ -43882,7 +43905,18 @@
   "clojure.contrib.repl-utils/source"
   {:comments [],
    :see-alsos [],
-   :examples [],
+   :examples
+   [{:namespace_id 75,
+     :ns "clojure.contrib.repl-utils",
+     :updated_at "2014-08-03 03:10:28.0",
+     :function "source",
+     :version 1,
+     :created_at "2014-08-03 03:10:28.0",
+     :library "Clojure Contrib",
+     :lib_version "1.2.0",
+     :library_id 1,
+     :body
+     "user=> (source max)\n;; prints in console:\n(defn max\n  \"Returns the greatest of the nums.\"\n  {:added \"1.0\"}\n  ([x] x)\n  ([x y] (if (> x y) x y))\n  ([x y & more]\n   (reduce max (max x y) more)))"}],
    :id 333,
    :name "source",
    :ns "clojure.contrib.repl-utils",
@@ -44642,15 +44676,15 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2010-07-28 10:50:01.0",
+     :updated_at "2014-08-20 22:03:04.0",
      :function "bit-shift-left",
-     :version 2,
+     :version 4,
      :created_at "2010-07-28 10:50:01.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "<pre>user=&gt; (bit-shift-left 2r1101 2) ; fill rightmost bits with 0s\r\n52 \r\n;; 52 = 2r110100\r\n</pre>\r\n"}
+     "<pre>user=> (bit-shift-left 1 10)\n1024\n</pre>\n\n<pre>user=> (bit-shift-left 2r1101 2) ; fill rightmost bits with 0s\n52 \n;; 52 = 2r110100\n</pre>\n"}
     {:namespace_id 330,
      :ns "clojure.core",
      :updated_at "2012-04-13 04:21:02.0",
