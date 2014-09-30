@@ -1,4 +1,4 @@
-{:snapshot-time "Fri Aug 29 06:53:55 PDT 2014",
+{:snapshot-time "Mon Sep 29 19:39:26 PDT 2014",
  :snapshot-info
  {"clojure.zip/insert-right"
   {:comments [],
@@ -7144,7 +7144,18 @@
    :ns "clj-swing.panel",
    :url "http://clojuredocs.org/v/5196"},
   "clojure.contrib.core/-?>>"
-  {:comments [],
+  {:comments
+   ({:namespace_id 11,
+     :ns "clojure.contrib.core",
+     :updated_at "2014-09-24 17:28:46.0",
+     :user_id 1050,
+     :function "-?>>",
+     :version "1.2.0",
+     :created_at "2014-09-24 17:28:46.0",
+     :library "Clojure Contrib",
+     :library_id 1,
+     :body
+     "Since Clojure 1.5, `-?>>` has been renamed to `some->>` and moved to clojure.core."}),
    :see-alsos [],
    :examples [],
    :id 90,
@@ -13334,15 +13345,15 @@
    :examples
    [{:namespace_id 113,
      :ns "clojure.string",
-     :updated_at "2010-09-26 04:22:04.0",
+     :updated_at "2014-09-05 21:43:56.0",
      :function "split",
-     :version 3,
+     :version 4,
      :created_at "2010-07-17 10:33:44.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (clojure.string/split \"q1w2e3r4t5y6u7i8o9p0\" #\"\\d+\")\n[\"q\" \"w\" \"e\" \"r\" \"t\" \"y\" \"u\" \"i\" \"o\" \"p\"]\nuser=> (clojure.string/split \"q1w2e3r4t5y6u7i8o9p0\" #\"\\d+\" 5)\n[\"q\" \"w\" \"e\" \"r\" \"t5y6u7i8o9p0\"]\n"}
+     "user=> (require '[clojure.string :as str])\n\nuser=> (str/split \"Clojure is awesome!\" #\" \")\n[\"Clojure\" \"is\" \"awesome!\"]\n\nuser=> (str/split \"q1w2e3r4t5y6u7i8o9p0\" #\"\\d+\")\n[\"q\" \"w\" \"e\" \"r\" \"t\" \"y\" \"u\" \"i\" \"o\" \"p\"]\nuser=> (str/split \"q1w2e3r4t5y6u7i8o9p0\" #\"\\d+\" 5)\n[\"q\" \"w\" \"e\" \"r\" \"t5y6u7i8o9p0\"]\n"}
     {:namespace_id 113,
      :ns "clojure.string",
      :updated_at "2010-10-03 07:11:14.0",
@@ -16273,7 +16284,18 @@
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     ";; You can use map and apply together to drill one level deep in a collection\n;; of collections, in this case returning a collection of the max of each\n;; nested collection\n\nuser=> (map #(apply max %) [[1 2 3][4 5 6][7 8 9]])\n(3 6 9)"}],
+     ";; You can use map and apply together to drill one level deep in a collection\n;; of collections, in this case returning a collection of the max of each\n;; nested collection\n\nuser=> (map #(apply max %) [[1 2 3][4 5 6][7 8 9]])\n(3 6 9)"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2014-08-30 15:36:58.0",
+     :function "apply",
+     :version 1,
+     :created_at "2014-08-30 15:36:58.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body
+     ";; Using `apply` with optional keyword parameters:\n\n(defn add2 [a & {:keys [plus] :or {plus 0}}]\n  (+ 2 plus a))\n\n(add2 4)                    ; => 6\n(add2 4 :plus 1)            ; => 7\n(apply add2 [4])            ; => 6\n(apply add2 [4 {:plus 1}])  ; => IllegalArgumentException\n(apply add2 [4 :plus 1])    ; => 7\n"}],
    :id 5353,
    :name "apply",
    :ns "clojure.core",
@@ -17950,15 +17972,15 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2010-09-26 00:40:10.0",
+     :updated_at "2014-08-30 12:26:32.0",
      :function "hash-set",
-     :version 4,
+     :version 5,
      :created_at "2010-07-30 08:26:58.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (hash-set 1 2 1 3 1 4 1 5)\n#{1 2 3 4 5}\n\nuser=> (= (hash-set :c :a :b) #{:b :a :c})\ntrue \n\n\nuser=> (hash-set (seq \"Lorem ipsum dolor sit amet\"))\n#{(\\L \\o \\r \\e \\m \\space \\i \\p \\s \\u \\m \\space \\d \\o \\l \\o \\r \\space \\s \\i \\t \\space \\a \\m \\e \\t)} \n\nuser=> (apply hash-set (seq \"Lorem ipsum dolor sit amet\"))\n#{\\space \\a \\d \\e \\i \\L \\l \\m \\o \\p \\r \\s \\t \\u} \n\n\n;; Caution: hash-set now prevents duplicate keys (Clojure 1.2)\nuser=> (hash-set 1 1)\nDuplicate key: 1\n  [Thrown class java.lang.IllegalArgumentException]\n"}],
+     "user=> (hash-set 1 2 1 3 1 4 1 5)\n#{1 2 3 4 5}\n\nuser=> (= (hash-set :c :a :b) #{:b :a :c})\ntrue \n\n\nuser=> (hash-set (seq \"Lorem ipsum dolor sit amet\"))\n#{(\\L \\o \\r \\e \\m \\space \\i \\p \\s \\u \\m \\space \\d \\o \\l \\o \\r \\space \\s \\i \\t \\space \\a \\m \\e \\t)} \n\nuser=> (apply hash-set (seq \"Lorem ipsum dolor sit amet\"))\n#{\\space \\a \\d \\e \\i \\L \\l \\m \\o \\p \\r \\s \\t \\u} \n"}],
    :id 5545,
    :name "hash-set",
    :ns "clojure.core",
@@ -26906,15 +26928,15 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2011-06-15 23:21:08.0",
+     :updated_at "2014-09-06 23:44:36.0",
      :function "fn",
-     :version 11,
+     :version 13,
      :created_at "2010-07-28 12:52:11.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     ";; simple anonymous function passed to (map )\nuser=> (map (fn [x] (* x x)) (range 1 10))\n(1 4 9 16 25 36 49 64 81) \n\n;; anonymous function with a name.  not so anonymous now is it?\n;; this is useful in stack traces\n(fn add[a b] (+ a b))\n\n;; anonymous function with two params, the second is destructed\nuser=> (reduce (fn [m [k v]] (assoc m v k)) {} {:b 2 :a 1 :c 3})\n{2 :b, 1 :a, 3 :c} \n\n;; define and instantly call an anonymous function\nuser=> ((fn [a b c] (+ a b c)) 2 4 6)\n12\n\n;; define and instantly call an anonymous variadic function \n;; \"nums\" is a list here\nuser=> ((fn [& nums] (/ (apply + nums) (count nums))) 1 2 3 4)\n5/2 \n\n;; define and instantly call an anonymous mixed function\n;; \"nums\" is a list, while \"int\" is a number\nuser=> ((fn [int & nums] (+ int (/ (apply + nums) (count nums)))) 10 1 2 3 4)\n25/2 \n\n;; define and instantly call an anonymous overloaded function \n;; even though it is quite pointless\nuser=>  ((fn ([a] (inc a)) ([a b] (+ a b))) 3)\n4\n\n"}
+     ";; simple anonymous function passed to (map )\nuser=> (map (fn [x] (* x x)) (range 1 10))\n(1 4 9 16 25 36 49 64 81) \n\n;; anonymous function with a name.  not so anonymous now is it?\n;; this is useful in stack traces\n(fn add [a b] (+ a b))\n\n;; anonymous function with two params, the second is destructured\nuser=> (reduce (fn [m [k v]] (assoc m v k)) {} {:b 2 :a 1 :c 3})\n{2 :b, 1 :a, 3 :c} \n\n;; define and instantly call an anonymous function\nuser=> ((fn [a b c] (+ a b c)) 2 4 6)\n12\n\n;; define and instantly call an anonymous variadic function \n;; \"nums\" is a list here\nuser=> ((fn [& nums] (/ (apply + nums) (count nums))) 1 2 3 4)\n5/2 \n\n;; define and instantly call an anonymous mixed function\n;; \"nums\" is a list, while \"int\" is a number\nuser=> ((fn [int & nums] (+ int (/ (apply + nums) (count nums)))) 10 1 2 3 4)\n25/2 \n\n;; define and instantly call an anonymous overloaded function \n;; even though it is quite pointless\nuser=>  ((fn ([a] (inc a)) ([a b] (+ a b))) 3)\n4\n\n"}
     {:namespace_id 99,
      :ns "clojure.core",
      :updated_at "2010-09-26 00:47:43.0",
@@ -29810,15 +29832,15 @@
      "user=> (keep-indexed #(if (pos? %2) %1) [-9 0 29 -7 45 3 -8])\n(2 4 5)\n;; f takes 2 args: 'index' and 'value' where index is 0-based\n;; when f returns nil the index is not included in final result\nuser=> (keep-indexed (fn [idx v]\n                       (if (pos? v) idx)) [-9 0 29 -7 45 3 -8])\n(2 4 5)"}
     {:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2011-05-27 10:03:29.0",
+     :updated_at "2014-08-31 22:01:06.0",
      :function "keep-indexed",
-     :version 3,
+     :version 5,
      :created_at "2011-05-25 03:31:08.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "(defn position [x coll & {:keys [from-end all] :or {from-end false all false}}]\n  (cond\n   (true? from-end) (last (keep-indexed #(if (= x %2) %1) coll))\n   (true? all) (keep-indexed #(if (= x %2) %1) coll)\n   :else (first (keep-indexed #(if (= x %2) %1) coll))))\n\nuser> (position [1 1] [[1 0][1 1][2 3][1 1]])\n1\nuser> (position [1 1] [[1 0][1 1][2 3][1 1]] :from-end true)\n3\nuser> (position [1 1] [[1 0][1 1][2 3][1 1]] :all true)\n(1 3)\n\nuser> (def foo (shuffle (range 10)))\n#'user/foo\nuser> foo\n(5 8 9 1 2 7 0 6 3 4)\nuser> (position 5 foo)\n0\nuser> (position 0 foo)\n6"}],
+     "(defn position [x coll & {:keys [from-end all] :or {from-end false all false}}]\n  (let [all-idxs (keep-indexed (fn [idx val] (when (= val x) idx)) coll)]\n  (cond\n   (true? from-end) (last all-idxs)\n   (true? all)      all-idxs\n   :else            (first all-idxs))))\n\nuser> (position [1 1] [[1 0][1 1][2 3][1 1]])\n1\nuser> (position [1 1] [[1 0][1 1][2 3][1 1]] :from-end true)\n3\nuser> (position [1 1] [[1 0][1 1][2 3][1 1]] :all true)\n(1 3)\n\nuser> (def foo (shuffle (range 10)))\n#'user/foo\nuser> foo\n(5 8 9 1 2 7 0 6 3 4)\nuser> (position 5 foo)\n0\nuser> (position 0 foo)\n6"}],
    :id 5572,
    :name "keep-indexed",
    :ns "clojure.core",
@@ -33449,7 +33471,19 @@
    :url "http://clojuredocs.org/v/5352"},
   "clojure.core/locking"
   {:comments [],
-   :see-alsos [],
+   :see-alsos
+   ({:namespace_id 99,
+     :weight 2,
+     :name "future",
+     :updated_at "2011-08-03 05:43:23.0",
+     :version "1.2.0",
+     :created_at "2010-07-14 20:21:27.0",
+     :added nil,
+     :url "http://clojuredocs.org/v/1677",
+     :line "5407",
+     :arglists_comp "[& body]",
+     :url_friendly_name "future",
+     :file "clojure/core.clj"}),
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
@@ -35169,15 +35203,15 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2012-03-28 09:33:08.0",
+     :updated_at "2014-08-29 16:34:45.0",
      :function "sorted-map",
-     :version 3,
+     :version 6,
      :created_at "2010-08-02 03:52:30.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (sorted-map :z 1, :b 2, :a 3)\n{:a 3, :b 2, :z 1}"}],
+     "user=> (sorted-map :z 1, :b 2, :a 3)\n{:a 3, :b 2, :z 1}\n\nuser=> (into (sorted-map) {:b 2 :a 1})\n{:a 1, :b 2}"}],
    :id 5763,
    :name "sorted-map",
    :ns "clojure.core",
@@ -35438,7 +35472,17 @@
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     "user=> (vec (range 10))\n[0 1 2 3 4 5 6 7 8 9]\n\nuser=> (rseq (vec (range 10)))\n(9 8 7 6 5 4 3 2 1 0)\n"}],
+     "user=> (vec (range 10))\n[0 1 2 3 4 5 6 7 8 9]\n\nuser=> (rseq (vec (range 10)))\n(9 8 7 6 5 4 3 2 1 0)\n"}
+    {:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2014-08-29 15:50:27.0",
+     :function "rseq",
+     :version 1,
+     :created_at "2014-08-29 15:50:27.0",
+     :library "Clojure Core",
+     :lib_version "1.3.0",
+     :library_id 15,
+     :body "(rseq (into (sorted-map) {:a 1 :b 2}))"}],
    :id 5736,
    :name "rseq",
    :ns "clojure.core",
@@ -42776,15 +42820,15 @@
    :examples
    [{:namespace_id 99,
      :ns "clojure.core",
-     :updated_at "2012-09-10 16:51:35.0",
+     :updated_at "2014-09-25 18:09:57.0",
      :function "->",
-     :version 7,
+     :version 8,
      :created_at "2010-07-12 09:49:07.0",
      :library "Clojure Core",
      :lib_version "1.2.0",
      :library_id 3,
      :body
-     ";; Use of `->` (the \"thread-first\" macro) can help make code\n;; more readable by removing nesting. It can be especially\n;; useful when using host methods:\n\n;; Arguably a bit cumbersome to read:\nuser=> (first (.split (.replace (.toUpperCase \"a b c d\")\n                                \"A\"\n                                \"X\")\n                      \" \"))\n\"X\"\n\n;; Perhaps easier to read:\nuser=> (-> \"a b c d\" \n           .toUpperCase \n           (.replace \"A\" \"X\") \n           (.split \" \") \n           first)\n\"X\"\n\n;; It can also be useful for pulling values out of deeply-nested\n;; data structures:\nuser=> (def person \n            {:name \"Mark Volkmann\"\n             :address {:street \"644 Glen Summit\"\n                       :city \"St. Charles\"\n                       :state \"Missouri\"\n                       :zip 63304}\n             :employer {:name \"Object Computing, Inc.\"\n                        :address {:street \"12140 Woodcrest Dr.\"\n                                  :city \"Creve Coeur\"\n                                  :state \"Missouri\"\n                                  :zip 63141}}})\n \nuser=> (-> person :employer :address :city)\n\"Creve Coeur\"\n\n;; same as above, but with more nesting\nuser=> (((person :employer) :address) :city)\n\"Creve Coeur\"\n\n;; Note that this operator (along with ->>) has at times been\n;; referred to as a 'thrush' operator.\n\n;; From http://clojure-examples.appspot.com/clojure.core/-%3E\n"}
+     ";; Use of `->` (the \"thread-first\" macro) can help make code\n;; more readable by removing nesting. It can be especially\n;; useful when using host methods:\n\n;; Arguably a bit cumbersome to read:\nuser=> (first (.split (.replace (.toUpperCase \"a b c d\")\n                                \"A\"\n                                \"X\")\n                      \" \"))\n\"X\"\n\n;; Perhaps easier to read:\nuser=> (-> \"a b c d\" \n           .toUpperCase \n           (.replace \"A\" \"X\") \n           (.split \" \") \n           first)\n\"X\"\n\n;; It can also be useful for pulling values out of deeply-nested\n;; data structures:\nuser=> (def person \n            {:name \"Mark Volkmann\"\n             :address {:street \"644 Glen Summit\"\n                       :city \"St. Charles\"\n                       :state \"Missouri\"\n                       :zip 63304}\n             :employer {:name \"Object Computing, Inc.\"\n                        :address {:street \"12140 Woodcrest Dr.\"\n                                  :city \"Creve Coeur\"\n                                  :state \"Missouri\"\n                                  :zip 63141}}})\n \nuser=> (-> person :employer :address :city)\n\"Creve Coeur\"\n\n;; same as above, but with more nesting\nuser=> (:city (:address (:employer person)))\n\"Creve Coeur\"\n\n;; Note that this operator (along with ->>) has at times been\n;; referred to as a 'thrush' operator.\n\n;; From http://clojure-examples.appspot.com/clojure.core/-%3E\n"}
     {:namespace_id 99,
      :ns "clojure.core",
      :updated_at "2011-01-03 08:13:16.0",
@@ -50329,7 +50373,18 @@
    :ns "clojure.core",
    :url "http://clojuredocs.org/v/5506"},
   "clojure.contrib.core/-?>"
-  {:comments [],
+  {:comments
+   ({:namespace_id 11,
+     :ns "clojure.contrib.core",
+     :updated_at "2014-09-24 17:28:24.0",
+     :user_id 1050,
+     :function "-?>",
+     :version "1.2.0",
+     :created_at "2014-09-24 17:28:24.0",
+     :library "Clojure Contrib",
+     :library_id 1,
+     :body
+     "Since Clojure 1.5, `-?>` has been renamed to `some->` and moved to clojure.core."}),
    :see-alsos
    ({:namespace_id 99,
      :weight 1,
@@ -58206,7 +58261,18 @@
    :ns "swank.commands.inspector",
    :url "http://clojuredocs.org/v/4240"},
   "clojure.core/binding"
-  {:comments [],
+  {:comments
+   ({:namespace_id 330,
+     :ns "clojure.core",
+     :updated_at "2014-09-02 22:45:56.0",
+     :user_id 1247,
+     :function "binding",
+     :version "1.3.0",
+     :created_at "2014-09-02 22:43:35.0",
+     :library "Clojure Core",
+     :library_id 15,
+     :body
+     "The first example (binding mymax to max) appears to be broken.  The last line generates the error:\n<pre>\n  IllegalStateException Can't dynamically bind non-dynamic var: clojure.core/max\n</pre>\n\nI tried inserting (.setDynamic #'max) at the top, and it got rid of the error, but the binding didn't seem to actually happen.  I.e. the last line prints 20.\n\n<br>The only way I could get it to work is by redefining max from scratch as dynamic:\n\n<pre>\n(defn ^:dynamic max\n  ([x] x)\n  ([x y] (. clojure.lang.Numbers (max x y)))\n  ([x y &amp; more]\n   (reduce max (max x y) more)))\n</pre>\n\nAfter THIS the first example succeeds.\n\n<br>The moral of the story - I guess you can't easily bind built-in functions.  You need to write your functions with the intention of them being bindable.  And I guess the first example should simply be removed?"}),
    :see-alsos
    ({:namespace_id 330,
      :weight 4,
