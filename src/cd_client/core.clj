@@ -87,7 +87,7 @@ enable-debug-flags for supported arguments."
         data (:snapshot-info x)
         snapshot-time (:snapshot-time x)]
     (dosync (alter *cd-client-mode*
-                   (fn [cur-val]
+                   (fn [_cur-val]
                      {:source :local-file, :filename fname,
                       :data data, :snapshot-time snapshot-time})))
     (println "Read info on" (count data) "names from file:" fname)
@@ -101,7 +101,7 @@ enable-debug-flags for supported arguments."
 
   See also: set-local-mode! show-mode"
   []
-  (dosync (alter *cd-client-mode* (fn [cur-val] {:source :web})))
+  (dosync (alter *cd-client-mode* (fn [_cur-val] {:source :web})))
   (println "Now retrieving clojuredocs data from web site" *clojuredocs-root*))
 
 
@@ -623,6 +623,103 @@ in the local snapshot."
      `(browse-to-core ~ns ~name)))
 
 
+;; ordering-map copied under Eclipse Public License v1.0 from useful
+;; library available at: https://github.com/flatland/useful
+
+(defn ordering-map
+  "Create an empty map with a custom comparator that puts the given
+keys first, in the order specified. Other keys will be placed after
+the special keys, sorted by the default-comparator."
+  ([key-order] (ordering-map key-order compare))
+  ([key-order default-comparator]
+     (let [indices (into {} (map-indexed (fn [i x] [x i]) key-order))]
+       (sorted-map-by (fn [a b]
+                        (if-let [a-idx (indices a)]
+                          (if-let [b-idx (indices b)]
+                            (compare a-idx b-idx)
+                            -1)
+                          (if (indices b)
+                            1
+                            (default-comparator a b))))))))
+
+(def empty-ordered-one-name-info
+  (ordering-map [
+                 :name
+                 :ns
+                 :url
+                 :id
+                 :see-alsos
+                 :examples
+                 :comments
+                 ]))
+
+(def empty-ordered-see-also
+  (ordering-map [
+                 :name
+                 :url_friendly_name
+                 :url
+                 :file
+                 :version
+                 :added
+                 :created_at
+                 :updated_at
+                 :namespace_id
+                 :weight
+                 :line
+                 :arglists_comp
+                 ]))
+
+(def empty-ordered-example
+  (ordering-map [
+                 :function
+                 :ns
+                 :library
+                 :lib_version
+                 :created_at
+                 :updated_at
+                 :namespace_id
+                 :version
+                 :library_id
+                 :body
+                 ]))
+
+(def empty-ordered-comment
+  (ordering-map [
+                 :function
+                 :ns
+                 :library
+                 :version
+                 :user_id
+                 :created_at
+                 :updated_at
+                 :namespace_id
+                 :library_id
+                 :body
+                 ]))
+
+
+(defn use-sorted-maps [all-info-map]
+  (reduce (fn [m [name-str info]]
+            (let [{:keys [comments see-alsos examples]} info
+                  sorted-comments (->> comments
+                                       (map #(into empty-ordered-comment %))
+                                       (sort-by :created_at))
+                  sorted-see-alsos (->> see-alsos
+                                        (map #(into empty-ordered-see-also %))
+                                        (sort-by :name))
+                  sorted-examples (->> examples
+                                       (map #(into empty-ordered-example %))
+                                       (sort-by :created_at))
+                  info-with-sorted-maps (assoc info
+                                          :comments sorted-comments
+                                          :see-alsos sorted-see-alsos
+                                          :examples sorted-examples)]
+              (assoc m
+                name-str
+                info-with-sorted-maps)))
+          (sorted-map) all-info-map))
+
+
 ;; Collect lots of info about each name:
 ;; + examples, see also list, and comments
 ;; + DON'T get the Clojure documentation string. Assume we have that
@@ -680,6 +777,7 @@ in the local snapshot."
                                       (:name one-name-info))
                                  one-name-info))
                              {} all-info)
+        all-info-map (use-sorted-maps all-info-map)
         now (str (java.util.Date.))]
     (with-open [f (io/writer fname)]
       (binding [*out* f]
@@ -729,7 +827,7 @@ in the local snapshot."
         (println "Must be in local mode to print snapshot statistics."
                  "Currently in:")
         (show-mode))
-      (let [{:keys [data filename snapshot-time]} mode
+      (let [{:keys [data]} mode
             total-num-syms (count data)
             data-by-ns (group-by #(ns-name-of-full-sym-name (key %)) data)
             all-ns (set (keys data-by-ns))
@@ -737,7 +835,7 @@ in the local snapshot."
             (->> (keys data-by-ns)
                  (map (fn [ns]
                         [ns (example-counts (get data-by-ns ns))]))
-                 (filter (fn [[ns ex-counts]]
+                 (filter (fn [[_ns ex-counts]]
                            (pos? (count (remove zero? ex-counts)))))
                  (map first))
             nss-with-no-examples (set/difference
