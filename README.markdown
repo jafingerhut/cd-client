@@ -2,6 +2,22 @@
 
 A client for the http://clojuredocs.org API
 
+Note: ClojureDocs stopped supporting an HTTP-based programmatic API
+for retrieving information about its documentation in 2014, and has
+not re-enabled it since then.  Thus most of the functions in this
+library that attempt to connect to `http://api.clojuredocs.org` will
+hang and eventually time out with failure.
+
+While it is still possible to use the `set-local-mode!` of this
+library with a local data file on disk, the latest data file available
+in this repo is from 2014.  That file was created near the last time
+that ClojureDocs had a working programmatic API.
+
+It would certainly be possible to use screen-scraping techniques to
+update the data from ClojureDocs.org human-readable pages, but there
+is no code I am aware of that does this.
+
+
 ## Usage
 
     (use 'cd-client.core)
