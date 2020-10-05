@@ -1,10 +1,7 @@
 (ns cd-client.core
   (:use [clojure.java.browse :only [browse-url]]
         [clojure.pprint :only [pprint]])
-  (:require [cheshire.core :as json]
-            [clj-http.client :as http]
-            [clj-http.util :as util]
-            [clojure.set :as set]
+  (:require [clojure.set :as set]
             [clojure.string :as string]
             [clojure.tools.reader.edn :as edn]
             [clojure.java.io :as io]
@@ -58,6 +55,15 @@ enable-debug-flags for supported arguments."
     (edn/read r)))
 
 
+(defn data-from-snapshot-file-format-v0
+  [fname]
+  (let [x (read-safely fname)
+        data (:snapshot-info x)
+        snapshot-time (:snapshot-time x)]
+    {:source :local-file, :filename fname,
+     :data data, :snapshot-time snapshot-time}))
+
+
 ;; Handle errors in attempting to open the file, or as returned from
 ;; read?
 (defn set-local-mode!
@@ -83,13 +89,10 @@ enable-debug-flags for supported arguments."
   Snapshot time: Sun Apr 01 17:20:17 PDT 2012
   nil"
   [fname]
-  (let [x (read-safely fname)
-        data (:snapshot-info x)
-        snapshot-time (:snapshot-time x)]
-    (dosync (alter *cd-client-mode*
-                   (fn [_cur-val]
-                     {:source :local-file, :filename fname,
-                      :data data, :snapshot-time snapshot-time})))
+  (let [snapshot-info (data-from-snapshot-file-format-v0 fname)
+        data (:data snapshot-info)
+        snapshot-time (:snapshot-time snapshot-info)]
+    (dosync (alter *cd-client-mode* (fn [_cur-val] snapshot-info)))
     (println "Read info on" (count data) "names from file:" fname)
     (println "Snapshot time:" snapshot-time)))
 
@@ -133,7 +136,8 @@ enable-debug-flags for supported arguments."
   construct a URL that works on clojuredocs.org, then do normal URL
   encoding on any remaining characters that need it."
   [name]
-  (util/url-encode (string/escape name { \. "_dot", \/ "_" })))
+  name
+  #_(util/url-encode (string/escape name { \. "_dot", \/ "_" })))
 
 (defn- remove-markdown
   "Remove basic markdown syntax from a string."
@@ -241,9 +245,10 @@ enable-debug-flags for supported arguments."
         `(call-with-ns-and-name ~fn (var ~name))))))
 
 (defn- get-simple [url]
-  (when (:show-urls @*debug-flags*)
+  nil
+  #_(when (:show-urls @*debug-flags*)
     (println "get-simple getting URL" url))
-  (let [http-resp (http/get url {:accept-encoding "" :decompress-body false})]
+  #_(let [http-resp (http/get url {:accept-encoding "" :decompress-body false})]
     (when (:show-http-resp @*debug-flags*)
       (println "get-simple HTTP response" http-resp))
     (-> http-resp
