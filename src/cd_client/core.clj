@@ -8,18 +8,7 @@
             [clojure.repl :as repl]))
 
 
-;; For testing purposes use localhost:8080
-(def ^:private ^:dynamic *clojuredocs-root* "http://api.clojuredocs.org")
-;;(def ^:private ^:dynamic *clojuredocs-root* "http://localhost:8080")
-
-(def ^:private ^:dynamic *examples-api* (str *clojuredocs-root* "/examples/"))
-(def ^:private ^:dynamic *search-api*   (str *clojuredocs-root* "/search/"))
-(def ^:private ^:dynamic *comments-api* (str *clojuredocs-root* "/comments/"))
-(def ^:private ^:dynamic *seealso-api*  (str *clojuredocs-root* "/see-also/"))
-
 (def ^:private ^:dynamic *screen-width* 72)
-
-
 (def ^:private ^:dynamic *debug-flags* (ref #{}))
 
 (defn enable-debug-flags
@@ -45,9 +34,8 @@ enable-debug-flags for supported arguments."
                    (apply disj cur-val keywords)))))
 
 
-;; Use one of the functions set-local-mode! or set-web-mode! below to
-;; change the mode, and show-mode to show the current mode.
-(def ^:private ^:dynamic *cd-client-mode* (ref {:source :web}))
+;; Use set-local-mode! to load in a new snapshot file.
+(def ^:private ^:dynamic *cd-client-mode* (ref {}))
 
 
 (defn- read-safely [x & opts]
@@ -55,13 +43,10 @@ enable-debug-flags for supported arguments."
     (edn/read r)))
 
 
-(defn data-from-snapshot-file-format-v0
-  [fname]
-  (let [x (read-safely fname)
-        data (:snapshot-info x)
-        snapshot-time (:snapshot-time x)]
-    {:source :local-file, :filename fname,
-     :data data, :snapshot-time snapshot-time}))
+(defn data-from-snapshot-file-format-v0 [fname]
+  (let [x (read-safely fname)]
+    {:filename fname, :data (:snapshot-info x),
+     :snapshot-time (:snapshot-time x)}))
 
 
 ;; Handle errors in attempting to open the file, or as returned from
@@ -73,10 +58,6 @@ enable-debug-flags for supported arguments."
   useful when you do not have Internet access. Even if you do have
   access, you may be able to get results more quickly in local mode,
   and you will not put load on the clojuredocs.org servers.
-
-  Use set-web-mode! if you wish to change the mode back to retrieving
-  results from the Internet, or show-mode to see which mode you are
-  in.
 
   A snapshot file is available here:
 
@@ -96,48 +77,20 @@ enable-debug-flags for supported arguments."
     (println "Read info on" (count data) "names from file:" fname)
     (println "Snapshot time:" snapshot-time)))
 
-
-(defn set-web-mode!
-  "Change the behavior of future calls to cdoc and other documentation
-  access functions and macros in cd-client.core. Their results will
-  be obtained by accessing clojuredocs.org over the Internet.
-
-  See also: set-local-mode! show-mode"
-  []
-  (dosync (alter *cd-client-mode* (fn [_cur-val] {:source :web})))
-  (println "Now retrieving clojuredocs data from web site" *clojuredocs-root*))
-
+(set-local-mode! "snapshots/clojuredocs-snapshot-latest.txt")
 
 (defn show-mode
   "Print the mode you are in, local or web, for accessing
   documentation with cdoc and other macros and functions in
   cd-client.core.
 
-  See also: set-local-mode! set-web-mode!"
+  See also: set-local-mode!"
   []
   (let [mode @*cd-client-mode*]
-    (if (= :web (:source mode))
-      (println "Web mode. Data is retrieved from" *clojuredocs-root*)
-      (do
-        (println "Local mode. Data for" (count (:data mode))
-                 "names was read from file:" (:filename mode))
-        (println "Snapshot time:" (:snapshot-time mode))))))
+    (println "Data for" (count (:data mode))
+             "names was read from file:" (:filename mode))
+    (println "Snapshot time:" (:snapshot-time mode))))
 
-
-;; Rather than adding things here as the crop up, it might be better
-;; to replace everything that is not on a short list of "known good"
-;; characters. Here are the ones that seem to work fine so far,
-;; without substitution in the API URLs:
-;;
-;; a-z  A-Z  0-9  - * ? ! _ = $
-
-(defn- fixup-name-url
-  "Replace some special characters in symbol names in order to
-  construct a URL that works on clojuredocs.org, then do normal URL
-  encoding on any remaining characters that need it."
-  [name]
-  name
-  #_(util/url-encode (string/escape name { \. "_dot", \/ "_" })))
 
 (defn- remove-markdown
   "Remove basic markdown syntax from a string."
@@ -244,31 +197,18 @@ enable-debug-flags for supported arguments."
                   "e.g. clojure.string/join")
         `(call-with-ns-and-name ~fn (var ~name))))))
 
-(defn- get-simple [url]
-  nil
-  #_(when (:show-urls @*debug-flags*)
-    (println "get-simple getting URL" url))
-  #_(let [http-resp (http/get url {:accept-encoding "" :decompress-body false})]
-    (when (:show-http-resp @*debug-flags*)
-      (println "get-simple HTTP response" http-resp))
-    (-> http-resp
-        :body
-        (json/decode true))))
-
 (defn examples-core
   "Return examples from clojuredocs for a given namespace and name (as strings)"
   [ns name]
   (let [mode @*cd-client-mode*]
-    (if (= :web (:source mode))
-      (get-simple (str *examples-api* ns "/" (fixup-name-url name)))
-      ;; Make examples-core return the value that I wish the
-      ;; json/decode call above did when there are no examples,
-      ;; i.e. the URL and an empty vector of examples. Then I can
-      ;; test browse-to to see if it will work unmodified for names
-      ;; that have no examples.
-      (let [name-info (get (:data mode) (str ns "/" name))]
-        {:examples (:examples name-info),
-         :url (:url name-info)}))))
+    ;; Make examples-core return the value that I wish the
+    ;; json/decode call above did when there are no examples,
+    ;; i.e. the URL and an empty vector of examples. Then I can
+    ;; test browse-to to see if it will work unmodified for names
+    ;; that have no examples.
+    (let [name-info (get (:data mode) (str ns "/" name))]
+      {:examples (:examples name-info),
+       :url (:url name-info)})))
 
 
 (defmacro examples
@@ -279,9 +219,9 @@ enable-debug-flags for supported arguments."
   See cdoc documentation for examples of the kinds of arguments that
   can be given. This macro can be given the same arguments as cdoc."
   ([name]
-     `(handle-fns-etc ~name examples-core))
+   `(handle-fns-etc ~name examples-core))
   ([ns name]
-     `(examples-core ~ns ~name)))
+   `(examples-core ~ns ~name)))
 
 
 ;; Can we make pr-examples-core private, to avoid polluting namespace
@@ -355,11 +295,7 @@ enable-debug-flags for supported arguments."
   Clojure 1.2 and another for Clojure 1.3."
   [ns str-or-pattern]
   (let [mode @*cd-client-mode*]
-    (if (= :web (:source mode))
-      (get-simple (str *search-api*
-                       (if (nil? ns) "" (str ns "/"))
-                       (fixup-name-url str-or-pattern)))
-      (search-local-core ns str-or-pattern (:data mode)))))
+    (search-local-core ns str-or-pattern (:data mode))))
 
 
 (defn search
@@ -387,35 +323,21 @@ enable-debug-flags for supported arguments."
                           ; case-insensitively"
   ([str-or-pattern] (search nil str-or-pattern))
   ([ns str-or-pattern]
-     (let [mode @*cd-client-mode*]
-       (if (and (= :web (:source mode))
-                (instance? java.util.regex.Pattern str-or-pattern))
-         (println "Regex searches only supported in local mode.")
-         (let [results (search-core ns str-or-pattern)
-               fullnames (map #(str (:ns %) "/" (:name %)) results)
-               fullnames-uniq (set fullnames)]
-           (println (string/join "\n" (sort fullnames-uniq)))
-           (println (count fullnames-uniq) "matches found"))))))
-
-
-(defn search-data
-  "Search for a method name within an (optional) namespace.
-
-  Note: This currently always attempts to access clojuredocs, even if
-  you have used set-local-mode!"
-  ([name]    (get-simple (str *search-api* name)))
-  ([ns name] (get-simple (str *search-api* ns "/" (fixup-name-url name)))))
+   (let [mode @*cd-client-mode*
+         results (search-core ns str-or-pattern)
+         fullnames (map #(str (:ns %) "/" (:name %)) results)
+         fullnames-uniq (set fullnames)]
+     (println (string/join "\n" (sort fullnames-uniq)))
+     (println (count fullnames-uniq) "matches found"))))
 
 
 (defn comments-core
   "Return comments from clojuredocs for a given namespace and name (as
   strings)"
   [ns name]
-  (let [mode @*cd-client-mode*]
-    (if (= :web (:source mode))
-      (get-simple (str *comments-api* ns "/" (fixup-name-url name)))
-      (let [name-info (get (:data mode) (str ns "/" name))]
-        (:comments name-info)))))
+  (let [mode @*cd-client-mode*
+        name-info (get (:data mode) (str ns "/" name))]
+    (:comments name-info)))
 
 
 (defmacro comments
@@ -427,9 +349,9 @@ enable-debug-flags for supported arguments."
   See cdoc documentation for examples of the kinds of arguments that
   can be given. This macro can be given the same arguments as cdoc."
   ([name]
-     `(handle-fns-etc ~name comments-core))
+   `(handle-fns-etc ~name comments-core))
   ([ns name]
-     `(comments-core ~ns ~name)))
+   `(comments-core ~ns ~name)))
 
 
 (defn pr-comments-core
@@ -466,20 +388,18 @@ enable-debug-flags for supported arguments."
   See cdoc documentation for examples of the kinds of arguments that
   can be given. This macro can be given the same arguments as cdoc."
   ([name]
-     `(handle-fns-etc ~name pr-comments-core))
+   `(handle-fns-etc ~name pr-comments-core))
   ([ns name]
-     `(pr-comments-core ~ns ~name)))
+   `(pr-comments-core ~ns ~name)))
 
 
 (defn see-also-core
   "Return 'see also' info from clojuredocs for a given namespace and
   name (as strings)"
   [ns name]
-  (let [mode @*cd-client-mode*]
-    (if (= :web (:source mode))
-      (get-simple (str *seealso-api* ns "/" (fixup-name-url name)))
-      (let [name-info (get (:data mode) (str ns "/" name))]
-        (:see-alsos name-info)))))
+  (let [mode @*cd-client-mode*
+        name-info (get (:data mode) (str ns "/" name))]
+    (:see-alsos name-info)))
 
 
 (defmacro see-also
@@ -491,9 +411,9 @@ enable-debug-flags for supported arguments."
   See cdoc documentation for examples of the kinds of arguments that
   can be given. This macro can be given the same arguments as cdoc."
   ([name]
-     `(handle-fns-etc ~name see-also-core))
+   `(handle-fns-etc ~name see-also-core))
   ([ns name]
-     `(see-also-core ~ns ~name)))
+   `(see-also-core ~ns ~name)))
 
 
 (defn pr-see-also-core
@@ -522,9 +442,9 @@ enable-debug-flags for supported arguments."
   See cdoc documentation for examples of the kinds of arguments that
   can be given. This macro can be given the same arguments as cdoc."
   ([name]
-     `(handle-fns-etc ~name pr-see-also-core))
+   `(handle-fns-etc ~name pr-see-also-core))
   ([ns name]
-     `(pr-see-also-core ~ns ~name)))
+   `(pr-see-also-core ~ns ~name)))
 
 
 (defn cdoc-core
@@ -571,13 +491,13 @@ enable-debug-flags for supported arguments."
   (use 'clojure.java.io)
   (cdoc reader)"
   ([name]
-     `(do
-        (repl/doc ~name)
-        (handle-fns-etc ~name cdoc-core)))
+   `(do
+      (repl/doc ~name)
+      (handle-fns-etc ~name cdoc-core)))
   ([ns name]
-     `(do
-        (repl/doc ~(symbol ns name))
-        (cdoc-core ~ns ~name))))
+   `(do
+      (repl/doc ~(symbol ns name))
+      (cdoc-core ~ns ~name))))
 
 
 (defmacro cdir
@@ -586,25 +506,22 @@ the number of examples, see-alsos, and comments that each symbol has
 in the local snapshot."
   [nsname]
   (let [mode @*cd-client-mode*]
-    (if (= :local-file (:source mode))
-      (do
-        (printf "Exa See Com Symbol\n")
-        (printf "--- --- --- -------------\n")
-        `(doseq [v# (repl/dir-fn '~nsname)]
-           (printf "%3d %3d %3d %s\n"
-                   (count (:examples (examples-core '~nsname v#)))
-                   (count (see-also-core '~nsname v#))
-                   (count (comments-core '~nsname v#))
-                   v#)))
-      `(repl/dir ~nsname))))
+    (printf "Exa See Com Symbol\n")
+    (printf "--- --- --- -------------\n")
+    `(doseq [v# (repl/dir-fn '~nsname)]
+       (printf "%3d %3d %3d %s\n"
+               (count (:examples (examples-core '~nsname v#)))
+               (count (see-also-core '~nsname v#))
+               (count (comments-core '~nsname v#))
+               v#))))
 
 
 (defn browse-to-core
   "Open a browser to the clojuredocs page for a given namespace and name
   (as strings)"
   ([ns name]
-     (when-let [url (:url (examples-core ns name))]
-       (browse-url url))))
+   (when-let [url (:url (examples-core ns name))]
+     (browse-url url))))
 
 
 (defmacro browse-to
@@ -623,9 +540,9 @@ in the local snapshot."
   See cdoc documentation for examples of the kinds of arguments that
   can be given. This macro can be given the same arguments as cdoc."
   ([name]
-     `(handle-fns-etc ~name browse-to-core))
+   `(handle-fns-etc ~name browse-to-core))
   ([ns name]
-     `(browse-to-core ~ns ~name)))
+   `(browse-to-core ~ns ~name)))
 
 
 ;; ordering-map copied under Eclipse Public License v1.0 from useful
@@ -637,15 +554,15 @@ keys first, in the order specified. Other keys will be placed after
 the special keys, sorted by the default-comparator."
   ([key-order] (ordering-map key-order compare))
   ([key-order default-comparator]
-     (let [indices (into {} (map-indexed (fn [i x] [x i]) key-order))]
-       (sorted-map-by (fn [a b]
-                        (if-let [a-idx (indices a)]
-                          (if-let [b-idx (indices b)]
-                            (compare a-idx b-idx)
-                            -1)
-                          (if (indices b)
-                            1
-                            (default-comparator a b))))))))
+   (let [indices (into {} (map-indexed (fn [i x] [x i]) key-order))]
+     (sorted-map-by (fn [a b]
+                      (if-let [a-idx (indices a)]
+                        (if-let [b-idx (indices b)]
+                          (compare a-idx b-idx)
+                          -1)
+                        (if (indices b)
+                          1
+                          (default-comparator a b))))))))
 
 (def empty-ordered-one-name-info
   (ordering-map [
@@ -826,71 +743,66 @@ the special keys, sorted by the default-comparator."
   Printed stats for 51 namespaces (200 others with a total of 2155 symbols have
   no examples)"
   []
-  (let [mode @*cd-client-mode*]
-    (if (not= :local-file (:source mode))
-      (do
-        (println "Must be in local mode to print snapshot statistics."
-                 "Currently in:")
-        (show-mode))
-      (let [{:keys [data]} mode
-            total-num-syms (count data)
-            data-by-ns (group-by #(ns-name-of-full-sym-name (key %)) data)
-            all-ns (set (keys data-by-ns))
-            nss-with-at-least-1-example
-            (->> (keys data-by-ns)
-                 (map (fn [ns]
-                        [ns (example-counts (get data-by-ns ns))]))
-                 (filter (fn [[_ns ex-counts]]
-                           (pos? (count (remove zero? ex-counts)))))
-                 (map first))
-            nss-with-no-examples (set/difference
-                                  all-ns (set nss-with-at-least-1-example))]
-        (printf " #   # syms  %% syms  avg / max\n")
-        (printf " of   with    with   examples\n")
-        (printf "syms examps examples per sym   Namespace\n")
-        (printf "---- ------ -------- --------- -----------------------\n")
-        (doseq [ns-name (sort nss-with-at-least-1-example)]
-          (let [all-syms (get data-by-ns ns-name)
-                ex-counts (example-counts all-syms)
-                at-least-1-ex-counts (remove zero? ex-counts)]
-            (when (pos? (count at-least-1-ex-counts))
-              (printf "%4d %6d %8s %6s %2d %s"
-                      (count all-syms)
-                      (count at-least-1-ex-counts)
-                      (let [n (count all-syms)]
-                        (if (zero? n)
-                          (format "%8s" "N/A")
-                          (format "%7.1f%%"
-                                  (* 100.0 (/ (count at-least-1-ex-counts) n)))))
-                      (let [n (count at-least-1-ex-counts)]
-                        (if (zero? n)
-                          (format "%6s" "N/A")
-                          (format "%6.1f"
-                                  (double (/ (reduce + 0 at-least-1-ex-counts)
-                                             n)))))
-                      (apply max ex-counts)
-                      ns-name)
-              (printf "\n"))))
-        (printf "---- ------ -------- --------- -----------------------\n")
-        (let [num-syms-shown (reduce + 0
-                                     (map #(count (get data-by-ns %))
-                                          nss-with-at-least-1-example))
-              num-at-least-1-ex (reduce + 0
-                                        (map #(count
-                                               (remove zero?
-                                                       (example-counts
-                                                        (get data-by-ns %))))
-                                             nss-with-at-least-1-example))]
-          (printf "%4d %6d %7.1f%%\n"
-                  num-syms-shown
-                  num-at-least-1-ex
-                  (* 100.0 (/ num-at-least-1-ex num-syms-shown)))
-          (printf "\n")
-          (printf (str "Printed stats for %d namespaces (%d others with a "
-                       "total of %d symbols have no examples)\n")
-                  (count nss-with-at-least-1-example)
-                  (count nss-with-no-examples)
-                  (- total-num-syms num-syms-shown))
-          (printf "\nList of namespaces that have no examples:\n")
-          (doseq [ns-name (sort nss-with-no-examples)]
-            (printf "%4d %s\n" (count (get data-by-ns ns-name)) ns-name)))))))
+  (let [mode @*cd-client-mode*
+        {:keys [data]} mode
+        total-num-syms (count data)
+        data-by-ns (group-by #(ns-name-of-full-sym-name (key %)) data)
+        all-ns (set (keys data-by-ns))
+        nss-with-at-least-1-example
+        (->> (keys data-by-ns)
+             (map (fn [ns]
+                    [ns (example-counts (get data-by-ns ns))]))
+             (filter (fn [[_ns ex-counts]]
+                       (pos? (count (remove zero? ex-counts)))))
+             (map first))
+        nss-with-no-examples (set/difference
+                              all-ns (set nss-with-at-least-1-example))]
+    (printf " #   # syms  %% syms  avg / max\n")
+    (printf " of   with    with   examples\n")
+    (printf "syms examps examples per sym   Namespace\n")
+    (printf "---- ------ -------- --------- -----------------------\n")
+    (doseq [ns-name (sort nss-with-at-least-1-example)]
+      (let [all-syms (get data-by-ns ns-name)
+            ex-counts (example-counts all-syms)
+            at-least-1-ex-counts (remove zero? ex-counts)]
+        (when (pos? (count at-least-1-ex-counts))
+          (printf "%4d %6d %8s %6s %2d %s"
+                  (count all-syms)
+                  (count at-least-1-ex-counts)
+                  (let [n (count all-syms)]
+                    (if (zero? n)
+                      (format "%8s" "N/A")
+                      (format "%7.1f%%"
+                              (* 100.0 (/ (count at-least-1-ex-counts) n)))))
+                  (let [n (count at-least-1-ex-counts)]
+                    (if (zero? n)
+                      (format "%6s" "N/A")
+                      (format "%6.1f"
+                              (double (/ (reduce + 0 at-least-1-ex-counts)
+                                         n)))))
+                  (apply max ex-counts)
+                  ns-name)
+          (printf "\n"))))
+    (printf "---- ------ -------- --------- -----------------------\n")
+    (let [num-syms-shown (reduce + 0
+                                 (map #(count (get data-by-ns %))
+                                      nss-with-at-least-1-example))
+          num-at-least-1-ex (reduce + 0
+                                    (map #(count
+                                           (remove zero?
+                                                   (example-counts
+                                                    (get data-by-ns %))))
+                                         nss-with-at-least-1-example))]
+      (printf "%4d %6d %7.1f%%\n"
+              num-syms-shown
+              num-at-least-1-ex
+              (* 100.0 (/ num-at-least-1-ex num-syms-shown)))
+      (printf "\n")
+      (printf (str "Printed stats for %d namespaces (%d others with a "
+                   "total of %d symbols have no examples)\n")
+              (count nss-with-at-least-1-example)
+              (count nss-with-no-examples)
+              (- total-num-syms num-syms-shown))
+      (printf "\nList of namespaces that have no examples:\n")
+      (doseq [ns-name (sort nss-with-no-examples)]
+        (printf "%4d %s\n" (count (get data-by-ns ns-name)) ns-name)))))
