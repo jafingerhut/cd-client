@@ -9,33 +9,10 @@
 
 
 (def ^:private ^:dynamic *screen-width* 72)
-(def ^:private ^:dynamic *debug-flags* (ref #{}))
-
-(defn enable-debug-flags
-  "Takes any number of keyswords as arguments.  Enables the debug
-print messages corresponding to those keywords within the cd-client
-library.  Currently these keywords are supported:
-
-    :show-urls       Show URLs of HTTP requests sent.
-
-    :show-http-resp  Show HTTP responses received as a Clojure map, as
-                     returned by clj-http.client/get."
-  [& keywords]
-  (dosync (alter *debug-flags*
-                 (fn [cur-val]
-                   (apply conj cur-val keywords)))))
-
-(defn disable-debug-flags
-  "Disables debug print messages in cd-client library.  See
-enable-debug-flags for supported arguments."
-  [& keywords]
-  (dosync (alter *debug-flags*
-                 (fn [cur-val]
-                   (apply disj cur-val keywords)))))
 
 
 ;; Use set-local-mode! to load in a new snapshot file.
-(def ^:private ^:dynamic *cd-client-mode* (ref {}))
+(def ^:private ^:dynamic *cd-client-mode* (atom {}))
 
 
 (defn- read-safely [x & opts]
@@ -73,23 +50,21 @@ enable-debug-flags for supported arguments."
   (let [snapshot-info (data-from-snapshot-file-format-v0 fname)
         data (:data snapshot-info)
         snapshot-time (:snapshot-time snapshot-info)]
-    (dosync (alter *cd-client-mode* (fn [_cur-val] snapshot-info)))
+    (reset! *cd-client-mode* snapshot-info)
     (println "Read info on" (count data) "names from file:" fname)
     (println "Snapshot time:" snapshot-time)))
 
 (set-local-mode! "snapshots/clojuredocs-snapshot-latest.txt")
 
 (defn show-mode
-  "Print the mode you are in, local or web, for accessing
-  documentation with cdoc and other macros and functions in
-  cd-client.core.
+  "Print brief info about the snapshot file that has been loaded.
 
   See also: set-local-mode!"
   []
-  (let [mode @*cd-client-mode*]
-    (println "Data for" (count (:data mode))
-             "names was read from file:" (:filename mode))
-    (println "Snapshot time:" (:snapshot-time mode))))
+  (let [{:keys [data filename snapshot-time]} @*cd-client-mode*]
+    (println "Data for" (count data)
+             "names was read from file:" filename)
+    (println "Snapshot time:" snapshot-time)))
 
 
 (defn- remove-markdown
@@ -200,13 +175,12 @@ enable-debug-flags for supported arguments."
 (defn examples-core
   "Return examples from clojuredocs for a given namespace and name (as strings)"
   [ns name]
-  (let [mode @*cd-client-mode*]
-    ;; Make examples-core return the value that I wish the
-    ;; json/decode call above did when there are no examples,
-    ;; i.e. the URL and an empty vector of examples. Then I can
-    ;; test browse-to to see if it will work unmodified for names
-    ;; that have no examples.
-    (let [name-info (get (:data mode) (str ns "/" name))]
+  (let [{:keys [data]} @*cd-client-mode*]
+    ;; Make examples-core return the value that I prefer when there
+    ;; are no examples, i.e. the URL and an empty vector of
+    ;; examples. Then I can test browse-to to see if it will work
+    ;; unmodified for names that have no examples.
+    (let [name-info (get data (str ns "/" name))]
       {:examples (:examples name-info),
        :url (:url name-info)})))
 
@@ -294,16 +268,15 @@ enable-debug-flags for supported arguments."
   can return more than one such map for the same symbol, e.g. one for
   Clojure 1.2 and another for Clojure 1.3."
   [ns str-or-pattern]
-  (let [mode @*cd-client-mode*]
-    (search-local-core ns str-or-pattern (:data mode))))
+  (let [{:keys [data]} @*cd-client-mode*]
+    (search-local-core ns str-or-pattern data)))
 
 
 (defn search
-  "Search for symbols whose names contain a specified string, or in
-  local mode, symbols whose names match a specified regex pattern.
-  With a single argument, all symbols in known namespaces are
-  searched. With two arguments, only the namespace whose name is
-  specified by the string ns is searched.
+  "Search for symbols whose names contain a specified string or match a
+  regex pattern.  With a single argument, all symbols in known
+  namespaces are searched. With two arguments, only the namespace
+  whose name is specified by the string ns is searched.
 
   Examples:
 
@@ -312,8 +285,7 @@ enable-debug-flags for supported arguments."
   (search \"clojure.core\" \"with\") ; contains 'with' and is in
                                      ; namespace clojure.core
 
-  In local mode, you can do regex searches. Regex searches are not
-  supported by the clojuredocs web site search API at this time.
+  Examples regex pattern searches:
 
   (search \"clojure.core\" \"^with\") ; begins with 'with' and is in
                                       ; namespace clojure.core
@@ -323,8 +295,7 @@ enable-debug-flags for supported arguments."
                           ; case-insensitively"
   ([str-or-pattern] (search nil str-or-pattern))
   ([ns str-or-pattern]
-   (let [mode @*cd-client-mode*
-         results (search-core ns str-or-pattern)
+   (let [results (search-core ns str-or-pattern)
          fullnames (map #(str (:ns %) "/" (:name %)) results)
          fullnames-uniq (set fullnames)]
      (println (string/join "\n" (sort fullnames-uniq)))
@@ -335,8 +306,8 @@ enable-debug-flags for supported arguments."
   "Return comments from clojuredocs for a given namespace and name (as
   strings)"
   [ns name]
-  (let [mode @*cd-client-mode*
-        name-info (get (:data mode) (str ns "/" name))]
+  (let [{:keys [data]} @*cd-client-mode*
+        name-info (get data (str ns "/" name))]
     (:comments name-info)))
 
 
@@ -397,8 +368,8 @@ enable-debug-flags for supported arguments."
   "Return 'see also' info from clojuredocs for a given namespace and
   name (as strings)"
   [ns name]
-  (let [mode @*cd-client-mode*
-        name-info (get (:data mode) (str ns "/" name))]
+  (let [{:keys [data]} @*cd-client-mode*
+        name-info (get data (str ns "/" name))]
     (:see-alsos name-info)))
 
 
@@ -501,19 +472,17 @@ enable-debug-flags for supported arguments."
 
 
 (defmacro cdir
-  "Like clojure.repl/dir, except if you are in local mode, also prints
-the number of examples, see-alsos, and comments that each symbol has
-in the local snapshot."
+  "Like clojure.repl/dir, except also print the number of examples,
+  see-alsos, and comments that each symbol has in the snapshot data."
   [nsname]
-  (let [mode @*cd-client-mode*]
-    (printf "Exa See Com Symbol\n")
-    (printf "--- --- --- -------------\n")
-    `(doseq [v# (repl/dir-fn '~nsname)]
-       (printf "%3d %3d %3d %s\n"
-               (count (:examples (examples-core '~nsname v#)))
-               (count (see-also-core '~nsname v#))
-               (count (comments-core '~nsname v#))
-               v#))))
+  (printf "Exa See Com Symbol\n")
+  (printf "--- --- --- -------------\n")
+  `(doseq [v# (repl/dir-fn '~nsname)]
+     (printf "%3d %3d %3d %s\n"
+             (count (:examples (examples-core '~nsname v#)))
+             (count (see-also-core '~nsname v#))
+             (count (comments-core '~nsname v#))
+             v#)))
 
 
 (defn browse-to-core
@@ -529,13 +498,7 @@ in the local snapshot."
   and name (as strings), open a browser to the clojuredocs page for
   it.
 
-  Note: This macro always attempts to access the Internet, even if you
-  have used set-local-mode!  Clojuredocs web page contents are not
-  saved in a snapshot file at this time.
-
-  In web mode, there is currently a bug where browse-to will fail if
-  you attempt to browse to a symbol that does not have any examples on
-  clojuredocs.
+  Note: This macro always attempts to access the Internet.
 
   See cdoc documentation for examples of the kinds of arguments that
   can be given. This macro can be given the same arguments as cdoc."
@@ -724,9 +687,9 @@ the special keys, sorted by the default-comparator."
 
 
 (defn print-snapshot-stats
-  "When in local mode, show a summary of all namespaces in the
-  snapshot that have at least one example for one of its symbols. Below
-  is an example of the output.
+  "Show a summary of all namespaces in the snapshot that have at least
+  one example for one of its symbols. Below is an example of the
+  output.
 
    #   # syms  % syms  avg / max
    of   with    with   examples
@@ -743,8 +706,7 @@ the special keys, sorted by the default-comparator."
   Printed stats for 51 namespaces (200 others with a total of 2155 symbols have
   no examples)"
   []
-  (let [mode @*cd-client-mode*
-        {:keys [data]} mode
+  (let [{:keys [data]} @*cd-client-mode*
         total-num-syms (count data)
         data-by-ns (group-by #(ns-name-of-full-sym-name (key %)) data)
         all-ns (set (keys data-by-ns))
